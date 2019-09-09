@@ -136,25 +136,7 @@
 				return $this;
 		}
 
-		/**
-		 * Get the value of Area
-		 */ 
-		public function getArea()
-		{
-				return $this->Area;
-		}
-
-		/**
-		 * Set the value of Area
-		 *
-		 * @return  self
-		 */ 
-		public function setArea($Area)
-		{
-				$this->Area = $Area;
-
-				return $this;
-		}
+		
 
 		/**
 		 * Get the value of FechaInsercion

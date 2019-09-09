@@ -8,18 +8,18 @@ include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/funciones.php');
 class business_Persona
 {
 
-  public function fncBusinessListarChips(){
+  public function fncBusinessListarPersonaPorArea($id_area){
 
 			@session_start();
 			$connection = new connection();
 			$connectionstatus = $connection -> openConnection();
 			if ($connectionstatus) 
 			{
-				$sql = "usp_Gps_Chip_ListarChips";
+				$sql = "usp_Clinica_Persona_ListarPersonaParaHorario";
 						//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 				// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
 				$proc = mssql_init($sql, $connectionstatus); 
-							// mssql_bind($proc, '@USRId', $USRId, SQLINT4, false, false, 10);
+				mssql_bind($proc, '@id_area', $id_area, SQLINT4, false, false, 10);
 				// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
 
 							// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 

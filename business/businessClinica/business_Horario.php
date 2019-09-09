@@ -8,18 +8,18 @@ include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/funciones.php');
 class business_Horario
 {
 
-  public function fncBusinessListarHorariosEspecialidad($id_especialidad){
+  public function fncBusinessListarHorariosArea($id_area){
 
 			@session_start();
 			$connection = new connection();
 			$connectionstatus = $connection -> openConnection();
 			if ($connectionstatus) 
 			{
-				$sql = "usp_Clinica_Horario_listarHorarioPorEspecialidad";
+				$sql = "usp_Clinica_Horario_listarHorarioPorArea";
 						//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 				// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
 				$proc = mssql_init($sql, $connectionstatus); 
-				mssql_bind($proc, '@id_especialidad', $id_especialidad, SQLINT4, false, false, 10);
+				mssql_bind($proc, '@id_area', $id_area, SQLINT4, false, false, 10);
 				// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
 
 							// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 

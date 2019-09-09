@@ -115,29 +115,69 @@
               <!-- /.card -->
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Create Event</h3>
+                  <h3 id="id_tituloGestion"class="card-title">Gestión de Horarios</h3>
                 </div>
                 <div class="card-body">
-                  <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                    <!--<button type="button" id="color-chooser-btn" class="btn btn-info btn-block dropdown-toggle" data-toggle="dropdown">Color <span class="caret"></span></button>-->
-                    <ul class="fc-color-picker" id="color-chooser">
-                      <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
-                      <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
-                      <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
-                      <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                      <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
-                    </ul>
+                 
+               
+                  <input type="hidden" id="id_area" name="" value="">
+
+                  <div class="form-group">
+                      <label>Personas</label>
+                      <select class="form-control select2" id="idPersonalhorario" style="width: 100%;">
+                        <option selected="selected">...</option>
+                        
+                      </select>
                   </div>
-                  <!-- /btn-group -->
-                  <div class="input-group">
-                    <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+                   
+
+
+                 <!-- Color Picker -->
+                 <div class="form-group">
+                  <label>Color:</label>
+
+                  <div id="color" class="input-group my-colorpicker2">
+                    <input type="text" class="form-control" id="id_color" placeholder="COLOR" >
 
                     <div class="input-group-append">
-                      <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
+                      <span class="input-group-text"><i class="fas fa-square"></i></span>
                     </div>
-                    <!-- /btn-group -->
                   </div>
-                  <!-- /input-group -->
+                  <!-- /.input group -->
+                </div>
+
+
+
+
+                  <!-- Date and time range -->
+                  <div class="form-group">
+                    <label>Rango Horario:</label>
+
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <button type="button" id="id_btn_agregarHorario" class="btn btn-success" disabled > Agregar </button>
+                      </div>
+                    
+                      <input type="text" class="form-control float-right" id="reservationtime">
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
+
+
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button type="button" id="id_btn_eliminarHorario" class="btn btn-warning" disabled >Eliminar</button>
+                      </div>
+                   
+                    <input type="date"  id="fechaEliminar" class="form-control">
+                  </div>
+                  <!-- /.input group -->
+
+
+
+                  <!-- Date and time range -->
                 </div>
               </div>
             </div>

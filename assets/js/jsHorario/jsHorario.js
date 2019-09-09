@@ -5,9 +5,32 @@ $('document').ready(function(){
  
   if ( document.getElementById( "listaEspecialidad" )) {
   
-      listarChip();       
-
+      listarChip();  
+      $('.select2').select2({
+        theme: 'bootstrap4'
+      }) ;
       
+      $('#reservationtime').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 30,
+        locale: {
+          format: 'DD/MM/YYYY hh:mm A'
+        }
+      });
+     
+      $("#fechaEliminar").change(function() {
+        alert($(this).val());
+      });
+
+      $("#id_btn_agregarHorario" ).click(function() {
+        fnc_agregarHorario();
+      });
+
+      $('#color').colorpicker();
+      $('#color').on('colorpickerChange', function(event) {
+        $('#color .fa-square').css('color', event.color.toString());
+      });
+      //fnc_listarPersonasDelArea();
       //fnc_reiniciarValidador();
   }
 
@@ -48,11 +71,11 @@ $('document').ready(function(){
     }
 
 
-$('#chipBotonNuevo').click(function () {
-  $('#bd-example-modal-lg form').get(0).reset();
-  fnc_reiniciarValidador();
-  fnc_chipLimpiarModal();
-});
+    $('#chipBotonNuevo').click(function () {
+      $('#bd-example-modal-lg form').get(0).reset();
+      fnc_reiniciarValidador();
+      fnc_chipLimpiarModal();
+    });
 
 
     $('#chipGuardar').click(function(){
@@ -77,7 +100,59 @@ $('#chipBotonNuevo').click(function () {
       fnc_guardarChip(parametros);
     });
 
-function fnc_guardarChip(parametros){
+    function fnc_agregarHorario(){
+      var hora = document.getElementById("reservationtime");
+     
+      var startDate = $('#reservationtime').data('daterangepicker').startDate.format('YYYY-MM-DD HH:mm');
+      var endDate = $('#reservationtime').data('daterangepicker').endDate.format('YYYY-MM-DD HH:mm');
+      console.log(startDate +"---"+ endDate);
+
+      var id_area = document.getElementById("id_area").value;
+      var idPersonalhorario =   document.getElementById("idPersonalhorario").value;
+      var id_color = document.getElementById("id_color").value;
+
+
+      var parametros = {
+        'p'         : 'uctftGr4Jm',
+        'id_area'   :  id_area,
+        'id_persona':  idPersonalhorario,
+        'color'      : id_color,
+        'fecha_inicio': startDate,
+        'fecha_fin'  : endDate
+      }
+
+      fnc_guardarHorario(parametros);
+
+   
+      
+    }
+
+function fnc_prueba (parametros){
+  console.log(parametros);
+  $.ajax({
+    type: "GET",
+    url: "../modules/horario.php",
+    data: parametros,
+  
+    
+    success: function (response) {
+      swal(
+				'Success',
+				'You clicked the <b style="color:green;">Success</b> button!',
+				'success'
+			)
+    },
+    failure: function(){
+      swal(
+				'Success',
+				'You clicked the <b style="color:green;">Success</b> button!',
+				'success'
+			)
+    }
+  });
+}
+
+function fnc_guardarHorario(parametros){
         swal({
             title: '¿Estas Seguro?',
             text: "You won't be able to revert this!",
@@ -89,73 +164,22 @@ function fnc_guardarChip(parametros){
         }).then(function (result) {       
 
             if(result.value){
-                var proceso = 'xZ6rQTOHxk';
-                $.ajax({
-                    type: "GET",
-                    url: "../modules/chip.php",
-                    data: parametros,
-                   
-                    success: function(response) {
-                        if(response=='1'){
-                            swal(
-                                'Agregado!',
-                                'El Registro Fue Agregado',
-                                'success'
-                            )
-                          var table = $('#tablaListarChip').DataTable();
-                          table.clear();
-                          table.destroy();
-                            listarChip();
-                            $('#chipCancelar').click();
-
-                        } else if (response=='3'){
-                            swal(
-                                'Error!',
-                                'El Numero ya Existe',
-                              'error'
-                            )
-                        } else if (response=='4'){
-                          swal(
-                            'Exito!',
-                            'El Registro Fue Modificado',
-                            'success'
-                          )
-                          var table = $('#tablaListarChip').DataTable();
-                          table.clear();
-                          table.destroy();
-                          listarChip();
-                          $('#chipCancelar').click();
-                        }
-                        else{
-
-                        }
-
-                        
-                        
-                        console.log(response);
-                    },
-                    failure: function (response) {
-                        swal(
-                        "Error Interno",
-                        "Vaya, tu registro no se guardó", // had a missing comma
-                        "error"
-                        )
-                    }
-                });
+                
+               //alert("holas");
+               fnc_prueba(parametros);
                
 
             }
           
-        })
-    }
-
-
-
-
+        });
     
-   /* $('#boton').click(function(){
-        listarChip();
-    });*/
+
+
+  
+    
+    }
+    
+   
     var listarChip = function(){
       var table = $('#listaEspecialidad').DataTable();
       table.clear();
@@ -229,6 +253,8 @@ function fnc_guardarChip(parametros){
         $('#chipGuardar').attr("disabled", false);
         $('#chipGuardar').removeClass('disabled');
         fnc_chipMostrarDatosEditar(data);
+        
+        
        
         //fnc_reiniciarValidador();
 
@@ -239,13 +265,17 @@ function fnc_guardarChip(parametros){
             
         var data = table.row( $(this).parents('tr') ).data();
 
-        var id_especialidad = data["id_especialidad"];
+        var id_especialidad = data["id_area"];
+        document.getElementById("id_area").value=id_especialidad;
+        document.getElementById("id_tituloGestion").innerHTML="Gestión de Horarios : " + data["Nombre"];
+        document.getElementById("id_btn_agregarHorario").disabled=false;
+        document.getElementById("id_btn_eliminarHorario").disabled=false;
         var parametros = {
           "p"               : "xZ6rQTOHxk",
-          "id_especialidad" : id_especialidad
+          "id_area" : id_especialidad
         };
 
-        console.log(parametros);
+       // console.log(parametros);
         
         $.ajax({
           type: "GET",
@@ -253,7 +283,7 @@ function fnc_guardarChip(parametros){
           data: parametros,
          
           success: function(response) {
-             console.log(response);
+            // console.log(response);
 
              fnc_renderHorarios(response);
           },
@@ -262,10 +292,11 @@ function fnc_guardarChip(parametros){
           }
       });
         
-        console.log(data);
+        //console.log(data);
         
               
         //fnc_reiniciarValidador();
+        fnc_listarPersonasDelArea(id_especialidad)
 
         
       } );
@@ -359,7 +390,7 @@ function fnc_guardarChip(parametros){
         });
       }
      // console.log(data);
-      console.log(fechas);
+     // console.log(fechas);
       var date = new Date()
       var d    = date.getDate(),
           m    = date.getMonth(),
@@ -407,7 +438,37 @@ function fnc_guardarChip(parametros){
     }
 
 
-  
+
+    function fnc_listarPersonasDelArea(id_area){
+
+      parametros ={
+        'p': 'J9Y0B7rh86',
+        'id_area' : id_area
+      }
+      var personaLista="";
+      $.ajax({
+        type: "get",
+        url: "../modules/persona.php",
+        data: parametros,
+       
+        success: function (datos) {
+         document.getElementById("idPersonalhorario").innerHTML="";
+         personaLista = JSON.parse(datos);
+         console.log(personaLista);
+         var select = document.getElementById( 'idPersonalhorario' );
+          var option;
+          for(var key in personaLista)
+          {
+            option = document.createElement( 'option' );
+            option.value = personaLista[key]["id_persona"];
+            option.text = personaLista[key]["Nombre"];
+            select.add( option );
+          }
+        }
+      });
+      
+
+    }
 
     var chart5,options;
     function fnc_reporteCantidadChipsPorOperador(){

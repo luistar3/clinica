@@ -1,21 +1,21 @@
 <?php 
 
 include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/connection.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Especialidad.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Area.php');
 include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/funciones.php');
 //include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/navegador.php');
 
-class business_Especialidad
+class business_Area
 {
 
-  public function fncBusinessListarEspecialidad(){
+  public function fncBusinessListarArea(){
 
 			@session_start();
 			$connection = new connection();
 			$connectionstatus = $connection -> openConnection();
 			if ($connectionstatus) 
 			{
-				$sql = "usp_Clinica_Especialidad_listarEspecialidad";
+				$sql = "usp_Clinica_Area_listarArea";
 						//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 						// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
 				$proc = mssql_init($sql, $connectionstatus); 

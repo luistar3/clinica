@@ -1,30 +1,30 @@
 <?php  
 
-	class data_Especialidad
+	class data_Area
 	
 	{
-		private $id_especialidad;
+		private $id_area;
 		private $Nombre;
 		private $Piso;
 		private $id_persona;
 		
 
 		/**
-		 * Get the value of id_especialidad
+		 * Get the value of id_area
 		 */ 
-		public function getId_especialidad()
+		public function getId_area()
 		{
-				return $this->id_especialidad;
+				return $this->id_area;
 		}
 
 		/**
-		 * Set the value of id_especialidad
+		 * Set the value of id_area
 		 *
 		 * @return  self
 		 */ 
-		public function setId_especialidad($id_especialidad)
+		public function setId_area($id_area)
 		{
-				$this->id_especialidad = $id_especialidad;
+				$this->id_area = $id_area;
 
 				return $this;
 		}

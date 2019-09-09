@@ -9,7 +9,7 @@
 		private $Dia;
 		private $Fecha;
 		private $id_persona;
-		private $id_especialidad;
+		private $id_area;
 		private $Fecha_insercion;
 		private $Fecha_modificacion;
 		private $Estado;
@@ -143,21 +143,21 @@
 		}
 
 		/**
-		 * Get the value of id_especialidad
+		 * Get the value of id_area
 		 */ 
-		public function getId_especialidad()
+		public function getId_area()
 		{
-				return $this->id_especialidad;
+				return $this->id_area;
 		}
 
 		/**
-		 * Set the value of id_especialidad
+		 * Set the value of id_area
 		 *
 		 * @return  self
 		 */ 
-		public function setId_especialidad($id_especialidad)
+		public function setId_area($id_area)
 		{
-				$this->id_especialidad = $id_especialidad;
+				$this->id_area = $id_area;
 
 				return $this;
 		}

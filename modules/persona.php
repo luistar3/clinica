@@ -1,8 +1,8 @@
 <?php
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/EventosWeb/data/data_Persona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/EventosWeb/business/businessEvento/business_Persona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/EventosWeb/business/businessEvento/business_Usuario.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/EventosWeb/data/data_Usuario.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Persona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Persona.php');
+	//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessclinica/business_Usuario.php');
+	//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Usuario.php');
 
 
 
@@ -55,7 +55,7 @@
 					fnc_AutenticarUsuario();
 				break;
 			case 'J9Y0B7rh86':
-					fnc_AgregarPersonaRegistrarEvento();
+					fnc_listarPersonasPorArea();
 				break;
 			case 'xZ6rQTOHxk':
 					fnc_Agregar();
@@ -199,23 +199,15 @@
 	//	FUNCIONES
 	//===========================================================================
 
-	function fnc_Busqueda($sex)
+	function fnc_listarPersonasPorArea()
 	{
-		@session_start();
-		$url_parametros['sesion'] = $sex;
-		$validacion_post = true;
-
-		if ($validacion_post == true){
-			$business_Empresa = new business_Empresa();
-			$dtConsultarEmpresas = $business_Empresa -> fncBusinessConsultar();
-
-			include('../views/mod_empresa/div_consultarempresa.php');
-
-		}else{
-			header('Location: ../index.php?' . http_build_query($url_parametros)); 
-		}	
+		$id_area = $_GET["id_area"];
+		$business_Persona = new business_Persona();
+		$dtListarPersonas =  $business_Persona -> fncBusinessListarPersonaPorArea($id_area);
+		echo json_encode($dtListarPersonas,JSON_UNESCAPED_UNICODE);
 
 	}
+	
 	
 	function fnc_VerificarRuc()
 	{

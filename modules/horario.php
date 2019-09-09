@@ -2,8 +2,8 @@
 
     include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Horario.php');
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Horario.php');
-    include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Especialidad.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Especialidad.php');
+    include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Area.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Area.php');
     
 
 
@@ -67,13 +67,13 @@
 		switch ($get_opcion) {
 
 			case 'J9Y0B7rh86':
-					fnc_listarEspecialidad();
+					fnc_listarArea();
 				break;
 			case 'xZ6rQTOHxk':
-					fnc_listarHorariosPorEpecialidad();
+					fnc_listarHorariosPorArea();
 				break;
 			case 'uctftGr4Jm':
-					fnc_Modificar();
+					fnc_agregarHorario();
 				break;
 			case 'UkUELwv6kL':
 					fnc_VerificarAforo($sex);
@@ -182,25 +182,25 @@
 	//===========================================================================
 
 	
-	function fnc_listarEspecialidad()
+	function fnc_listarArea()
 	{
 		//@session_start();
         //$menu_activo = "horarioEspecialidad";
-		$business_Especialidad = new business_Especialidad();
-		$dtListarEspecialidad = $business_Especialidad -> fncBusinessListarEspecialidad();
+		$business_Area = new business_Area();
+		$dtListarArea = $business_Area -> fncBusinessListarArea();
 		$json_data = array(
 	
-			"data" => $dtListarEspecialidad   // total data array
+			"data" => $dtListarArea   // total data array
 		);
 		echo json_encode($json_data);
 	}
-	function fnc_listarHorariosPorEpecialidad()
+	function fnc_listarHorariosPorArea()
 	{
 		//@session_start();
 		//$menu_activo = "horarioEspecialidad";
-		$id_especialidad = $_GET["id_especialidad"];
+		$id_area = $_GET["id_area"];
 		$business_Horarios = new business_Horario();
-		$dtListarHorarios = $business_Horarios -> fncBusinessListarHorariosEspecialidad($id_especialidad);
+		$dtListarHorarios = $business_Horarios -> fncBusinessListarHorariosArea($id_area);
 		//$json_data = array(
 	
 		//	"data" => $dtListarHorarios   // total data array
@@ -220,19 +220,9 @@
 		//$newDate = date("m-d-Y", strtotime($origDate));
 		echo json_encode($dtListarHorarios,JSON_UNESCAPED_UNICODE);
 	}
-	function fnc_reporteCantidadChipsPorOperador()
+	function fnc_agregarHorario()
 	{
-		$business_Chip = new business_Chip();
-		$dtListarReporteCantidadPorChip = $business_Chip -> fnc_reporteCantidadChipsPorOperador();
-		// $json_data = array(
-	
-		// 	"data" => $dtListarReporteCantidadPorChip  // total data array
-		// );
-		
-		foreach ($dtListarReporteCantidadPorChip as $key => $value) {
-			array_push($result,array(strtoupper($value['operador']) ,$value["cantidad"]));
-		}
-		echo json_encode($result, JSON_NUMERIC_CHECK);
+		echo("1");
 	}
 
 	function fnc_reporteCantidadDineroPorOperador()
