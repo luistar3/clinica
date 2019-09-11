@@ -4587,16 +4587,13 @@ Docs & License: https://fullcalendar.io/
         },
         dir: 'ltr',
         buttonText: {
-            prev: 'prev',
-            next: 'next',
-            prevYear: 'prev year',
-            nextYear: 'next year',
-            year: 'year',
-            today: 'today',
-            month: 'month',
-            week: 'week',
-            day: 'day',
-            list: 'list'
+            prev: "Anterior",
+            next: "Següent",
+            today: "Avui",
+            month: "Mes",
+            week: "Setmana",
+            day: "Dia",
+            list: "Agenda"
         },
         weekLabel: 'W',
         allDayText: 'all-day',

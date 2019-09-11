@@ -42,25 +42,35 @@ class business_Horario
 				echo 'Tenemos un problema: ' . mssql_get_last_message();
 			}
 	}
-	public function fnc_reporteCantidadChipsPorOperador(){
+	public function fncBusinessAgregarHorario($data_horario){
 
 		@session_start();
 		$connection = new connection();
 		$connectionstatus = $connection -> openConnection();
 		if ($connectionstatus) 
 		{
-			$sql = "usp_Gps_Chip_CantidadPorOperador";
+			$sql = "usp_Clinica_Horario_insertarHorario";
 					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 			// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
-			$proc = mssql_init($sql, $connectionstatus); 
-						// mssql_bind($proc, '@USRId', $USRId, SQLINT4, false, false, 10);
-			// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
 
-						// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
-						// mssql_bind($proc, '@varDni', $varDni, SQLVARCHAR, false, false, 10); 
-						// mssql_bind($proc, '@intEdad', $intEdad, SQLINT4, false, false, 10); 
-						// mssql_bind($proc, '@IdGradoAcademico', $IdGradoAcademico, SQLINT4, false, false, 10); 
-						// mssql_bind($proc, '@IdSectorAcademico', $IdSectorAcademico, SQLINT4, false, false, 10); 
+			$id_persona		 = $data_horario -> getId_persona();
+			$id_area 		 = $data_horario -> getId_area();
+			$color			 = $data_horario -> getColor();
+			$estado			 = $data_horario -> getEstado();
+			$hora_inicio 	 = $data_horario -> getHora_inicio();
+			$hora_fin		 = $data_horario -> getHora_Fin();
+
+			//print_r($data_horario);
+			
+			$proc = mssql_init($sql, $connectionstatus); 
+			
+
+			 mssql_bind($proc, '@fecha_inicio', $hora_inicio, SQLVARCHAR, false, false, 10); 
+			 mssql_bind($proc, '@fecha_fin', $hora_fin, SQLVARCHAR, false, false, 10); 
+			 mssql_bind($proc, '@id_persona', $id_persona, SQLINT4, false, false, 10); 
+			 mssql_bind($proc, '@id_area', $id_area, SQLINT4, false, false, 10); 
+			 mssql_bind($proc, '@color', $color, SQLVARCHAR, false, false, 10);
+			 mssql_bind($proc, '@estado', $estado, SQLVARCHAR, false, false, 10);  
 
 			$result = mssql_execute($proc);
 			$devolver = sqlsrv_getdata($result);
@@ -77,25 +87,23 @@ class business_Horario
 		}
 }
 
-public function fnc_reporteCantidadDeDineroPorOperador(){
+public function fncBusinessComprovacionExistenciaHorario($anio,$mes,$dia,$id_persona,$id_area){
 
 	@session_start();
 	$connection = new connection();
 	$connectionstatus = $connection -> openConnection();
 	if ($connectionstatus) 
 	{
-		$sql = "usp_Gps_Chip_CantidadDineroPorOperador";
+		$sql = "usp_Clinica_Horario_verificarExistenciaHorario";
 				//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 		// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
 		$proc = mssql_init($sql, $connectionstatus); 
-					// mssql_bind($proc, '@USRId', $USRId, SQLINT4, false, false, 10);
-		// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
-
-					// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
-					// mssql_bind($proc, '@varDni', $varDni, SQLVARCHAR, false, false, 10); 
-					// mssql_bind($proc, '@intEdad', $intEdad, SQLINT4, false, false, 10); 
-					// mssql_bind($proc, '@IdGradoAcademico', $IdGradoAcademico, SQLINT4, false, false, 10); 
-					// mssql_bind($proc, '@IdSectorAcademico', $IdSectorAcademico, SQLINT4, false, false, 10); 
+		 mssql_bind($proc, '@anio', $anio, SQLINT4, false, false, 10);
+		 mssql_bind($proc, '@mes', $mes, SQLINT4, false, false, 10);
+		 mssql_bind($proc, '@dia', $dia, SQLINT4, false, false, 10);
+		 mssql_bind($proc, '@id_persona', $id_persona, SQLINT4, false, false, 10);
+		 mssql_bind($proc, '@id_area', $id_area, SQLINT4, false, false, 10);
+		
 
 		$result = mssql_execute($proc);
 		$devolver = sqlsrv_getdata($result);

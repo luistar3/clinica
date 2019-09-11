@@ -339,7 +339,20 @@
         week: {
             dow: 1,
             doy: 4 // The week that contains Jan 4th is the first week of the year.
-        }
+        },
+        buttonText: {
+            prev: "Ant",
+            next: "Sig",
+            today: "Hoy",
+            month: "Mes",
+            week: "Semana",
+            day: "Día",
+            list: "Agenda"
+        },
+        weekLabel: "Sm",
+        allDayHtml: "Todo<br/>el día",
+        eventLimitText: "más",
+        noEventsMessage: "No hay eventos para mostrar"
     };
 
     var _m16 = {
@@ -347,7 +360,20 @@
         week: {
             dow: 1,
             doy: 4 // The week that contains Jan 4th is the first week of the year.
-        }
+        },
+        buttonText: {
+            prev: "Ant",
+            next: "Sig",
+            today: "Hoy",
+            month: "Mes",
+            week: "Semana",
+            day: "Día",
+            list: "Agenda"
+        },
+        weekLabel: "Sm",
+        allDayHtml: "Todo<br/>el día",
+        eventLimitText: "más",
+        noEventsMessage: "No hay eventos para mostrar"
     };
 
     var _m17 = {
@@ -355,7 +381,20 @@
         week: {
             dow: 1,
             doy: 4 // The week that contains Jan 4th is the first week of the year.
-        }
+        },
+        buttonText: {
+            prev: "Ant",
+            next: "Sig",
+            today: "Hoy",
+            month: "Mes",
+            week: "Semana",
+            day: "Día",
+            list: "Agenda"
+        },
+        weekLabel: "Sm",
+        allDayHtml: "Todo<br/>el día",
+        eventLimitText: "más",
+        noEventsMessage: "No hay eventos para mostrar"
     };
 
     var _m18 = {

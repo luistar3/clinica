@@ -15,6 +15,7 @@
 		private $Estado;
 		private $Fecha_eleminacion;
 		private $Espacio;
+		private $Color;
 
 		
 
@@ -258,6 +259,26 @@
 		public function setEspacio($Espacio)
 		{
 				$this->Espacio = $Espacio;
+
+				return $this;
+		}
+
+		/**
+		 * Get the value of Color
+		 */ 
+		public function getColor()
+		{
+				return $this->Color;
+		}
+
+		/**
+		 * Set the value of Color
+		 *
+		 * @return  self
+		 */ 
+		public function setColor($Color)
+		{
+				$this->Color = $Color;
 
 				return $this;
 		}

@@ -222,7 +222,148 @@
 	}
 	function fnc_agregarHorario()
 	{
-		echo("1");
+
+		
+		$validacion_post = true;
+		if( !isset($_GET["id_area"]) || $_GET["id_area"] == "" ){ $validacion_post = false; }
+		if( !isset($_GET["id_persona"]) || $_GET["id_persona"] == "" ){ $validacion_post = false; }
+		//if( !isset($_GET["color"]) || $_GET["color"] == "" ){ $validacion_post = false; }
+		if( !isset($_GET["fecha_inicio"]) || $_GET["fecha_inicio"] == "" ){ $validacion_post = false; }
+		if( !isset($_GET["fecha_fin"]) || $_GET["fecha_fin"] == "" ){ $validacion_post = false; }
+		if( !isset($_GET["fecha_inicio_fin"]) || $_GET["fecha_inicio_fin"] == "" ){ $validacion_post = false; }
+
+		if ($validacion_post) {
+
+
+			$id_area 			=  $_GET["id_area"];
+			$id_persona 		=  $_GET["id_persona"];
+			$color 				=  $_GET["id_reten"];
+			$fecha_inicio 		=  $_GET["fecha_inicio"];
+			$fecha_fin 			=  $_GET["fecha_fin"];
+			$fecha_inicio_fin 	=  $_GET["fecha_inicio_fin"];
+			
+
+
+
+			// $input = $fecha_inicio; 
+			// $date = strtotime($input); 
+			// echo date('h:i:s', $date);
+
+			//$inicio = strtotime($fecha_fin."+ 1 days");
+			$inicio = strtotime($fecha_inicio);
+			$inicio_fin = strtotime($fecha_inicio_fin);
+			$fin 	= strtotime($fecha_fin);
+			$fecha_inicio=date("Y-M-d H:i",$inicio);
+			$fecha_fin=date("Y-M-d H:i",$fin); 
+			$fecha_inicio_fin = date("Y-M-d H:i",$inicio_fin);
+			
+			
+		
+			$business_Horarios = new business_Horario();
+			$data_horario = new data_Horario();
+
+			$data_horario -> setId_persona($id_persona);
+			$data_horario -> setId_area($id_area);
+			//$data_horario -> setColor($color);
+			$data_horario -> setEstado(1);
+
+		
+			$anio_i = strtotime($fecha_inicio);
+			$anio_f = strtotime($fecha_inicio_fin);
+			$hora_i = date("H",$anio_i);
+			$hora_f = date("H",$anio_f);
+
+			
+		
+			//echo($f);
+
+			while ($fecha_fin >= $fecha_inicio) {
+
+				echo($fecha_fin." >= ".$fecha_inicio);
+				echo("<br>");
+			
+
+			$data_horario -> setHora_inicio($fecha_inicio);
+			$data_horario -> setHora_Fin($fecha_inicio_fin);
+
+			//echo($fecha_inicio ."---".$fecha_inicio_fin);
+
+			$anio_s = strtotime($fecha_inicio);
+			$anio_f = strtotime($fecha_inicio_fin);
+			$anio = date("Y",$anio_s);
+			$mes = date("m",$anio_s);
+			$dia = date("d",$anio_s);
+			$hora = date("H",$anio_s);
+			$hora_f = date("H",$anio_f);
+			$minuto = date("i",$anio_s);
+			$codigoColor ="";
+			if ($hora>7 && $hora<12) {
+				$codigoColor ="#28a745";
+				//echo("<br>".$hora."-");
+			}elseif($hora>11 && $hora<19){
+				$codigoColor = "#f7c329";
+				//echo("<br>".$hora."-");
+			}else {
+				$codigoColor = "#5d87b5";
+				//echo("<br>".$hora."-");
+			}
+
+			if ($color==1) {
+				$codigoColor ="#ea5160";
+			}
+			//echo($color."<br>");
+			//echo($codigoColor."<br>");
+			//echo($color."<br>");
+			// mañana  8 -12
+			// tarde 	3-7.30
+			// noche 	7.30 7.30 
+			// reten 	7.30 7.30 
+			$data_horario -> setColor($codigoColor);
+		
+
+			
+			$xinicio = strtotime($fecha_inicio."+ 1 days");			
+			$fecha_inicio = date("Y-M-d H:i",$xinicio);
+
+			$zinicio = strtotime($fecha_inicio_fin."+ 1 days");
+			$fecha_inicio_fin = date("Y-M-d H:i",$zinicio);
+			// comprovacion de existencia de horario
+
+			//print_r($data_horario);
+
+			$dt_horario = $business_Horarios -> fncBusinessComprovacionExistenciaHorario($anio,$mes,$dia,$id_persona,$id_area);
+			if (count($dt_horario)>0) {
+				echo(2);
+			}
+			else {
+				//$bolres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);
+				//print_r($data_horario);
+				echo(1);
+			}
+			// comprovacion de existencia de horario
+
+			//$bollres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);
+			
+			
+			//print_r($data_horario);
+
+				
+				
+			}
+			
+		} else {
+			echo("0");
+		}
+		
+		
+
+
+
+		
+		
+		//H:i:s
+		//$date = new DateTime('2000-12-31');
+		//$date->modify('+1 day');
 	}
 
 	function fnc_reporteCantidadDineroPorOperador()

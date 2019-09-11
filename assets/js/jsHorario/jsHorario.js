@@ -14,7 +14,37 @@ $('document').ready(function(){
         timePicker: true,
         timePickerIncrement: 30,
         locale: {
-          format: 'DD/MM/YYYY hh:mm A'
+          
+        "format": "YYYY/MM/DD hh:mm",
+        "separator": " - ",
+        "applyLabel": "Aplicar",
+        "cancelLabel": "Cancelar",
+        "fromLabel": "De",
+        "toLabel": "Até",
+        "customRangeLabel": "Custom",
+        "daysOfWeek": [
+            "Dom",
+            "Lun",
+            "Mar",
+            "Mie",
+            "Jue",
+            "Vie",
+            "Sáb"
+        ],
+        "monthNames": [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre"
+      ]
         }
       });
      
@@ -109,16 +139,28 @@ $('document').ready(function(){
 
       var id_area = document.getElementById("id_area").value;
       var idPersonalhorario =   document.getElementById("idPersonalhorario").value;
-      var id_color = document.getElementById("id_color").value;
+      //var id_color = document.getElementById("id_color").value;
+
+      var array_hora_fin =  startDate;
+      array_hora_fin = array_hora_fin.split(" ");
+
+      var array_hora_inicio =  endDate;
+      array_hora_inicio = array_hora_inicio.split(" ");
+
+      var auxiliar_fechaFin = array_hora_fin[0] + " "+array_hora_inicio[1];
+
+      var id_reten= document.getElementById("idReten").value;
 
 
       var parametros = {
         'p'         : 'uctftGr4Jm',
         'id_area'   :  id_area,
         'id_persona':  idPersonalhorario,
-        'color'      : id_color,
+        
         'fecha_inicio': startDate,
-        'fecha_fin'  : endDate
+        'fecha_fin'  : endDate,
+        'fecha_inicio_fin':auxiliar_fechaFin,
+        'id_reten' : id_reten
       }
 
       fnc_guardarHorario(parametros);
@@ -136,17 +178,48 @@ function fnc_prueba (parametros){
   
     
     success: function (response) {
-      swal(
-				'Success',
-				'You clicked the <b style="color:green;">Success</b> button!',
-				'success'
-			)
+      
+      if (response=="0") {
+        swal(
+          'Campos faltantes',
+          'You clicked the <b style="color:green;">Success</b> button!',
+          'error'
+        )
+      }
+      else{
+       
+        var id_area = document.getElementById("id_area").value;
+        var parametros = {
+          "p"               : "xZ6rQTOHxk",
+          "id_area" : id_area
+                         };
+          $.ajax({
+            type: "GET",
+            url: "../modules/horario.php",
+            data: parametros,
+          
+            success: function(response) {
+              // console.log(response);
+
+              fnc_renderHorarios(response);
+              swal(
+                'Procesado',
+                'You clicked the <b style="color:green;">Success</b> button!',
+                'success'
+              )
+            }
+          });
+
+      }
+      
+      
+
     },
     failure: function(){
       swal(
 				'Success',
 				'You clicked the <b style="color:green;">Success</b> button!',
-				'success'
+				'warnig'
 			)
     }
   });
@@ -270,6 +343,9 @@ function fnc_guardarHorario(parametros){
         document.getElementById("id_tituloGestion").innerHTML="Gestión de Horarios : " + data["Nombre"];
         document.getElementById("id_btn_agregarHorario").disabled=false;
         document.getElementById("id_btn_eliminarHorario").disabled=false;
+        document.getElementById("id_btn_eliminarHorario").disabled=false;
+        document.getElementById("fechaEliminar").disabled=false;
+        
         var parametros = {
           "p"               : "xZ6rQTOHxk",
           "id_area" : id_especialidad
@@ -403,7 +479,7 @@ function fnc_guardarHorario(parametros){
   var calendar = new Calendar(calendarEl, {
         plugins: [ 'bootstrap', 'interaction', 'dayGrid', 'timeGrid' ],
         selectable:true,
-        locale: 'es',
+        'locale': 'es',
         header    : {
           left  : 'prev,next today',
           center: 'title',
