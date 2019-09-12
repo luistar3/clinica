@@ -65,8 +65,8 @@ class business_Horario
 			$proc = mssql_init($sql, $connectionstatus); 
 			
 
-			 mssql_bind($proc, '@fecha_inicio', $hora_inicio, SQLVARCHAR, false, false, 10); 
-			 mssql_bind($proc, '@fecha_fin', $hora_fin, SQLVARCHAR, false, false, 10); 
+			 mssql_bind($proc, '@fecha_inicio', $hora_inicio, SQLVARCHAR, false, false, 20); 
+			 mssql_bind($proc, '@fecha_fin', $hora_fin, SQLVARCHAR, false, false, 20); 
 			 mssql_bind($proc, '@id_persona', $id_persona, SQLINT4, false, false, 10); 
 			 mssql_bind($proc, '@id_area', $id_area, SQLINT4, false, false, 10); 
 			 mssql_bind($proc, '@color', $color, SQLVARCHAR, false, false, 10);

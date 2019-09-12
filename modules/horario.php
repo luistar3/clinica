@@ -249,15 +249,17 @@
 			// $date = strtotime($input); 
 			// echo date('h:i:s', $date);
 
+
 			//$inicio = strtotime($fecha_fin."+ 1 days");
 			$inicio = strtotime($fecha_inicio);
 			$inicio_fin = strtotime($fecha_inicio_fin);
 			$fin 	= strtotime($fecha_fin);
-			$fecha_inicio=date("Y-M-d H:i",$inicio);
-			$fecha_fin=date("Y-M-d H:i",$fin); 
-			$fecha_inicio_fin = date("Y-M-d H:i",$inicio_fin);
+			$fecha_inicio=date("Y-m-d H:i:s",$inicio);
+			$fecha_fin=date("Y-m-d H:i:s",$fin); 
+			$fecha_inicio_fin = date("Y-m-d H:i:s",$inicio_fin);
 			
-			
+			$x_hora = strtotime($fecha_inicio);
+			$c_hora = date('H',$x_hora);
 		
 			$business_Horarios = new business_Horario();
 			$data_horario = new data_Horario();
@@ -267,26 +269,33 @@
 			//$data_horario -> setColor($color);
 			$data_horario -> setEstado(1);
 
-		
-			$anio_i = strtotime($fecha_inicio);
-			$anio_f = strtotime($fecha_inicio_fin);
-			$hora_i = date("H",$anio_i);
-			$hora_f = date("H",$anio_f);
+			
+			$ho_i = date("H",$inicio);
+			$ho_f = date("H",$inicio_fin);
 
+			if ($ho_i>$ho_f) {
+				$zin = strtotime($fecha_fin."+ 1 days");
+				$fecha_fin = date("Y-m-d H:i:s",$zin);
+			}
 			
 		
 			//echo($f);
+			$cantDatosInsert=0;
+			$cantDatosNoInsert=0;
+
 
 			while ($fecha_fin >= $fecha_inicio) {
 
-				echo($fecha_fin." >= ".$fecha_inicio);
-				echo("<br>");
+				//echo("<br>".$fecha_fin." >= ".$fecha_inicio);
+				//echo("<br>");
+			
+				if ($fecha_fin<=$fecha_inicio) {
+					//echo("te pasaste");
+				}
+
 			
 
-			$data_horario -> setHora_inicio($fecha_inicio);
-			$data_horario -> setHora_Fin($fecha_inicio_fin);
-
-			//echo($fecha_inicio ."---".$fecha_inicio_fin);
+			//echo($fecha_inicio ."---".$fecha_inicio_fin."<br>");
 
 			$anio_s = strtotime($fecha_inicio);
 			$anio_f = strtotime($fecha_inicio_fin);
@@ -301,15 +310,19 @@
 				$codigoColor ="#28a745";
 				//echo("<br>".$hora."-");
 			}elseif($hora>11 && $hora<19){
-				$codigoColor = "#f7c329";
+				$codigoColor = "#ffc107";
 				//echo("<br>".$hora."-");
 			}else {
-				$codigoColor = "#5d87b5";
+				$codigoColor = "#007bff";
 				//echo("<br>".$hora."-");
 			}
 
 			if ($color==1) {
-				$codigoColor ="#ea5160";
+				$codigoColor ="#dc3545";
+			}
+
+			if ($hora > $hora_f) {
+				//echo("de und a para el otro");
 			}
 			//echo($color."<br>");
 			//echo($codigoColor."<br>");
@@ -318,38 +331,71 @@
 			// tarde 	3-7.30
 			// noche 	7.30 7.30 
 			// reten 	7.30 7.30 
-			$data_horario -> setColor($codigoColor);
 		
+				
+			$data_horario -> setHora_inicio(date_format(date_create($fecha_inicio), 'd-m-Y H:i:s') );
+			$data_horario -> setHora_Fin(date_format(date_create($fecha_inicio_fin), 'd-m-Y H:i:s') );
+			$data_horario -> setColor($codigoColor);
+			if ($hora > $hora_f) {
+				$fecha_fin_a = $data_horario -> getHora_Fin();
+				$zinicio_r = strtotime($fecha_inicio_fin."+ 1 days");
+				$fecha_inicio_fin_r = date("d-m-Y H:i:s",$zinicio_r);
+				$data_horario -> setHora_Fin($fecha_inicio_fin_r);
+			}
 
 			
+			
 			$xinicio = strtotime($fecha_inicio."+ 1 days");			
-			$fecha_inicio = date("Y-M-d H:i",$xinicio);
+			$fecha_inicio = date("d-m-Y H:i:s",$xinicio);
 
 			$zinicio = strtotime($fecha_inicio_fin."+ 1 days");
-			$fecha_inicio_fin = date("Y-M-d H:i",$zinicio);
+			$fecha_inicio_fin = date("d-m-Y H:i:s",$zinicio);
 			// comprovacion de existencia de horario
 
 			//print_r($data_horario);
 
+			//print_r($data_horario);
+
 			$dt_horario = $business_Horarios -> fncBusinessComprovacionExistenciaHorario($anio,$mes,$dia,$id_persona,$id_area);
+			//echo("-<br>".$anio."-".$mes."-".$dia."-<br>".$id_persona.$id_area);
+			//echo(count($dt_horario));
 			if (count($dt_horario)>0) {
-				echo(2);
-			}
-			else {
+
+				//if (($hora>=0 && $hora <=6) /*||  ($hora >= 19 && 23 >= $hora)*/ ) {
 				//$bolres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);
-				//print_r($data_horario);
-				echo(1);
+				//	$cantDatosInsert++;
+					//echo("paso con 1");
+				//}
+				//else {
+					$cantDatosNoInsert++;
+				//}
+				
+			}else{
+				//$bolres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);
+				$cantDatosInsert++;
+				//echo("paso con mas de 1");
 			}
+			//else {
+				$bolres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);
+			//	$cantDatosInsert++;
+				//echo("paso con NINGUNIO");
+				
+				//print_r($data_horario);
+				//echo(1);
+			//}
 			// comprovacion de existencia de horario
 
 			//$bollres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);
 			
 			
 			//print_r($data_horario);
-
-				
+		
 				
 			}
+			$arrayMensaje = array(
+				array('insert' => $cantDatosInsert),
+				array('noInsert' => $cantDatosNoInsert));
+			echo json_encode($arrayMensaje);
 			
 		} else {
 			echo("0");

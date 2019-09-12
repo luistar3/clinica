@@ -89,6 +89,10 @@
 
 <!-- Ekko Lightbox -->
 <script src="../assets/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+<!-- TOASTR -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
 
 <script src="../assets/js/jsHorario/jsHorario.js"></script>
 

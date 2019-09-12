@@ -43,6 +43,8 @@
   <link rel="stylesheet" href="../assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   
 
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+
    <!-- jsGrid -->
    <link rel="stylesheet" href="../assets/plugins/jsgrid/jsgrid.min.css">
   <link rel="stylesheet" href="../assets/plugins/jsgrid/jsgrid-theme.min.css">

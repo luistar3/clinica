@@ -135,35 +135,47 @@ $('document').ready(function(){
      
       var startDate = $('#reservationtime').data('daterangepicker').startDate.format('YYYY-MM-DD HH:mm');
       var endDate = $('#reservationtime').data('daterangepicker').endDate.format('YYYY-MM-DD HH:mm');
+
+      var h_startDate =parseInt($('#reservationtime').data('daterangepicker').startDate.format('HH')) ;
+      var h_endDate = parseInt($('#reservationtime').data('daterangepicker').endDate.format('HH')) ;
+      
       console.log(startDate +"---"+ endDate);
+      /*if (h_startDate>h_endDate) {
+        toastr.error('Horas No Válidas', 'ERROR!', {timeOut: 5000})
+      }else{*/
 
-      var id_area = document.getElementById("id_area").value;
-      var idPersonalhorario =   document.getElementById("idPersonalhorario").value;
-      //var id_color = document.getElementById("id_color").value;
+        console.log(h_startDate +"---"+ h_endDate);
 
-      var array_hora_fin =  startDate;
-      array_hora_fin = array_hora_fin.split(" ");
-
-      var array_hora_inicio =  endDate;
-      array_hora_inicio = array_hora_inicio.split(" ");
-
-      var auxiliar_fechaFin = array_hora_fin[0] + " "+array_hora_inicio[1];
-
-      var id_reten= document.getElementById("idReten").value;
-
-
-      var parametros = {
-        'p'         : 'uctftGr4Jm',
-        'id_area'   :  id_area,
-        'id_persona':  idPersonalhorario,
-        
-        'fecha_inicio': startDate,
-        'fecha_fin'  : endDate,
-        'fecha_inicio_fin':auxiliar_fechaFin,
-        'id_reten' : id_reten
-      }
-
-      fnc_guardarHorario(parametros);
+        var id_area = document.getElementById("id_area").value;
+        var idPersonalhorario =   document.getElementById("idPersonalhorario").value;
+        //var id_color = document.getElementById("id_color").value;
+  
+        var array_hora_fin =  startDate;
+        array_hora_fin = array_hora_fin.split(" ");
+  
+        var array_hora_inicio =  endDate;
+        array_hora_inicio = array_hora_inicio.split(" ");
+  
+        var auxiliar_fechaFin = array_hora_fin[0] + " "+array_hora_inicio[1];
+  
+        var id_reten= document.getElementById("idReten").value;
+  
+  
+        var parametros = {
+          'p'         : 'uctftGr4Jm',
+          'id_area'   :  id_area,
+          'id_persona':  idPersonalhorario,
+          
+          'fecha_inicio': startDate,
+          'fecha_fin'  : endDate,
+          'fecha_inicio_fin':auxiliar_fechaFin,
+          'id_reten' : id_reten
+        }
+  
+        fnc_guardarHorario(parametros);
+      
+    /*  }*/
+     
 
    
       
@@ -193,6 +205,17 @@ function fnc_prueba (parametros){
           "p"               : "xZ6rQTOHxk",
           "id_area" : id_area
                          };
+                        // console.log(response);
+        var respuesta = JSON.parse(response);
+        console.log(respuesta);
+        if (respuesta[1]['noInsert']>0) {
+          toastr.warning(' Horarios no Insertados'+respuesta[1]['noInsert'], 'Warning', {timeOut: 5000});
+          toastr.success(' Horarios Insertados'+respuesta[0]['insert'], 'Warning', {timeOut: 5000});
+        } else {
+          toastr.success('Todos Los Horarios Fueron Insertados', 'Success Alert', {timeOut: 5000})
+        }
+        
+          
           $.ajax({
             type: "GET",
             url: "../modules/horario.php",
@@ -202,11 +225,7 @@ function fnc_prueba (parametros){
               // console.log(response);
 
               fnc_renderHorarios(response);
-              swal(
-                'Procesado',
-                'You clicked the <b style="color:green;">Success</b> button!',
-                'success'
-              )
+              
             }
           });
 
@@ -227,13 +246,14 @@ function fnc_prueba (parametros){
 
 function fnc_guardarHorario(parametros){
         swal({
-            title: '¿Estas Seguro?',
-            text: "You won't be able to revert this!",
+            title: '¿Estás Seguro?',
+            text: "Esta Seguro Insertar Estos Horarios",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Si, Estoy Seguro!',
+            cancelButtonText: 'No!'
         }).then(function (result) {       
 
             if(result.value){

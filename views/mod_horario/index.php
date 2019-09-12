@@ -27,22 +27,17 @@
             <div class="sticky-top mb-3">
             <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title">Draggable Events</h4>
+                  <h4 class="card-title">Leyenda</h4>
                 </div>
                 <div class="card-body">
                   <!-- the events -->
-                  <div id="external-events">
-                    <div class="external-event bg-success">Lunch</div>
-                    <div class="external-event bg-warning">Go home</div>
-                    <div class="external-event bg-info">Do homework</div>
-                    <div class="external-event bg-primary">Work on UI design</div>
-                    <div class="external-event bg-danger">Sleep tight</div>
-                    <div class="checkbox">
-                      <label for="drop-remove">
-                        <input type="checkbox" id="drop-remove">
-                        remove after drop
-                      </label>
-                    </div>
+                  <div id="external-events" disabled >
+                    <div class="external-event bg-success">Día</div>
+                    <div class="external-event bg-warning">Tarde</div>
+                    <!-- <div class="external-event bg-info">Do homework</div> -->
+                    <div class="external-event bg-primary">Noche</div>
+                    <div class="external-event bg-danger">Reten</div>
+                   
                   </div>
                 </div>
                 <!-- /.card-body -->
