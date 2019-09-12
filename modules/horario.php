@@ -255,7 +255,7 @@
 			$inicio_fin = strtotime($fecha_inicio_fin);
 			$fin 	= strtotime($fecha_fin);
 			$fecha_inicio=date("Y-m-d H:i:s",$inicio);
-			$fecha_fin=date("Y-m-d H:i:s",$fin); 
+			$fecha_fin=date("d-m-Y H:i:s",$fin); 
 			$fecha_inicio_fin = date("Y-m-d H:i:s",$inicio_fin);
 			
 			$x_hora = strtotime($fecha_inicio);
@@ -275,25 +275,33 @@
 
 			if ($ho_i>$ho_f) {
 				$zin = strtotime($fecha_fin."+ 1 days");
-				$fecha_fin = date("Y-m-d H:i:s",$zin);
+				$fecha_fin = date("d-m-Y H:i:s",$zin);
 			}
 			
 		
 			//echo($f);
 			$cantDatosInsert=0;
 			$cantDatosNoInsert=0;
+			if ($fecha_fin >= $fecha_inicio) {
+				//echo("verdad");
+			}
+			else {
+				//echo("falso");
+			}
 
-
-			while ($fecha_fin >= $fecha_inicio) {
+			//echo("<br>".$fecha_fin." >= ".$fecha_inicio);
+			while (true) {
 
 				//echo("<br>".$fecha_fin." >= ".$fecha_inicio);
 				//echo("<br>");
 			
-				if ($fecha_fin<=$fecha_inicio) {
-					//echo("te pasaste");
-				}
+	
+			 $auxiliar_h = strtotime($fecha_fin);
+			 $auxiliar_f = strtotime($fecha_inicio);
 
-			
+			  if ($auxiliar_h  <=$auxiliar_f) {
+			 	 break;
+			 }
 
 			//echo($fecha_inicio ."---".$fecha_inicio_fin."<br>");
 
@@ -355,10 +363,12 @@
 			//print_r($data_horario);
 
 			//print_r($data_horario);
+			//$part_hora=$data_horario -> getHora_inicio();
 
 			$dt_horario = $business_Horarios -> fncBusinessComprovacionExistenciaHorario($anio,$mes,$dia,$id_persona,$id_area);
 			//echo("-<br>".$anio."-".$mes."-".$dia."-<br>".$id_persona.$id_area);
-			//echo(count($dt_horario));
+			//echo(count($dt_horario)."<br>");
+			//print_r($dt_horario);
 			if (count($dt_horario)>0) {
 
 				//if (($hora>=0 && $hora <=6) /*||  ($hora >= 19 && 23 >= $hora)*/ ) {
@@ -371,12 +381,12 @@
 				//}
 				
 			}else{
-				//$bolres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);
+				$bolres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);
 				$cantDatosInsert++;
 				//echo("paso con mas de 1");
 			}
 			//else {
-				$bolres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);
+				//$bolres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);
 			//	$cantDatosInsert++;
 				//echo("paso con NINGUNIO");
 				

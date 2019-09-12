@@ -97,6 +97,9 @@ public function fncBusinessComprovacionExistenciaHorario($anio,$mes,$dia,$id_per
 		$sql = "usp_Clinica_Horario_verificarExistenciaHorario";
 				//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 		// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
+
+		
+		//echo ("<br>usp_Clinica_Horario_verificarExistenciaHorario ". $anio.' '.$mes .' '. $dia.' '. $id_persona .' '. $id_area );
 		$proc = mssql_init($sql, $connectionstatus); 
 		 mssql_bind($proc, '@anio', $anio, SQLINT4, false, false, 10);
 		 mssql_bind($proc, '@mes', $mes, SQLINT4, false, false, 10);

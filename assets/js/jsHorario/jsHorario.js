@@ -499,11 +499,12 @@ function fnc_guardarHorario(parametros){
   var calendar = new Calendar(calendarEl, {
         plugins: [ 'bootstrap', 'interaction', 'dayGrid', 'timeGrid' ],
         selectable:true,
+        defaultView: 'listWeek',
         'locale': 'es',
         header    : {
           left  : 'prev,next today',
           center: 'title',
-          right : 'dayGridMonth,timeGridWeek,timeGridDay'
+          right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
         dateClick: function(info) {
           alert('clicked ' + info.dateStr);
