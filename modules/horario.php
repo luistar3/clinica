@@ -76,10 +76,10 @@
 					fnc_agregarHorario();
 				break;
 			case 'UkUELwv6kL':
-					fnc_VerificarAforo($sex);
+					fnc_confirmarExistenciaDeFecha();
 				break;
 			case 'Q6SwcynHWV':
-					fnc_reporteCantidadDineroPorOperador();
+					fnc_eliminarHorarioExistente();
 				break;
 			case 'Rd5f84FT7D':
 					fnc_reporteCantidadChipsPorOperador();
@@ -422,42 +422,74 @@
 		//$date->modify('+1 day');
 	}
 
-	function fnc_reporteCantidadDineroPorOperador()
+	function fnc_confirmarExistenciaDeFecha()
 	{
-		$business_Chip = new business_Chip();
-		$dtListarReporteCantidadDineroPorOperador = $business_Chip -> fnc_reporteCantidadDeDineroPorOperador();
-		// $json_data = array(
+		$validacion_post = true;
+		if( !isset($_GET["idPersonalhorario"]) || $_GET["idPersonalhorario"] == "" ){ $validacion_post = false; }
+		if( !isset($_GET["id_area"]) || $_GET["id_area"] == "" ){ $validacion_post = false; }
+		//if( !isset($_GET["color"]) || $_GET["color"] == "" ){ $validacion_post = false; }
+		if( !isset($_GET["fecha_eliminar"]) || $_GET["fecha_eliminar"] == "" ){ $validacion_post = false; }
+
+		if ($validacion_post) {
+
+			$fechaBuscar = strtotime($_GET["fecha_eliminar"]);
+			$id_persona = $_GET["idPersonalhorario"];
+			$id_area = $_GET["id_area"];
+			//echo($fechaBuscar);
+
+			 $anio = date("Y",$fechaBuscar);
+			 $mes = date("m",$fechaBuscar);
+			 $dia = date("d",$fechaBuscar);
+			//  echo("<br>");
+			//  echo($anio);
+			//  echo("<br>");
+			//  echo( $mes);
+			//  echo("<br>");
+			//  echo($dia);
+
+			$business_Horarios = new business_Horario();
+			$dtListarHorario = 
+			$dt_Horarios = $business_Horarios -> fncBusinessComprovacionExistenciaHorario(
+				$anio,
+				$mes,
+				$dia,
+				$id_persona,
+				$id_area
+			);
+
+			//print_r($dt_Horarios);
+		
+			echo json_encode($dt_Horarios, JSON_NUMERIC_CHECK);
+			# code...
+		}else {
+			# code...
+			echo("0");
+		}
 	
-		// 	"data" => $dtListarReporteCantidadPorChip  // total data array
-		// );
-		$result = array();
-		//foreach ($dtListarReporteCantidadDineroPorOperador as $key => $value) {
-		//	array_push($result,array(strtoupper($value['operador']) ,$value["monto"]));
-		//}
-		echo json_encode($dtListarReporteCantidadDineroPorOperador, JSON_NUMERIC_CHECK);
+
+
+		
 	}
 
-	function fnc_VerificarSesionRuc($sex)
+	function fnc_eliminarHorarioExistente()
 	{
-		@session_start();
-		$url_parametros['sesion'] = $sex;
 		$validacion_post = true;
-		$response = array();
-		$response['mensaje'] = false;
+		if( !isset($_GET["id_horario"]) || $_GET["id_horario"] == "" ){ $validacion_post = false; }
 
-		if( !isset($_SESSION['empresa']['rucvalidado']) || $_SESSION['empresa']['rucvalidado'] == "" ){ $validacion_post = false; }
-
-		if ($validacion_post == true){
-			if ( $_SESSION['empresa']['rucvalidado'] == true ){
-				$response['mensaje'] = true;
-			}else{
-				$response['mensaje'] = false;
+		if ($validacion_post) {
+			# code...
+			$business_Horarios = new business_Horario();
+			$bol_Horarios = $business_Horarios -> fncBusinessModificarEstadoHorario($_GET["id_horario"]);
+			if ($bol_Horarios) {
+				echo("1");
+			}else {
+				echo("0");
 			}
-			header('Content-Type: application/json; charset=utf-8');
-			echo json_encode($response);	
-		}else{
-			header('Location: ../index.php?' . http_build_query($url_parametros)); 
-		}	
+			//fncBusinessModificarEstadoHorario
+		} else {
+			echo("0");
+		}
+		
 
 	}
 

@@ -1,3 +1,4 @@
+var gl_id_horarioEliminar=0;
 
 $('document').ready(function(){
        
@@ -9,7 +10,9 @@ $('document').ready(function(){
       $('.select2').select2({
         theme: 'bootstrap4'
       }) ;
-      
+
+    
+      document.getElementById('fechaEliminar').valueAsDate = new Date();
       $('#reservationtime').daterangepicker({
         timePicker: true,
         timePickerIncrement: 30,
@@ -49,11 +52,23 @@ $('document').ready(function(){
       });
      
       $("#fechaEliminar").change(function() {
-        alert($(this).val());
+        //alert($(this).val());
+        fnc_vefirExisteFechaEliminar();
+        
+      });
+
+      $("#idPersonalhorario").change(function() {
+        //alert($(this).val());
+        fnc_vefirExisteFechaEliminar();
+        
       });
 
       $("#id_btn_agregarHorario" ).click(function() {
         fnc_agregarHorario();
+      });
+
+      $("#id_btn_eliminarHorario" ).click(function() {
+        fnc_eliminarHorarioExistente();
       });
 
       $('#color').colorpicker();
@@ -89,6 +104,99 @@ $('document').ready(function(){
       
 
     });
+
+    function fnc_eliminarHorarioExistente(){
+      var id_horario_eliminar = document.getElementById("id_horario_eliminar").value;
+      if (id_horario_eliminar==0) {
+
+        console.log(id_horario_eliminar);
+        toastr.error(' Datos Incompletos', 'Error', {timeOut: 5000});
+      } else {
+
+        
+
+        var parametros ={
+          'p':'Q6SwcynHWV',
+          'id_horario' : id_horario_eliminar
+        };
+
+        
+
+        $.ajax({
+          type: "GET",
+          url: "../modules/horario.php",
+          data: parametros,          
+          success: function (data) {
+            if (data == "0") {
+              
+            }else{
+              var id_area = document.getElementById("id_area").value;
+              var parametros = {
+                "p"               : "xZ6rQTOHxk",
+                "id_area" : id_area
+                               };
+               $.ajax({
+                type: "GET",
+                url: "../modules/horario.php",
+                data: parametros,
+                              
+                success: function(response) {
+                  // console.log(response);
+                    
+                  fnc_renderHorarios(response);
+                  
+                                }
+              });                 
+
+
+                               
+                
+            }
+          }
+        });
+      }
+    }
+
+    function fnc_vefirExisteFechaEliminar(){
+
+      var idPersonalhorario =   document.getElementById("idPersonalhorario").value;
+      var id_area = document.getElementById("id_area").value;
+      var fecha_eliminar = document.getElementById("fechaEliminar").value;
+
+      var parametros = {
+        "idPersonalhorario" : idPersonalhorario,
+        "id_area"           : id_area,
+        "fecha_eliminar"    : fecha_eliminar,
+        "p"                 : "UkUELwv6kL"
+      }
+
+      //console.log("asd");
+      $.ajax({
+        type: "GET",
+        url: "../modules/horario.php",
+        data: parametros,
+       
+        success: function (datos) {
+       // console.log(JSON.parse(datos));
+
+        if (Object.keys(JSON.parse(datos)).length>0) {
+
+          var JsonDatos = JSON.parse(datos);
+          console.log(JsonDatos);
+          document.getElementById("id_btn_eliminarHorario").disabled=false;
+          toastr.success(' Horario Encontrado', 'Exito', {timeOut: 5000});
+          document.getElementById("id_horario_eliminar").value=JsonDatos[0]['id_horario'];
+          //id_horarioEliminar = JsonDatos[0]['id_horario'];
+         // console.log(id_horarioEliminar);
+        } else {
+          document.getElementById("id_btn_eliminarHorario").disabled=true;
+          toastr.warning(' No se econtro Horario establecido', 'Advertencia', {timeOut: 5000});
+        }
+        //id_horarioEliminar
+        }
+      });
+
+    }
 
     function fnc_reiniciarValidador() {
       $.validate({
@@ -362,8 +470,8 @@ function fnc_guardarHorario(parametros){
         document.getElementById("id_area").value=id_especialidad;
         document.getElementById("id_tituloGestion").innerHTML="Gestión de Horarios : " + data["Nombre"];
         document.getElementById("id_btn_agregarHorario").disabled=false;
-        document.getElementById("id_btn_eliminarHorario").disabled=false;
-        document.getElementById("id_btn_eliminarHorario").disabled=false;
+        //document.getElementById("id_btn_eliminarHorario").disabled=false;
+        //document.getElementById("id_btn_eliminarHorario").disabled=false;
         document.getElementById("fechaEliminar").disabled=false;
         
         var parametros = {
@@ -499,7 +607,7 @@ function fnc_guardarHorario(parametros){
   var calendar = new Calendar(calendarEl, {
         plugins: [ 'bootstrap', 'interaction', 'dayGrid', 'timeGrid' ],
         selectable:true,
-        defaultView: 'listWeek',
+        
         'locale': 'es',
         header    : {
           left  : 'prev,next today',

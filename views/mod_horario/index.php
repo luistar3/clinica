@@ -8,12 +8,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>DataTables</h1>
+            <h1>Horarios</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">DataTables</li>
+              <li class="breadcrumb-item active">Horarios</li>
             </ol>
           </div>
         </div>
@@ -51,6 +51,7 @@
                  
                
                   <input type="hidden" id="id_area" name="" value="">
+                  <input type="hidden" id="id_horario_eliminar" name="" value="">
 
                   <div class="form-group">
                       <label>Personas</label>
@@ -149,11 +150,11 @@
 
           <div class="card p-0" >
             <div class="card-header">
-              <h3 class="card-title">DataTable with default features</h3>
+              <h3 class="card-title">Listado de Áreas</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body" style="max-height: 1200px" >
-              <table id="listaEspecialidad" style="width:100%;" role="grid" class="table table-bordered table-striped dataTable">
+              <table id="listaEspecialidad" style="width:100%;min-height: 302px;" role="grid" class="table table-bordered table-striped dataTable">
                 <thead>
                 <tr>
                   <th></th>
