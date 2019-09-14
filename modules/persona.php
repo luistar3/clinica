@@ -220,36 +220,12 @@
 	
 	function fnc_VerificarRuc()
 	{
-		@session_start();
-		$url_parametros['sesion'] = $sex;
-		$validacion_post = true;
-		$response = array();
-		$response['mensaje'] = false;
+		$business_Persona  = new BussinesPersona();
 
-		unset($_SESSION['empresa']);
-		$_SESSION['empresa']['rucvalidado'] = false;
 
-		if( !isset($_POST["ruc"]) || $_POST["ruc"] == "" ){ $validacion_post = false; }
-
-		if ($validacion_post == true){
-			$data_Empresa = new data_Empresa();
-			$data_Empresa->setVarRuc( fncCodificarTexto($_POST["ruc"]) );
-
-			$business_Empresa = new business_Empresa();
-			$dtConsultarEmpresas = $business_Empresa -> fncBusinessVerificarRuc($data_Empresa);
-
-			if ( count($dtConsultarEmpresas) == 0 ){
-				$response['mensaje'] = true;
-				$_SESSION['empresa']['rucvalidado'] = true;
-			}else{
-				$response['mensaje'] = false;
-				$_SESSION['empresa']['rucvalidado'] = false;
-			}
-			header('Content-Type: application/json; charset=utf-8');
-			echo json_encode($response);	
-		}else{
-			header('Location: ../index.php?' . http_build_query($url_parametros)); 
-		}	
+		//fncBusinessListarEspecializacion
+		//fncBusinessListarTipoPersona
+		
 
 	}
 	function fnc_CerrarSesion()
