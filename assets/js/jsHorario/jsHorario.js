@@ -128,8 +128,9 @@ $('document').ready(function(){
           data: parametros,          
           success: function (data) {
             if (data == "0") {
-              
+              toastr.error('No se pudo Eliminar Horario', 'Error', {timeOut: 5000});
             }else{
+              toastr.success('Se Elimino el Horario con Exito', 'Error', {timeOut: 5000});
               var id_area = document.getElementById("id_area").value;
               var parametros = {
                 "p"               : "xZ6rQTOHxk",
@@ -415,7 +416,7 @@ function fnc_guardarHorario(parametros){
             { data: 'Piso'},
             { data: 'Encargado'},
           
-            { "defaultContent": '<div class="dropdown"><a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></a><div class="dropdown-menu dropdown-menu-right"><a id="verHorario" class="dropdown-item" href="#"><i class="fa fa-eye"></i>Ver</a> <a id="editarChip" class="dropdown-item"  href="#"><i class="fa fa-pencil"></i> Editar</a><a class="dropdown-item"  id = "eliminarChip" href="#"><i class="fa fa-trash"></i> Eliminar</a>	</div>	</div>'}
+            { "defaultContent": '<div class="dropdown"><a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></a><div class="dropdown-menu dropdown-menu-right"><a id="verHorario" class="dropdown-item" href="#"><i class="fa fa-eye"></i>Ver</a> 	</div>	</div>'}
             
             
             ],

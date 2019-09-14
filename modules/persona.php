@@ -29,8 +29,8 @@
 			case 'index':
 					view_Index();
 				break;
-			case 'agregar':
-					view_AgregarEditar();
+			case 'gestionarPersona':
+					view_gestionarPersona();
 				break;
 			case 'editar':
 					view_AgregarEditar();
@@ -92,6 +92,15 @@
 		include('../views/includes/header.php');
 		include('../views/mod_persona/index.php');
 		include('../views/includes/footer.php');
+	}
+
+	function view_gestionarPersona(){
+		@session_start();
+		$menu_activo = "gestionPersonal";
+		$menu_open = "gestionPersonal";
+		include('../views/includes/header.php');
+	    include('../views/mod_persona/gestion.php');
+	    include('../views/includes/footer.php');
 	}
 	function view_Generar()
 	{

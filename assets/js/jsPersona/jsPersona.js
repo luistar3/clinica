@@ -1,75 +1,147 @@
-function fncDescargarDiv(nombreDiv, nombreArchivo){
-    // //*
-    // var element = $("#graficos-canvasGeneral"); // global variable
-    // var getCanvas; // global variable
 
-    // // $("#btn-Preview-Image").on('click', function () {
-    //      html2canvas(element, {
-    //      onrendered: function (canvas) {
-    //             $("#previewImage").append(canvas);
-    //             getCanvas = canvas;
-    //          }
-    //      });
-    // // });
-    // //*
+$('document').ready(function(){
 
-    // html2canvas($("#graficos-canvasGeneral"), {
-    //     onrendered: function(canvas) {
-    //         theCanvas = canvas;
-    //         document.body.appendChild(canvas);
+    if ( document.getElementById( "id_tablaPersonasPorArea" )) {
 
-    //         // Convert and download as image 
-    //         Canvas2Image.saveAsPNG(canvas); 
-    //         $("#previewImage").append(canvas);
-    //         // Clean up 
-    //         //document.body.removeChild(canvas);
-    //     }
-    // });
+        $('.select2').select2({
+            theme: 'bootstrap4'
+          });
+          
 
-    // html2canvas($('#graficos-canvasGeneral').get(0)).then(function (canvas) {
-    //   var base64encodedstring = canvas.toDataURL("image/jpeg", 1);
-    //   $('#previewImage').attr('src', base64encodedstring);
-    // });
-
-    // var element = $("#" + "graficos-" + nombreDiv)[0];
+    }
 
 
-    // var element = $("#" + nombreDiv)[0];
-    // html2canvas(element).then(function (canvas) {
-    //     var myImage = canvas.toDataURL();
-    //     downloadURI(myImage, nombreArchivo + ".pdf");
-    var element = $("#" + nombreDiv)[0];
-    $('html,body').scrollTop(0);
-    html2canvas(element, { scale: 2} ).then(function (canvas) {
-      // var ctx = canvas.getContext('2d');
-      //
-      // ctx.webkitImageSmoothingEnabled = false;
-      // ctx.mozImageSmoothingEnabled = false;
-      // ctx.imageSmoothingEnabled = false;
-      
-      var imgData = canvas.toDataURL(
-        'image/png', 1.0);
-      //Get the original size of canvas/image
-      var img_w = canvas.width;
-      var img_h = canvas.height;
+});
 
-      // alert(img_w)
-      // alert(img_h)
 
-      // var myImage = canvas.toDataURL();
-      var pdf = new jsPDF('p', 'mm', [img_w, img_h]);
-      // var width = pdf.internal.pageSize.getWidth();
-      // var height = pdf.internal.pageSize.getHeight();
-      pdf.addImage(imgData, 'PNG', 0, 0, img_w, img_h); //addImage(image, format, x-coordinate, y-coordinate, width, height)
-       
-      // doc.addPage();
 
-      pdf.save(nombreArchivo + ".pdf");
+var listarPersonasDataTables = function(){
+    var table = $('#listaEspecialidad').DataTable();
+    table.clear();
+    table.destroy();
+    
+    
+      var idioma = '';
+    
 
-    });
+    //$('#tablaListarChip').empty(); // empty in case the columns change
 
+    //document.getElementById("chipLlenar").innerHTML = '<tr id="chipLlenar"><th></th> < th class="table-plus datatable-nosort" > Numero Chip</th >   <th>Tipo Contrato</th> <th>Operador</th><th>Fecha Contrato</th> <th>Meses de Servicio</th> <th>Tarifa</th>th>Traza</th> <th></th>';
   
-}
+      var table = $('#listaEspecialidad').DataTable({
+        
+      
+          "scrollX": true,
+          "destroy":true,
+         
+          "ajax": {
+              url: "../modules/horario.php", // json datasource				
+              type: 'GET',  // method  , by default get
+              data :{
+                  "p":"J9Y0B7rh86"
+              }
+
+          },
+        
+          'columns': [
+          { data: 'fila' },
+          { data: 'Nombre' },
+          { data: 'Piso'},
+          { data: 'Encargado'},
+        
+          { "defaultContent": '<div class="dropdown"><a class="btn btn-outline-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></a><div class="dropdown-menu dropdown-menu-right"><a id="verHorario" class="dropdown-item" href="#"><i class="fa fa-eye"></i>Ver</a> 	</div>	</div>'}
+          
+          
+          ],
+          
+          responsive: false,
+          columnDefs: [{
+              targets: "datatable-nosort",
+              orderable: false,
+              
+          }
+          ],
+          
+          "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+          "language": {
+              "info": "_START_-_END_ de _TOTAL_ registros",
+              searchPlaceholder: "Search"
+          },
+          dom: 'Blfrtip',
+          buttons: [
+          'copy', 'csv', 'pdf', 'print'
+          ]
+  
+
+      });
+
+      
+
+    $('#listaEspecialidad tbody').off('click');
+    $('#listaEspecialidad tbody').on( 'click', '#editarChip', function () {
+     
+      var data = table.row( $(this).parents('tr') ).data();
+      
+      console.log(data);
+      $("#bd-example-modal-lg").modal('show');
+      $('#bd-example-modal-lg form').get(0).reset();
+      $('#chipGuardar').attr("disabled", false);
+      $('#chipGuardar').removeClass('disabled');
+      fnc_chipMostrarDatosEditar(data);
+      
+      
+     
+      //fnc_reiniciarValidador();
+
+       
+} );
+
+    $('#listaEspecialidad tbody').on( 'click', '#verHorario', function () {
+          
+      var data = table.row( $(this).parents('tr') ).data();
+
+      var id_especialidad = data["id_area"];
+      document.getElementById("id_area").value=id_especialidad;
+      document.getElementById("id_tituloGestion").innerHTML="Gestión de Horarios : " + data["Nombre"];
+      document.getElementById("id_btn_agregarHorario").disabled=false;
+      //document.getElementById("id_btn_eliminarHorario").disabled=false;
+      //document.getElementById("id_btn_eliminarHorario").disabled=false;
+      document.getElementById("fechaEliminar").disabled=false;
+      
+      var parametros = {
+        "p"               : "xZ6rQTOHxk",
+        "id_area" : id_especialidad
+      };
+
+     // console.log(parametros);
+      
+      $.ajax({
+        type: "GET",
+        url: "../modules/horario.php",
+        data: parametros,
+       
+        success: function(response) {
+          // console.log(response);
+
+           fnc_renderHorarios(response);
+        },
+        failure: function (response) {
+          
+        }
+    });
+      
+      //console.log(data);
+      
+            
+      //fnc_reiniciarValidador();
+      fnc_listarPersonasDelArea(id_especialidad)
+
+      
+    } );
+
+
+  }
+
 
 function fncDescargarDiv2(nombreDivFront, nombreDivBack, nombreArchivo){
 
@@ -114,237 +186,6 @@ function downloadURI(uri, name) {
     element.parentNode.removeChild(element);
 }
 
-
-function fnc_buscarApellido(){
-    removeTableBody();
-    var apellidoPaternoBusqueda = document.getElementById("apellidoPaternoBusqueda").value;
-    var apellidoMaternoBusqueda = document.getElementById("apellidoMaternoBusqueda").value;
-    var dniBusqueda = document.getElementById("dnibusqueda").value;
-    var nombreBusqueda = document.getElementById("nombreBusqueda").value
-
-    //var idEvento  = document.getElementById("IdEvento").value;
-    var parametros = {
-        "p"         : "xP6riiTOHxk",
-        "apellidoPaterno": apellidoPaternoBusqueda,
-        "apellidoMaterno": apellidoMaternoBusqueda,
-        "dni"       : dniBusqueda,
-        "nombre"    : nombreBusqueda
-       
-    };
-
-    var table = $('#table_ids').DataTable();
-    table.clear();
-    table.destroy();
-
-    $.ajax({
-            data:  parametros, //datos que se envian a traves de ajax
-            url:   '../modules/Persona.php', //archivo que recibe la peticion
-            type:  'GET', //método de envio
-            beforeSend: function () {
-                    $("#resultado").val("Verificando, espere por favor...");
-                    
-            },
-            success:  function (response) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-                   
-                    if (Object.keys(response).length) {
-                        $("#resultado").val(Object.keys(response).length);
-
-                        for (var i = 0; i < response.length; i++) {  
-                            var activo = 'class="bg-success"';
-                            var activoboton = '';
-                            if (response[i]["Estado"] == '0') {
-                                activo = 'class="bg-danger"';
-                                activoboton = 'disabled';
-                            }
-                            
-                            $('#cuerpoTabla').append('<tr ' + activo + ' >' + '<td>' + response[i]["Dni"] + '</td>' + '<td>' + response[i]["Nombre"] + '</td>' + '<td>' + response[i]["ApePat"] + '</td>' + '<td>' + response[i]["ApeMat"] + '</td>' + '<td>' + response[i]["NombreTipo"] + '</td>' + '<td>' + response[i]["Celular"] + '</td>' + '<td>' + response[i]["Correo"] + '</td>'+'<td> <button '+activoboton+'  class="btn btn-primary btn-block btn-lg m-t-10 waves-effect" onclick="fnc_RegistrarUsuarioEvento(this,'+response[i]["IdPersona"]+')"> ' +"Agregar" +'</button> </td></tr>' );    
-                        }
-
-                    
-                    }else{
-                        $("#resultado").val( "0 resultados");
-                    }
-
-                    //var myJSON = JSON.stringify(response);
-
-                   //console.log(myJSON);  
-                     recargartabla();
-                    
-
-            }
-    });
-    
-
-}
-
-function recargartabla() {
-    
-    // var table = $('#table_idse').DataTable();
-    
-    // table.clear.().redraw();
-
-    var table = $('#table_ids').DataTable();
-   
-    table.redraw();
-    
-}
-
-//$.when(fnc_buscarApellido()).recargartabla(function2());
-
-function removeTableBody(){
-    $('#cuerpoTabla').empty();
- var table = $('#table_ids').DataTable();
-    //table.Rows.Clear();
-    // table.redraw();
-
-    //var table = $('#table_ids').DataTable();
-    //table.dataTable().fnDestroy();
-   
-}
-
-function soloLetras(e) {
-    key = e.keyCode || e.which;
-    tecla = String.fromCharCode(key).toLowerCase();
-    letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-    especiales = [8, 37, 39, 46];
-
-    tecla_especial = false
-    for(var i in especiales) {
-        if(key == especiales[i]) {
-            tecla_especial = true;
-            break;
-        }
-    }
-
-    if(letras.indexOf(tecla) == -1 && !tecla_especial)
-        return false;
-}
-
-function fnc_RegistrarUsuarioEvento(btn,idPersona){
-
-    var idEvento  = document.getElementById("IdEventoApellido").value;
-    //alert(idPersona+' '+idEvento);
-    var parametros = {
-        "p" : "TbGGr4Jm",
-        "IdEvento" : idEvento,
-        "IdPersona" : idPersona
-       
-    };
-        $.ajax({
-            data:  parametros, //datos que se envian a traves de ajax
-            url:   '../modules/Registro.php', //archivo que recibe la peticion
-            type:  'GET', //método de envio
-            beforeSend: function () {
-                   // $("#resultado").val("Verificando, espere por favor...");
-                    
-            },
-            success:  function (respuesta) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-                
-               if (respuesta["btrespuesta"]==1) {
-                var row = btn.parentNode.parentNode;
-                row.parentNode.removeChild(row);
-
-                bootbox.alert({
-                    message: respuesta["mensaje"],
-                    size: 'small'
-                });
-               // alert(respuesta["mensaje"]);
-               } else {
-
-                bootbox.alert({
-                    message: respuesta["mensaje"],
-                    size: 'small'
-                });
-                //alert(respuesta["mensaje"]);
-               }
-                
-
-
-            }
-        });
-}
-
-function fnc_PersonaAgregarNuevaPersonaEvento(){
-    var IdEvento = document.getElementById("personaIdEvento").value;
-    var dni = document.getElementById("idDni").value;
-    var nombre = document.getElementById("nombre").value;
-    var ApePat = document.getElementById("apellidoPaterno").value;
-    var ApeMat = document.getElementById("apellidoMaterno").value;
-    var fechaFin = document.getElementById("fechaFin").value;
-    var fechaInicio = document.getElementById("fechaInicio").value;
-    var correo = document.getElementById("xcorreo").value;
-    var celular = document.getElementById("celular").value;
-    var dependencia = document.getElementById("dependencia").value;
-    var estamento = document.getElementById("estamento").value;
-    var unidadOrganica = document.getElementById("unidadOrganica").value;
-    var cargo = document.getElementById("cargo").value;
-    var dependenciaCargo = document.getElementById("dependenciaCargo").value;
-    var estadoPersona = document.getElementById("estadoPersona").value;
-    
-    var parametros = {
-        "p":"J9Y0B7rh86",
-        "IdEvento":IdEvento,
-        "dni":dni,
-        "nombre":nombre,
-        "ApePat":ApePat,
-        "ApeMat":ApeMat,
-        "fechaFin":fechaFin,
-        "fechaInicio":fechaInicio,
-        "correo":correo,
-        "celular":celular,
-        "dependencia":dependencia,
-        "estamento":estamento,
-        "unidadOrganica":unidadOrganica,
-        "cargo":cargo,
-        "dependenciaCargo":dependenciaCargo,
-        "estadoPersona":estadoPersona
-    };
-
-   
-    $.ajax({
-        data:  parametros, //datos que se envian a traves de ajax
-        url:   '../modules/persona.php', //archivo que recibe la peticion
-        type:  'GET', //método de envio
-        beforeSend: function () {
-               // $("#resultado").val("Verificando, espere por favor...");
-                
-        },
-        success:  function (respuesta) { //una vez que el archivo recibe el request lo procesa y lo devuelve
-            if (respuesta["respuesta"]["tipo"]==1) {
-                
-
-                bootbox.alert({
-                    message: respuesta["respuesta"]["mensaje"],
-                    size: 'small'
-                });
-               // alert(respuesta["mensaje"]);
-               } else {
-
-                bootbox.alert({
-                    message: respuesta["respuesta"]["mensaje"],
-                    size: 'small'
-                });
-                //alert(respuesta["mensaje"]);
-               }
-
-
-        }
-    });
-        
-}
-
-
-
-
-$(document).ready(function () {
-
-    $('#btn').attr("disabled", true);
-
-    $('#idDni, #nombre, #apellidoPaterno, #apellidoMaterno,#xcorreo').keyup(function () {
-        var buttonDisabled = $('#idDni').val().length == 0 || $('#nombre').val().length == 0 || $('#apellidoPaterno').val().length == 0 || $('#apellidoMaterno').val().length == 0 || $('#xcorreo').val().length == 0 ;
-        $('#btn').attr("disabled", buttonDisabled);
-    });
-});
 
 
 function SoloNumeros(evt){
