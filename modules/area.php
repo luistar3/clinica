@@ -92,12 +92,10 @@
 	function view_Index()
 	{
 		@session_start();
-        $menu_activo = "mantenimiento_persona_index";
-		$business_Persona = new business_Persona();
-		$dtListarPersonas = $business_Persona -> fncBusinessListarPersonas();
-		$dtListarPersonas = utf8_converter($dtListarPersonas);
+        $menu_activo = "gestionArea";
+		$menu_open = "gestionArea";
 		include('../views/includes/header.php');
-		include('../views/mod_persona/index.php');
+		include('../views/mod_area/index.php');
 		include('../views/includes/footer.php');
 	}
 

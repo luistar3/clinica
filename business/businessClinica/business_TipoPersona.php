@@ -5,7 +5,7 @@ include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_TipoPersona.php');
 include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/funciones.php');
 //include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/navegador.php');
 
-class business_Area
+class business_TipoPersona
 {
 
   public function fncBusinessListarTipoPersona(){

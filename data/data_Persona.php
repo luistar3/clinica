@@ -14,6 +14,7 @@
 		private $FechaModificacion ;
 		private $FechaEliminacion ;
 		private $Estado ;
+		private $id_tipoPersona;
 		private $id_especializacion ;
 
 		/**
@@ -234,6 +235,46 @@
 		public function setId_especializacion($id_especializacion)
 		{
 				$this->id_especializacion = $id_especializacion;
+
+				return $this;
+		}
+
+		/**
+		 * Get the value of id_tipoPersona
+		 */ 
+		public function getId_tipoPersona()
+		{
+				return $this->id_tipoPersona;
+		}
+
+		/**
+		 * Set the value of id_tipoPersona
+		 *
+		 * @return  self
+		 */ 
+		public function setId_tipoPersona($id_tipoPersona)
+		{
+				$this->id_tipoPersona = $id_tipoPersona;
+
+				return $this;
+		}
+
+		/**
+		 * Get the value of Area
+		 */ 
+		public function getArea()
+		{
+				return $this->Area;
+		}
+
+		/**
+		 * Set the value of Area
+		 *
+		 * @return  self
+		 */ 
+		public function setArea($Area)
+		{
+				$this->Area = $Area;
 
 				return $this;
 		}

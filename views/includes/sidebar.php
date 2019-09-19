@@ -87,6 +87,35 @@
           </li>
 
 
+          <li class="nav-item has-treeview <?php if($menu_open == 'gestionArea'){ echo $menu_class_open; } ?>    ">
+            <a href="#" class="nav-link <?php if($menu_activo == 'gestionArea'){ echo $menu_class_active; } ?> ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Area
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../modules/area.php?v=index" class="nav-link <?php if($menu_activo == 'gestionArea'){ echo $menu_class_active; } ?>   ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Gestión</p>
+                </a>
+              </li>
+              <!-- <li class="nav-item">
+                <a href="../../index2.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Dashboard v2</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../../index3.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Dashboard v3</p>
+                </a>
+              </li> -->
+            </ul>
+          </li>
 
 
 

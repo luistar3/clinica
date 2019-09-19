@@ -1,6 +1,6 @@
 <?php  
 
-	class data_Area
+	class data_TipoPersona
 	
 	{
 		private $id_tipoPersona;
