@@ -5,12 +5,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Blank Page</h1>
+            <h1>Personal</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Blank Page</li>
+              <li class="breadcrumb-item active">Gestion de Personal</li>
             </ol>
           </div>
         </div>
@@ -23,7 +23,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Title</h3>
+          <h3 class="card-title">Panel de Gestion de Personal</h3>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -38,7 +38,7 @@
 
         <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title"> <button title="Nuevo" id="id_nuevoRegistroPersona" class="btn btn-block btn-danger" ><i class="far fa-plus-square"></i></button> </h3>
+                <h3 class="card-title"> <button title="Nuevo" id="id_nuevoRegistroPersona" class="btn btn-block btn-danger" ><i class="fas fa-plus"></i><i class="far fa-user"></i></button> </h3>
               </div>
               <div class="card-body">
                 <div class="row">
@@ -215,7 +215,7 @@
 
         <!-- /.card-body -->
         <div class="card-footer">
-          Footer
+          <!-- Footer -->
         </div>
         <!-- /.card-footer-->
       </div>

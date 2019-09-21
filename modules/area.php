@@ -92,6 +92,8 @@
 	function view_Index()
 	{
 		@session_start();
+
+		echo(md5("123456"));
         $menu_activo = "gestionArea";
 		$menu_open = "gestionArea";
 		include('../views/includes/header.php');

@@ -362,6 +362,23 @@ function fnc_listarPersonasPoArea(id_Area){
          
       } );
 
+      $('#id_tablaGestion tbody').on( 'click', '#verPersona', function () {
+       
+        var data = table.row( $(this).parents('tr') ).data();
+    
+       
+    alert("Nombre: "+data["Nombre"]+" "+
+    data["ApePat"]+" "+
+    data["ApeMat"]+"\n"+
+    "Sexo: "+data["Sexo"]+"\n"+
+    "Area: "+data["area_Nombre"]+"\n"+
+    "Especializacion: "+data["espe_Nombre"]+"\n"+
+    "Tipo: "+data["tipo_Nombre"]);
+        
+       
+      } );
+
+
 
       
 }

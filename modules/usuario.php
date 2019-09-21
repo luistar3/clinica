@@ -1,9 +1,9 @@
 <?php
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/EventosWeb/business/businessEvento/business_Persona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/EventosWeb/data/data_Usuario.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/EventosWeb/data/data_Persona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/EventosWeb/business/businessEvento/business_Usuario.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/EventosWeb/business/businessEvento/business_Registro.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Persona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Usuario.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Persona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Usuario.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessbusinessClinicaEvento/business_Registro.php');
 
 	// if( (isset($_GET["sesion"]) and $_GET["sesion"] !== "") or (isset($_POST["sesion"]) and $_POST["sesion"] !== "") ){
 	// 	if( isset($_GET["sesion"]) ){$sex = $_GET['sesion'];}
@@ -131,12 +131,13 @@
 
 	function fnc_AutenticarUsuario()
 	{
-
+		echo("hola");
+		exit();
 		 @session_start();
 		 unset( $_SESSION['usuario']);
 
-		 $response_recaptcha = $_POST["g-recaptcha-response"];
-		 $secret = '6Lc7dJ8UAAAAAAPxht9eLdpUbQS__lEy6LA5jnY0';
+		// $response_recaptcha = $_POST["g-recaptcha-response"];
+		// $secret = '6Lc7dJ8UAAAAAAPxht9eLdpUbQS__lEy6LA5jnY0';
 		 // if (isset($response_recaptcha) && $response_recaptcha) {
 			 // $ip = $_SERVER['REMOTE_ADDR'];
 			 // $validation_server = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$response_recaptcha&remoteip=$ip");
@@ -166,7 +167,7 @@
 
 
 			$data_Usuario->setUsuario($post_usuario);
-			$data_Usuario->setClave(md5($post_contrasena) );
+			$data_Usuario->setContrasena(md5($post_contrasena) );
 
 			$dtAutenticarUsuario	 	= $business_Usuario -> fncBusinessAutenticarUsuario($data_Usuario);
 			
