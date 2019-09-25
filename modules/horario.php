@@ -11,13 +11,13 @@
 
 
 
-    // VERIFICAR PERMISO DEL MODULO
-	//  @session_start();
+    //VERIFICAR PERMISO DEL MODULO
+	 @session_start();
 
-	//  if (!isset($_SESSION['usuario'])) {
-	// 	header('Location: ../views/website/login.php');
-	// 	exit();
-	//  }
+	 if (!isset($_SESSION['usuario'])) {
+		header('Location: ../views/website/login.php');
+		exit();
+	 }
 	
 
 	// $url_parametros['sesion'] = $sex;
@@ -50,11 +50,11 @@
 			case 'editar':
 					view_AgregarEditar();
 				break;
-			case 'listarfuturo':
-					view_ListarEventoDetalle();
+			case 'ver':
+					view_ver();
 				break;
 			default:
-				header('Location: ../errors/404.php?sesion='.$sex);  
+				header('Location: ../errors/404.php?sesion=');  
 				break;
 
 		}
@@ -82,10 +82,10 @@
 					fnc_eliminarHorarioExistente();
 				break;
 			case 'Rd5f84FT7D':
-					fnc_reporteCantidadChipsPorOperador();
+					fnc_listarhorarioHoy();
 				break;
 			default:
-				header('Location: ../errors/404.php?sesion='.$sex);  
+				header('Location: ../errors/404.php?sesion=');  
 				break;
 		}
 
@@ -116,6 +116,21 @@
 		
 		include('../views/includes/header.php');
 		include('../views/mod_horario/index.php');
+		include('../views/includes/footer.php');
+		
+
+
+	}
+	
+	function view_ver()
+	{
+		//@session_start();
+		$menu_activo = "verHorario";
+		$menu_open = "verHorario";
+
+		
+		include('../views/includes/header.php');
+		include('../views/mod_horario/ver.php');
 		include('../views/includes/footer.php');
 		
 
@@ -188,6 +203,18 @@
         //$menu_activo = "horarioEspecialidad";
 		$business_Area = new business_Area();
 		$dtListarArea = $business_Area -> fncBusinessListarArea();
+		$json_data = array(
+	
+			"data" => $dtListarArea   // total data array
+		);
+		echo json_encode($json_data);
+	}
+	function fnc_listarhorarioHoy()
+	{
+		//@session_start();
+        //$menu_activo = "horarioEspecialidad";
+		$business_Horario = new business_Horario();
+		$dtListarArea = $business_Horario -> fncBusinessListarHorarioHoy();
 		$json_data = array(
 	
 			"data" => $dtListarArea   // total data array
@@ -314,10 +341,10 @@
 			$hora_f = date("H",$anio_f);
 			$minuto = date("i",$anio_s);
 			$codigoColor ="";
-			if ($hora>7 && $hora<12) {
+			if ($hora>6 && $hora<14) {
 				$codigoColor ="#28a745";
 				//echo("<br>".$hora."-");
-			}elseif($hora>11 && $hora<19){
+			}elseif($hora>13 && $hora<20){
 				$codigoColor = "#ffc107";
 				//echo("<br>".$hora."-");
 			}else {

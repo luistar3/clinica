@@ -20,7 +20,7 @@
 	$dtConsultarPermisoModulo = $business_Usuario -> fncBusinessConsultarPermisoModulo($_SESSION['usuario']["ses_USRId"], 'btnEmpresas');
 	if ( count($dtConsultarPermisoModulo) == 0 ){
 		$_SESSION['mensaje']["ses_MensajeEstado"] = 1;	
-		$_SESSION['mensaje']["ses_MensajeTipo"] 	= "error";	
+		$_SESSION['mensaje']["ses_MensajeTipo"] = "error";	
 		$_SESSION['mensaje']["ses_MensajeDescripcion"] 	= "El Usuario no tiene permiso a este módulo.";
 		header('Location: ../index.php?' . http_build_query($url_parametros)); 
 		exit();

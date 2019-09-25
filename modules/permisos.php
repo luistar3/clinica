@@ -99,12 +99,12 @@
 	function view_Index()
 	{
 		@session_start();
-        $menu_activo = "mantenimiento_persona_index";
-		$business_Persona = new business_Persona();
-		$dtListarPersonas = $business_Persona -> fncBusinessListarPersonas();
-		$dtListarPersonas = utf8_converter($dtListarPersonas);
+
+		//echo(md5("123456"));
+        $menu_activo = "permisos";
+		$menu_open = "permisos";
 		include('../views/includes/header.php');
-		include('../views/mod_persona/index.php');
+		include('../views/mod_permisos/index.php');
 		include('../views/includes/footer.php');
 	}
 

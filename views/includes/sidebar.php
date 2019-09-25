@@ -2,6 +2,10 @@
 <?php $menu_class_open = 'menu-open'; ?>
               <?php //$url_parametros_menu = $url_parametros; ?>
               <?php //$url_parametros_menu['v'] = 'index'; ?>
+<?php 
+$modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
+
+?>
 
 	 <!-- Main Sidebar Container -->
 	 <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -22,7 +26,7 @@
           <img src="../assets/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Luis Chambilla</a>
+          <a href="#" class="d-block"><?php echo($_SESSION['usuario']["ses_UsuarioNombre"]); ?></a>
         </div>
       </div>
 
@@ -31,7 +35,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-
+          <?php $horarios = array_search('HORARIOS',$modulos); ?> 
+          <?php if($horarios === false){}else{?>
           <li class="nav-item has-treeview <?php if($menu_open == 'horarioEspecialidad'){ echo $menu_class_open; } ?>  ">
             <a href="../modules/horario.php?v=index" class="nav-link <?php if($menu_activo == 'horarioEspecialidad'){ echo $menu_class_active; } ?>  ">
               <i class="nav-icon fas fa-table"></i>
@@ -50,11 +55,12 @@
             
             </ul>
           </li>
+          <?php }?>
 
 
 
-
-
+          <?php $personal = array_search('PERSONAL',$modulos); ?> 
+          <?php if($personal === false){}else{?>
 
           <li class="nav-item has-treeview <?php if($menu_open == 'gestionPersonal'){ echo $menu_class_open; } ?>   ">
             <a href="../modules/persona.php?v=gestionarPersona" class="nav-link <?php if($menu_activo == 'gestionPersonal'){ echo $menu_class_active; } ?> ">
@@ -85,8 +91,12 @@
               </li> -->
             </ul>
           </li>
+          <?php }?>
 
 
+
+          <?php $usuarios = array_search('USUARIOS',$modulos); ?> 
+          <?php if($usuarios === false){}else{?>
           <li class="nav-item has-treeview <?php if($menu_open == 'gestionArea'){ echo $menu_class_open; } ?>    ">
             <a href="#" class="nav-link <?php if($menu_activo == 'gestionArea'){ echo $menu_class_active; } ?> ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -116,10 +126,49 @@
               </li> -->
             </ul>
           </li>
+          <?php }?>
 
 
 
 
+
+          <?php $ver = array_search('VER',$modulos); ?> 
+          <?php if($ver === false){}else{?>
+          <li class="nav-item has-treeview <?php if($menu_open == 'verHorario'){ echo $menu_class_open; } ?>    ">
+            <a href="#" class="nav-link <?php if($menu_activo == 'verHorario'){ echo $menu_class_active; } ?> ">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Ver
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../modules/horario.php?v=ver" class="nav-link <?php if($menu_activo == 'verHorario'){ echo $menu_class_active; } ?>   ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Horarios</p>
+                </a>
+              </li>
+              <!-- <li class="nav-item">
+                <a href="../../index2.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Dashboard v2</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../../index3.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Dashboard v3</p>
+                </a>
+              </li> -->
+            </ul>
+          </li>
+          <?php }?>
+
+
+
+          <?php $DASHBOARD = array_search('DASHBOARD',$modulos); ?> 
+          <?php if($DASHBOARD === false){}else{?>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -149,6 +198,31 @@
               </li>
             </ul>
           </li>
+          <?php }?>
+
+
+          <?php $PERMISOS = array_search('PERMISOS',$modulos);
+           $PERMISOS=1;?> 
+          <?php if($PERMISOS === false){}else{?>
+          <li class="nav-item has-treeview  <?php if($menu_open == 'permisos'){ echo $menu_class_open; } ?>   ">
+            <a href="#" class="nav-link  <?php if($menu_activo == 'permisos'){ echo $menu_class_active; } ?>   ">
+              <i class="nav-icon fas fa-key"></i>
+              <p>
+                PERMISOS
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../modules/permisos.php?v=index" class="nav-link  <?php if($menu_activo == 'permisos'){ echo $menu_class_active; } ?>  ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ASIGNACION</p>
+                </a>
+              </li>
+            
+            </ul>
+          </li>
+          <?php }?>
 
  <!-- 
           <li class="nav-item">

@@ -122,9 +122,9 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Iniciar Sesión</p>
 
-      <form action="../../index3.html" method="post">
+      
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="text" id="vuser" class="form-control" placeholder="Usuario">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -132,7 +132,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" id="vpass" class="form-control" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -154,7 +154,7 @@
           </div>
           <!-- /.col -->
         </div>
-      </form>
+      
 
       <!-- <div class="social-auth-links text-center mb-3">
         <p>- OR -</p>
@@ -215,8 +215,6 @@ function myFunction() {
 
 $('document').ready(function(){
 
-if ( document.getElementById( "id_tablaGestion" )) {
-
     // $('.select2').select2({
     //     theme: 'bootstrap4'
     //   });
@@ -229,47 +227,42 @@ if ( document.getElementById( "id_tablaGestion" )) {
     //   fnc_listarOpciones();
 
     $( "#btn_Login_iniciarSession" ).click(function() {
-     
+      fnc_verificarUsuario();
     });
-    createGist();
+   
 
     // $( "#id_btnGuardarModificarPersona" ).click(function() {
     //   fnc_guardarModificarPersona();
     // });
 
-    
-}
+
+});
+
 
 function fnc_verificarUsuario(){
 
-  var parametros = {
-    "p":"6x8RlHMFSK"
-  }
-  
-  fetch('../../modules/usuario.php', {
-      method: 'POST',
-      body: parametros
-  })
-  .then(function(data) {
-    console.log('data = ', data);
-  })
-  .catch(function(err) {
-      console.error(err);
-  });
+  var vuser = document.getElementById("vuser").value;
+  var vpass = document.getElementById("vpass").value;
 
+  $parametros={
+    "usuario" : vuser,
+    "contrasena" : vpass
   }
-  function createGist(opts) {
-  ChromeSamples.log('Posting request to GitHub API...');
-  fetch('../../modules/usuario.php', {
-    method: 'post',
-    body: JSON.stringify(opts)
-  }).then(function(response) {
-    return response.json();
-  }).then(function(data) {
-    ChromeSamples.log('Created Gist:', data.html_url);
-  });
+  $.ajax({
+    type: "POST",
+    url: "../../modules/usuario.php?p=6x8RlHMFSK",
+    data: $parametros,
+    
+    success: function (re) {
+     
+      if( re=="1" ){
+        location.href ="../../modules/index.php";
+      }
+      
+    }
+  })
 }
 
-});
+
 </script>
 

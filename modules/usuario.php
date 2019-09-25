@@ -3,7 +3,7 @@
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Usuario.php');
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Persona.php');
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Usuario.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessbusinessClinicaEvento/business_Registro.php');
+	//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Registro.php');
 
 	// if( (isset($_GET["sesion"]) and $_GET["sesion"] !== "") or (isset($_POST["sesion"]) and $_POST["sesion"] !== "") ){
 	// 	if( isset($_GET["sesion"]) ){$sex = $_GET['sesion'];}
@@ -50,7 +50,7 @@
 					fnc_AutenticarUsuario();
 				break;
 			case 'eLXzIh5jMU':
-					fnc_CerrarSesion($sex);
+					fnc_CerrarSesion();
 				break;
 
 			case 's5ApcnXHNU':
@@ -131,8 +131,8 @@
 
 	function fnc_AutenticarUsuario()
 	{
-		echo("hola");
-		exit();
+		//echo("hola");
+		//exit();
 		 @session_start();
 		 unset( $_SESSION['usuario']);
 
@@ -171,33 +171,35 @@
 
 			$dtAutenticarUsuario	 	= $business_Usuario -> fncBusinessAutenticarUsuario($data_Usuario);
 			
-
+			//print_r($dtAutenticarUsuario);
+			//exit();
 
 			if (count($dtAutenticarUsuario)){
 
-				if ($dtAutenticarUsuario[0]["CambioContrasena"]==1) {
+				// if ($dtAutenticarUsuario[0]["CambioContrasena"]==1) {
 					
-					$_SESSION['Actualizacion'] = 1;
-					$url_parametros["dni"] =$_POST["usuario"];
-					header('Location: ../views/website/cambioContrasena.php?' . http_build_query($url_parametros));
-					exit();
-				}
+				// 	$_SESSION['Actualizacion'] = 1;
+				// 	$url_parametros["dni"] =$_POST["usuario"];
+				// 	header('Location: ../views/website/cambioContrasena.php?' . http_build_query($url_parametros));
+				// 	exit();
+				// }
+				
 
-				$dtPermisosUsuario 			 =	 $business_UsuarioPermiso -> fncBusinessAutenticarUsuarioPermisos( $_POST["usuario"]);
+				$dtPermisosUsuario  =	 $business_UsuarioPermiso -> fncBusinessVerificarPermisos($dtAutenticarUsuario[0]["id_usuario"]);
 
 
 				if ( $dtAutenticarUsuario[0]['Estado'] == true){
-					$_SESSION['usuario']["ses_UsuarioNombre"] 					= $dtAutenticarUsuario[0]['varNombres'].' '.$dtAutenticarUsuario[0]['varApellidos'];
-					$_SESSION['usuario']["ses_IdUsuario"] 						=	$dtAutenticarUsuario[0]['IdUsuario'];
-					$_SESSION['usuario']["ses_Dependencia"] 					=	$dtAutenticarUsuario[0]['Dependencia'];
+					$_SESSION['usuario']["ses_UsuarioNombre"] 					=   $dtAutenticarUsuario[0]['Nombre'].' '.$dtAutenticarUsuario[0]['ApePat'];
+					$_SESSION['usuario']["ses_UsuarioId"] 						=	$dtAutenticarUsuario[0]['id_usuario'];
+					//$_SESSION['usuario']["ses_Dependencia"] 					=	$dtAutenticarUsuario[0]['Dependencia'];
 					//$_SESSION['usuario']["ses_NombreDependencia"] 				=	$dtAutenticarUsuario[0]['Dependencia'];
-					$_SESSION['usuario']["ses_Titulo"]							=	$dtAutenticarUsuario[0]['Titulo'];
-					$_SESSION['usuario']["ses_IdRol"] 							=	$dtAutenticarUsuario[0]['IdRol'];
-					$_SESSION['usuario']["ses_IdDependencia"] 					=	$dtAutenticarUsuario[0]['Dependencia'];
-					$_SESSION['usuario']["ses_Dni"] 							=	$_POST["usuario"];
+					//$_SESSION['usuario']["ses_Titulo"]							=	$dtAutenticarUsuario[0]['Titulo'];
+					//$_SESSION['usuario']["ses_IdRol"] 							=	$dtAutenticarUsuario[0]['IdRol'];
+					$_SESSION['usuario']["ses_UsuarioRol"] 						=	$dtAutenticarUsuario[0]['NombreRol'];
+					$_SESSION['usuario']["ses_Dni"] 							=	$dtAutenticarUsuario[0]['Dni'];
 					$_SESSION['usuario']["ses_UsuarioLogeado"] 					= true;
 
-					$_SESSION['mensaje']["ses_MensajeEstado"] 	= 0;
+					
 
 
 
@@ -207,61 +209,54 @@
 					$objPermiso =array();
 					$PermisoValorEspecifico =array();
 					$datosPersona =array();
-					$data_Persona = new data_Persona();
-					$bussines_persona = new business_Persona();
-					$data_Persona ->setVarDni($_POST["usuario"]);
-					$dt_persona =  $bussines_persona -> fncBusinessBuscarIdPorDni($data_Persona);
-					$_SESSION['usuario']["ses_DatosPersonaID"] 						= $dt_persona[0]["IdPersona"];
-						$_SESSION['usuario']["ses_DatosPersonaDNI"] 						= $dt_persona[0]["Dni"];
-						$_SESSION['usuario']["ses_DatosPersonaNombre"] 						= $dt_persona[0]["Nombre"];
-						$_SESSION['usuario']["ses_DatosPersonaApellido"] 						= $dt_persona[0]["Apellido"];
-						$_SESSION['usuario']["ses_DatosPersonaTipo"] 						= $dt_persona[0]["IdTipoPersona"];
+					//$data_Persona = new data_Persona();
+					//$bussines_persona = new business_Persona();
+					//$data_Persona ->setVarDni($_POST["usuario"]);
+					// $dt_persona =  $bussines_persona -> fncBusinessBuscarIdPorDni($data_Persona);
+					// $_SESSION['usuario']["ses_DatosPersonaID"] 						= $dt_persona[0]["IdPersona"];
+					// 	$_SESSION['usuario']["ses_DatosPersonaDNI"] 						= $dt_persona[0]["Dni"];
+					// 	$_SESSION['usuario']["ses_DatosPersonaNombre"] 						= $dt_persona[0]["Nombre"];
+					// 	$_SESSION['usuario']["ses_DatosPersonaApellido"] 						= $dt_persona[0]["Apellido"];
+					// 	$_SESSION['usuario']["ses_DatosPersonaTipo"] 						= $dt_persona[0]["IdTipoPersona"];
 
 					if (count($dtPermisosUsuario)) {
 
 
 
 						foreach ($dtPermisosUsuario as $value) {
-							$_SESSION['usuario']["ses_Permiso"] 					=  $value["USRId"];
-							$_SESSION['usuario']["ses_PermisoDni"] 					=  $value["USRdni"];
-							$_SESSION['usuario']["ses_PermisoNombre"] 				=  $value["PRFnombre"];
-							$_SESSION['usuario']["ses_PermisoIdPtaDependencia"] 	=  $value["IdPtaDependencia"];
-							$_SESSION['usuario']["ses_PermisoIdPtaDependenciaFijo"] =  $value["IdPtaDependenciaFijo"];
-							array_push($objPermiso, $value["PSTobjeto"]);
-							array_push($PermisoValorEspecifico, $value["CDPValorEspecifico"]);
+							// $_SESSION['usuario']["ses_Permiso"] 					=  $value["USRId"];
+							// $_SESSION['usuario']["ses_PermisoDni"] 					=  $value["USRdni"];
+							// $_SESSION['usuario']["ses_PermisoNombre"] 				=  $value["PRFnombre"];
+							// $_SESSION['usuario']["ses_PermisoIdPtaDependencia"] 	=  $value["IdPtaDependencia"];
+							// $_SESSION['usuario']["ses_PermisoIdPtaDependenciaFijo"] =  $value["IdPtaDependenciaFijo"];
+							array_push($objPermiso, $value["NombreModulos"]);
+							
 						}
 						$_SESSION['usuario']["ses_PermisoPSTobjeto"] 							= $objPermiso;
-						$_SESSION['usuario']["ses_PermisoValorEspecifico"] 						= $PermisoValorEspecifico;
-
+						//$_SESSION['usuario']["ses_PermisoValorEspecifico"] 						= $PermisoValorEspecifico;
+						
 					}
-
-					header('Location: ../modules/evento.php?v=eventopPage');
+					//print_r(	$_SESSION['usuario']["ses_PermisoPSTobjeto"] );
+					//print_r($dtAutenticarUsuario);
+					echo("1"); //exito
 				}else{
-					$_SESSION['usuario']["ses_UsuarioLogeado"] = false;
-					$_SESSION['mensaje']["ses_MensajeEstado"] 	= 1;
-					$_SESSION['mensaje']["ses_MensajeTipo"] = "error";
-					$_SESSION['mensaje']["ses_MensajeDescripcion"] = "Usuario se encuentra inactivo";
-					header('Location: ../views/website/login.php');
+					echo("3");//usario inactivo
 				}
 
 			}else{
-				$_SESSION['usuario']["ses_UsuarioLogeado"] = false;
-				$_SESSION['mensaje']["ses_MensajeEstado"] = 1;
-				$_SESSION['mensaje']["ses_MensajeTipo"] = "error";
-				$_SESSION['mensaje']["ses_MensajeDescripcion"] = "Error en inicio de sesión";
-				header('Location: ../views/website/login.php');
+				echo("2"); // no encontro usuario
 
 			}
 
 		}else{
 			//header('Location: ../index.php');
-			header('Location: ../views/website/login.php');
+			echo("0");// datos icompletos
 			//echo("error al enviar");
 		}
 
 	}
 	else {
-		header('Location: ../views/website/login.php');
+		echo("4");// sin permiso para captcha
 	}
 
 // }
@@ -271,12 +266,12 @@
 
 	}
 
-	function fnc_CerrarSesion($sex)
+	function fnc_CerrarSesion()
 	{
 		@session_start();
 		// unset($_SESSION['usuario']);
 		// unset($_SESSION['mensaje']);
-		header('Location: ../index.php?' . http_build_query($url_parametros));
+		header('Location: ../views/website/login.php');
 	}
 
 

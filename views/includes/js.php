@@ -97,6 +97,7 @@
 <script src="../assets/js/jsHorario/jsHorario.js"></script>
 
 <script src="../assets/js/jsPersona/jsPersona.js"></script>
+<script src="../assets/js/jsPermisos/jsPermisos.js"></script>
 
 <script>
 

@@ -2,7 +2,9 @@ var gl_id_horarioEliminar=0;
 
 $('document').ready(function(){
        
-
+  if ( document.getElementById( "listaHorariosVer" )) {
+    listarhorarioHoy();
+  }
  
   if ( document.getElementById( "listaEspecialidad" )) {
   
@@ -381,6 +383,116 @@ function fnc_guardarHorario(parametros){
     
     }
     
+    var listarhorarioHoy = function(){
+      var table = $('#listaHorariosVer').DataTable();
+      table.clear();
+      table.destroy();
+      
+      
+        var idioma = '';
+      
+
+      //$('#tablaListarChip').empty(); // empty in case the columns change
+
+      //document.getElementById("chipLlenar").innerHTML = '<tr id="chipLlenar"><th></th> < th class="table-plus datatable-nosort" > Numero Chip</th >   <th>Tipo Contrato</th> <th>Operador</th><th>Fecha Contrato</th> <th>Meses de Servicio</th> <th>Tarifa</th>th>Traza</th> <th></th>';
+    
+        var table = $('#listaHorariosVer').DataTable({
+          
+        
+          "lengthChange": false,
+          "bInfo" : false,
+          "bLengthChange": false,
+          "info": false,
+          "scrollX": true,
+            "destroy":true,
+           
+            "ajax": {
+                url: "../modules/horario.php", // json datasource				
+                type: 'GET',  // method  , by default get
+                data :{
+                    "p":"Rd5f84FT7D"
+                }
+
+            },
+          
+            'columns': [
+          
+            { data: 'Nombre' },
+            { data: 'persona'},
+            { data: 'manana',
+              render: function(data){
+                if (data=="null") {
+                  return('<span class="badge badge-pill badge-primary" style="background-color: #28a745" >'+''+'</span>');
+                } else {
+                  return('<span class="badge badge-pill badge-primary" style="background-color: #28a745" >'+data+'</span>');
+                  
+                }
+              }
+            },
+            { data: 'tarde',
+            render : function(data){
+              if (data=="null") {
+                return('<span class="badge badge-pill badge-primary" style="background-color: #ffc107" >'+''+'</span>');
+              } else {
+                return('<span class="badge badge-pill badge-primary" style="background-color: #ffc107" >'+data+'</span>');
+                
+              }
+            }
+            },
+            { data: 'noche',
+            render : function(data){
+              if (data=="null") {
+                return('<span class="badge badge-pill badge-primary" style="background-color: #007bff" >'+''+'</span>');
+              } else {
+                return('<span class="badge badge-pill badge-primary" style="background-color: #007bff" >'+data+'</span>');
+                
+              }
+            }
+          },
+            { data: 'reten',
+            render : function(data){
+              if (data=="null") {
+                return('<span class="badge badge-pill badge-primary" style="background-color: #dc3545" >'+''+'</span>');
+              } else {
+                return('<span class="badge badge-pill badge-primary" style="background-color: #dc3545" >'+data+'</span>');
+                
+              }
+            }
+          }
+          
+            
+            
+            
+            ],
+            
+            responsive: false,
+            columnDefs: [{
+                targets: "datatable-nosort",
+                orderable: false,
+                
+            }
+            ],
+            
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "language": {
+                "info": "_START_-_END_ de _TOTAL_ registros",
+                searchPlaceholder: "Search"
+            },
+            dom: 'Blfrtip'
+    
+
+        });
+
+        
+
+      $('#listaEspecialidad tbody').off('click');
+     
+
+     
+
+
+    }
+
    
     var listarChip = function(){
       var table = $('#listaEspecialidad').DataTable();

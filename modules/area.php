@@ -15,6 +15,13 @@
 
     // VERIFICAR PERMISO DEL MODULO
 	 @session_start();
+	
+
+	 if (!isset($_SESSION['usuario'])) {
+		header('Location: ../views/website/login.php');
+		exit();
+	 }
+	
 	// $url_parametros['sesion'] = $sex;
 	// $business_Usuario = new business_Usuario();
 	// $dtConsultarPermisoModulo = $business_Usuario -> fncBusinessConsultarPermisoModulo($_SESSION['usuario']["ses_USRId"], 'btnEmpresas');
@@ -93,7 +100,7 @@
 	{
 		@session_start();
 
-		echo(md5("123456"));
+		//echo(md5("123456"));
         $menu_activo = "gestionArea";
 		$menu_open = "gestionArea";
 		include('../views/includes/header.php');

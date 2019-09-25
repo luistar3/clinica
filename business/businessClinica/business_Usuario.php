@@ -19,7 +19,34 @@ class business_Usuario
 			$proc = mssql_init($sql, $connectionstatus);  
 
 			mssql_bind($proc, '@Usuario', $DataUsuario->getUsuario(), SQLVARCHAR, false, false, 10); 
-			mssql_bind($proc, '@Clave', $DataUsuario->getClave(), SQLVARCHAR, false, false, 10); 
+			mssql_bind($proc, '@Contrasena', $DataUsuario->getContrasena(), SQLVARCHAR, false, false, 10); 
+
+			$result = mssql_execute($proc);
+			$devolver = sqlsrv_getdata($result);
+			$connection -> closeConnection($connectionstatus);
+			unset($connectionstatus);
+			unset($connection);
+			return $devolver;
+		} 
+		else 
+		{
+			unset($connectionstatus);
+			unset($connection);
+			echo 'Tenemos un problema: ' . mssql_get_last_message();
+		}
+	}
+	public function fncBusinessVerificarPermisos($id)
+	{
+		
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Usuario_permisoModulo";
+			$proc = mssql_init($sql, $connectionstatus);  
+			
+			mssql_bind($proc, '@idUsuario', $id, SQLINT4, false, false, 10); 
+		
 
 			$result = mssql_execute($proc);
 			$devolver = sqlsrv_getdata($result);
