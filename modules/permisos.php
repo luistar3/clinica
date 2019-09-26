@@ -7,6 +7,7 @@
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Area.php');
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_TipoPersona.php');
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_TipoPersona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Rol.php');
 	
 	//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessclinica/business_Usuario.php');
 	//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Usuario.php');
@@ -66,7 +67,7 @@
 		switch ($get_opcion) {
 
 			case '6x8RlHMFSK': 
-					fnc_AutenticarUsuario();
+					fnc_lisarRoles();
 				break;
 			case 'J9Y0B7rh86':
 					fnc_listarPersonasPorArea();
@@ -228,6 +229,14 @@
 		$business_Persona = new business_Persona();
 		$dtListarPersonas =  $business_Persona -> fncBusinessListarPersonaPorArea($id_area);
 		echo json_encode($dtListarPersonas,JSON_UNESCAPED_UNICODE);
+
+	}
+	function fnc_lisarRoles()
+	{
+		//$id_area = $_GET["id_area"];
+		$business_Rol = new business_Rol();
+		$dtListarRol =  $business_Rol -> fncBusinessListarRol();
+		echo json_encode($dtListarRol,JSON_UNESCAPED_UNICODE);
 
 	}
 	

@@ -418,10 +418,10 @@ function fnc_guardarHorario(parametros){
             'columns': [
           
             { data: 'Nombre' },
-            { data: 'persona'},
+            
             { data: 'manana',
               render: function(data){
-                if (data=="null") {
+                if (data=="*") {
                   return('<span class="badge badge-pill badge-primary" style="background-color: #28a745" >'+''+'</span>');
                 } else {
                   return('<span class="badge badge-pill badge-primary" style="background-color: #28a745" >'+data+'</span>');
@@ -431,7 +431,7 @@ function fnc_guardarHorario(parametros){
             },
             { data: 'tarde',
             render : function(data){
-              if (data=="null") {
+              if (data=="*") {
                 return('<span class="badge badge-pill badge-primary" style="background-color: #ffc107" >'+''+'</span>');
               } else {
                 return('<span class="badge badge-pill badge-primary" style="background-color: #ffc107" >'+data+'</span>');
@@ -441,7 +441,7 @@ function fnc_guardarHorario(parametros){
             },
             { data: 'noche',
             render : function(data){
-              if (data=="null") {
+              if (data=="*") {
                 return('<span class="badge badge-pill badge-primary" style="background-color: #007bff" >'+''+'</span>');
               } else {
                 return('<span class="badge badge-pill badge-primary" style="background-color: #007bff" >'+data+'</span>');
@@ -451,7 +451,7 @@ function fnc_guardarHorario(parametros){
           },
             { data: 'reten',
             render : function(data){
-              if (data=="null") {
+              if (data=="*") {
                 return('<span class="badge badge-pill badge-primary" style="background-color: #dc3545" >'+''+'</span>');
               } else {
                 return('<span class="badge badge-pill badge-primary" style="background-color: #dc3545" >'+data+'</span>');

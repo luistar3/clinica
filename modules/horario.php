@@ -212,12 +212,48 @@
 	function fnc_listarhorarioHoy()
 	{
 		//@session_start();
-        //$menu_activo = "horarioEspecialidad";
+		//$menu_activo = "horarioEspecialidad";
+		$business_Area = new business_Area();
+		$dtListarArea = $business_Area -> fncBusinessListarArea();
 		$business_Horario = new business_Horario();
-		$dtListarArea = $business_Horario -> fncBusinessListarHorarioHoy();
+		$dtListarHorario = $business_Horario -> fncBusinessListarHorarioHoy();
+		$extra = "";
+
+		//print_r($dtListarArea);
+		$objeto = array();
+		for ($i=0; $i < count($dtListarArea) ; $i++) { 
+			$objeto[$i]["Nombre"]=$dtListarArea[$i]["Nombre"];
+			$objeto[$i]["manana"]="";
+			$objeto[$i]["tarde"]="";
+			$objeto[$i]["noche"]="";
+			$objeto[$i]["reten"]="";
+			for ($e=0; $e < count($dtListarHorario) ; $e++) { 
+				if ($dtListarArea[$i]["Nombre"]==$dtListarHorario[$e]["Nombre"]) {
+
+					if ($dtListarHorario[$e]["manana"]!='') {
+						$objeto[$i]["Nombre"]=$dtListarHorario[$e]["Nombre"];
+						$objeto[$i]["manana"]=$dtListarHorario[$e]["manana"];
+					}
+					if ($dtListarHorario[$e]["tarde"]!='') {
+						$objeto[$i]["Nombre"]=$dtListarHorario[$e]["Nombre"];
+						$objeto[$i]["tarde"]=$dtListarHorario[$e]["tarde"];
+					}
+					if ($dtListarHorario[$e]["noche"]!='') {
+						$objeto[$i]["Nombre"]=$dtListarHorario[$e]["Nombre"];
+						$objeto[$i]["noche"]=$dtListarHorario[$e]["noche"];
+					}
+					if ($dtListarHorario[$e]["reten"]!='') {
+						$objeto[$i]["Nombre"]=$dtListarHorario[$e]["Nombre"];
+						$objeto[$i]["reten"]=$dtListarHorario[$e]["reten"];
+					}
+				}
+			}
+		}
+
+
 		$json_data = array(
 	
-			"data" => $dtListarArea   // total data array
+			"data" => $objeto   // total data array
 		);
 		echo json_encode($json_data);
 	}

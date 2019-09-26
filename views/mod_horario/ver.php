@@ -119,13 +119,14 @@
             <div class="card card-primary" style="background-color: aliceblue;" >
               <div class="card-body p-0">
                 <!-- THE CALENDAR -->
+                <button type="reset"></button>
                 <div id="calendar" class="card-body" style="min-height:700px;" >
                     <table id="listaHorariosVer" style="width:100%;min-height: 550px;"  class="table table-bordered  dataTable">
                       <thead>
                         <tr>
                           
                           <th >Area</th>
-                          <th>Persona</th>
+                        
                           <th>Mañana</th>
                           <th>Tarde</th>                  
                           <th>Noche</th>
@@ -136,7 +137,7 @@
                       <tfoot>
                         <tr>
                           <th>Area</th>
-                          <th>Persona</th>
+                          
                           <th>Mañana</th>
                           <th>Tarde</th>                  
                           <th>Noche</th>
