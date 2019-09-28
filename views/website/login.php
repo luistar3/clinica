@@ -150,7 +150,7 @@
           </div> -->
           <!-- /.col -->
           <div class="col-12">
-            <button type="submit" id="btn_Login_iniciarSession" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            <button type="button" id="btn_Login_iniciarSession" class="btn btn-primary btn-block btn-flat">Sign In</button>
           </div>
           <!-- /.col -->
         </div>

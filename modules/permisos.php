@@ -70,10 +70,10 @@
 					fnc_lisarRoles();
 				break;
 			case 'J9Y0B7rh86':
-					fnc_listarPersonasPorArea();
+					fnc_lisarPermisosPorRoles();
 				break;
 			case 'xZ6rQTOHxk':
-					fnc_Agregar();
+					fnc_guardarPermisosPorRoles();
 				break;
 			case 'uctftGr4Jm':
 					fnc_eliminarUsuario();
@@ -239,6 +239,39 @@
 		echo json_encode($dtListarRol,JSON_UNESCAPED_UNICODE);
 
 	}
+	function fnc_lisarPermisosPorRoles()
+	{
+		$idRol = $_GET["idRol"];
+		$business_Rol = new business_Rol();
+		$dtListarPermisosRol =  $business_Rol -> fncBusinessListarPermisosPorRol($idRol);
+		echo json_encode($dtListarPermisosRol,JSON_UNESCAPED_UNICODE);
+
+	}
+
+	function fnc_guardarPermisosPorRoles()
+	{
+		$idModulos = $_GET["idModulos"];
+		$Rol_idRol= $_GET["idPermisoModulos"];
+		//print_r($idModulos);
+		$business_Rol = new business_Rol();
+		$bolEliminarPermisosmodulo = $business_Rol-> fncBusinessEliminarPermisosPorRol($Rol_idRol);
+		$bolAgregarPermisosmodulo=false;
+		if ($idModulos!=0) {
+			foreach ($idModulos as $key => $dato) {
+				$bolAgregarPermisosmodulo = $business_Rol-> fncBusinessAgregarPermisosPorRol($Rol_idRol,$dato);
+			}
+		}
+		
+		if ($bolAgregarPermisosmodulo) {
+			echo("1");
+		}else {
+			echo("0");
+		}
+		// $dtListarPermisosRol =  $business_Rol -> fncBusinessListarPermisosPorRol($idRol);
+		// echo json_encode($dtListarPermisosRol,JSON_UNESCAPED_UNICODE);
+
+	}
+	
 	
 	
 	function fnc_camposAgregarPersona()

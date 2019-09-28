@@ -73,6 +73,26 @@ $('document').ready(function(){
         fnc_eliminarHorarioExistente();
       });
 
+    //bton de siguiente y anterior dias      
+      $("#idDiaAnteriorTablaHorarios" ).click(function() {
+        
+        var d = document.getElementById("diasAnteriorSiguiente").value;
+        d = parseInt(d)-1;
+        document.getElementById("diasAnteriorSiguiente").value=d;
+        listarhorarioHoy();
+
+      });
+      $("#idDiaSiguienteTablaHorarios" ).click(function() {
+        
+
+        var d = document.getElementById("diasAnteriorSiguiente").value;
+        d = parseInt(d)+1;
+        document.getElementById("diasAnteriorSiguiente").value=d;
+        listarhorarioHoy();
+      });
+    //--bton de siguiente y anterior dias  
+
+
       $('#color').colorpicker();
       $('#color').on('colorpickerChange', function(event) {
         $('#color .fa-square').css('color', event.color.toString());
@@ -387,11 +407,15 @@ function fnc_guardarHorario(parametros){
       var table = $('#listaHorariosVer').DataTable();
       table.clear();
       table.destroy();
-      
-      
-        var idioma = '';
-      
 
+      
+      
+      var idioma = '';
+      var dia = parseInt( document.getElementById("diasAnteriorSiguiente").value);
+
+     // dia = parseInt(dia) + 1;
+      console.log(dia);
+        
       //$('#tablaListarChip').empty(); // empty in case the columns change
 
       //document.getElementById("chipLlenar").innerHTML = '<tr id="chipLlenar"><th></th> < th class="table-plus datatable-nosort" > Numero Chip</th >   <th>Tipo Contrato</th> <th>Operador</th><th>Fecha Contrato</th> <th>Meses de Servicio</th> <th>Tarifa</th>th>Traza</th> <th></th>';
@@ -410,7 +434,8 @@ function fnc_guardarHorario(parametros){
                 url: "../modules/horario.php", // json datasource				
                 type: 'GET',  // method  , by default get
                 data :{
-                    "p":"Rd5f84FT7D"
+                    "p":"Rd5f84FT7D",
+                    "d": {'d':dia}
                 }
 
             },
@@ -463,32 +488,9 @@ function fnc_guardarHorario(parametros){
             
             
             
-            ],
-            
-            responsive: false,
-            columnDefs: [{
-                targets: "datatable-nosort",
-                orderable: false,
-                
-            }
-            ],
-            
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            "language": {
-                "info": "_START_-_END_ de _TOTAL_ registros",
-                searchPlaceholder: "Search"
-            },
-            dom: 'Blfrtip'
-    
+            ]
 
         });
-
-        
-
-      $('#listaEspecialidad tbody').off('click');
-     
-
-     
 
 
     }
@@ -622,7 +624,9 @@ function fnc_guardarHorario(parametros){
     }
 
     function fnc_renderHorarios(data){
-
+      document.getElementById('calendar').innerHTML='';
+      document.getElementById("idDiaAnteriorTablaHorarios").disabled = true
+      document.getElementById("idDiaSiguienteTablaHorarios").disabled = true
       var date = new Date()
       var d    = date.getDate(),
           m    = date.getMonth(),

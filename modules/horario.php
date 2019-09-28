@@ -211,13 +211,21 @@
 	}
 	function fnc_listarhorarioHoy()
 	{
+	
+			$numDia = $_GET["d"];
+			$business_Area = new business_Area();
+			$dtListarArea = $business_Area -> fncBusinessListarArea();
+			$business_Horario = new business_Horario();
+			$dtListarHorario = $business_Horario -> fncBusinessListarHorarioNum($numDia["d"]);
+			//print_r($numDia["d"]);
+		
 		//@session_start();
 		//$menu_activo = "horarioEspecialidad";
-		$business_Area = new business_Area();
-		$dtListarArea = $business_Area -> fncBusinessListarArea();
-		$business_Horario = new business_Horario();
-		$dtListarHorario = $business_Horario -> fncBusinessListarHorarioHoy();
-		$extra = "";
+		// $business_Area = new business_Area();
+		// $dtListarArea = $business_Area -> fncBusinessListarArea();
+		// $business_Horario = new business_Horario();
+		// $dtListarHorario = $business_Horario -> fncBusinessListarHorarioHoy();
+		// $extra = "";
 
 		//print_r($dtListarArea);
 		$objeto = array();

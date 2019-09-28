@@ -156,6 +156,38 @@ public function fncBusinessListarHorarioHoy(){
 	}
 }
 
+public function fncBusinessListarHorarioNum($num){
+
+	@session_start();
+	$connection = new connection();
+	$connectionstatus = $connection -> openConnection();
+	if ($connectionstatus) 
+	{
+		$sql = "usp_Clinica_Horario_listarHorarioNum";
+				//$USRId = $_SESSION['usuario']["ses_USRId"] ;
+		// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
+
+		
+		//echo ("<br>usp_Clinica_Horario_verificarExistenciaHorario ". $anio.' '.$mes .' '. $dia.' '. $id_persona .' '. $id_area );
+		$proc = mssql_init($sql, $connectionstatus); 
+		mssql_bind($proc, '@num', $num, SQLINT4, false, false, 10);
+		
+
+		$result = mssql_execute($proc);
+		$devolver = sqlsrv_getdata($result);
+		$connection -> closeConnection($connectionstatus);
+		unset($connectionstatus);
+		unset($connection);
+		return $devolver;
+	} 
+	else 
+	{
+		unset($connectionstatus);
+		unset($connection);
+		echo 'Tenemos un problema: ' . mssql_get_last_message();
+	}
+}
+
 	public function fncBusinessModificarEstadoHorario($id_horario){
 		//@session_start();
 		$connection = new connection();

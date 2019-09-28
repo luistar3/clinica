@@ -42,6 +42,122 @@ class business_Rol
 				echo 'Tenemos un problema: ' . mssql_get_last_message();
 			}
 	}
+
+	public function fncBusinessListarPermisosPorRol($idRol){
+
+		@session_start();
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Permisos_listarPermisosModulosPorRol";
+					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
+					// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
+			$proc = mssql_init($sql, $connectionstatus); 
+			mssql_bind($proc, '@idRol', $idRol, SQLINT4, false, false, 10);
+						// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
+
+						// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
+						// mssql_bind($proc, '@varDni', $varDni, SQLVARCHAR, false, false, 10); 
+						// mssql_bind($proc, '@intEdad', $intEdad, SQLINT4, false, false, 10); 
+						// mssql_bind($proc, '@IdGradoAcademico', $IdGradoAcademico, SQLINT4, false, false, 10); 
+						// mssql_bind($proc, '@IdSectorAcademico', $IdSectorAcademico, SQLINT4, false, false, 10); 
+
+			$result = mssql_execute($proc);
+			$devolver = sqlsrv_getdata($result);
+			$connection -> closeConnection($connectionstatus);
+			unset($connectionstatus);
+			unset($connection);
+			return $devolver;
+		} 
+		else 
+		{
+			unset($connectionstatus);
+			unset($connection);
+			echo 'Tenemos un problema: ' . mssql_get_last_message();
+		}
+	}
+	public function fncBusinessEliminarPermisosPorRol($Rol_idRol){
+
+		@session_start();
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Permisos_eliminarPermisosModulosPorRol";
+					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
+					// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
+			$proc = mssql_init($sql, $connectionstatus); 
+			mssql_bind($proc, '@idRol', $Rol_idRol, SQLINT4, false, false, 10);
+						// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
+
+						// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
+						// mssql_bind($proc, '@varDni', $varDni, SQLVARCHAR, false, false, 10); 
+						// mssql_bind($proc, '@intEdad', $intEdad, SQLINT4, false, false, 10); 
+						// mssql_bind($proc, '@IdGradoAcademico', $IdGradoAcademico, SQLINT4, false, false, 10); 
+						// mssql_bind($proc, '@IdSectorAcademico', $IdSectorAcademico, SQLINT4, false, false, 10); 
+
+			$result = mssql_execute($proc);
+			if ($result) {
+				$connection -> closeConnection($connectionstatus);
+				unset($connectionstatus);
+				unset($connection);
+				return true;
+			}else{
+				$connection -> closeConnection($connectionstatus);
+				unset($connectionstatus);
+				unset($connection);
+				return false;
+			}
+		} 
+		else 
+		{
+			unset($connectionstatus);
+			unset($connection);
+			echo 'Tenemos un problema: ' . mssql_get_last_message();
+		}
+	}
+	public function fncBusinessAgregarPermisosPorRol($Rol_idRol,$idModulos){
+
+		@session_start();
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Permisos_agregarPermisosModulosPorRol";
+					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
+					// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
+			$proc = mssql_init($sql, $connectionstatus); 
+			mssql_bind($proc, '@idRol', $Rol_idRol, SQLINT4, false, false, 10);
+			mssql_bind($proc, '@idModulos', $idModulos, SQLINT4, false, false, 10);
+						// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
+
+						// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
+						// mssql_bind($proc, '@varDni', $varDni, SQLVARCHAR, false, false, 10); 
+						// mssql_bind($proc, '@intEdad', $intEdad, SQLINT4, false, false, 10); 
+						// mssql_bind($proc, '@IdGradoAcademico', $IdGradoAcademico, SQLINT4, false, false, 10); 
+						// mssql_bind($proc, '@IdSectorAcademico', $IdSectorAcademico, SQLINT4, false, false, 10); 
+
+			$result = mssql_execute($proc);
+			if ($result) {
+				$connection -> closeConnection($connectionstatus);
+				unset($connectionstatus);
+				unset($connection);
+				return true;
+			}else{
+				$connection -> closeConnection($connectionstatus);
+				unset($connectionstatus);
+				unset($connection);
+				return false;
+			}
+		} 
+		else 
+		{
+			unset($connectionstatus);
+			unset($connection);
+			echo 'Tenemos un problema: ' . mssql_get_last_message();
+		}
+	}
 	public function fnc_reporteCantidadChipsPorOperador(){
 
 		@session_start();

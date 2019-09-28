@@ -40,7 +40,7 @@
               <div class="col-12">
                 <div class="form-group">
               
-                  <select class="duallistbox" multiple="multiple">
+                  <select class="duallistbox" multiple="multiple" id="idSelectPermisosPorModulo">
                    
                   </select>
                 </div>
@@ -50,7 +50,7 @@
             </div>
             <!-- /.row -->
             <div class="form-group">
-                      <label>Personas</label>
+                      <label>Modulos</label>
                       <select class="form-control select2" id="idPermisoModulos" style="width: 100%;">
                         <option selected="">asdas</option>
                         <option selected="">asd</option>
@@ -59,6 +59,10 @@
                         <option selected="">...</option>
                         
                       </select>
+            </div>
+            <div class="form-group">
+                      
+                     <input type="submit" value="guardar" id="idBtnGuardarPermisosModulos">
             </div>
           </div>
 

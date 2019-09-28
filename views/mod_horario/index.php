@@ -119,7 +119,40 @@
             <div class="card card-primary">
               <div class="card-body p-0">
                 <!-- THE CALENDAR -->
-                <div id="calendar" class="card-body" style="min-height:700px;" ></div>
+                <div class="btn-group">
+                        <button title="Recargar" onclick="location.reload();" type="button" class="btn btn-info"><i class="fas fa-redo"></i></button>
+                        <button title="Dia Anterior"  id ="idDiaAnteriorTablaHorarios" class="btn btn-info"><i class="fas fa-caret-left"></i></i></button>
+                        <button title="Dia Siguiente" id ="idDiaSiguienteTablaHorarios" class="btn btn-info"><i class="fas fa-caret-right"></i></i></button>
+                        <!-- <button  class="btn btn-info"><i class="fas fa-caret-right"></i></i></button> -->
+                </div>
+                <div id="calendar" class="card-body" style="min-height:700px;" >
+                <input type="hidden" id="diasAnteriorSiguiente" name="" value="0">
+                <table id="listaHorariosVer" style="width:100%;min-height: 550px;"  class="table table-bordered  dataTable">
+                      <thead>
+                        <tr>
+                          
+                          <th >Area</th>
+                        
+                          <th>Mañana</th>
+                          <th>Tarde</th>                  
+                          <th>Noche</th>
+                          <th>Reten</th>
+                        </tr>
+                      </thead>
+                      
+                      <tfoot>
+                        <tr>
+                          <th>Area</th>
+                          
+                          <th>Mañana</th>
+                          <th>Tarde</th>                  
+                          <th>Noche</th>
+                          <th>Reten</th>
+                        </tr>
+                      </tfoot>
+                    </table>
+                
+                </div>
               </div>
               <!-- /.card-body -->
             </div>
