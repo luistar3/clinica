@@ -79,10 +79,13 @@
 					fnc_eliminarUsuario();
 				break;
 			case 'eLXzIh5jMU':
-					fnc_camposAgregarPersona();
+					fnc_listarUsuario();
 				break;
 			case 'xP6riiTOHxk':
 					fnc_listarPersonaPorIdArea();
+				break;
+			case 'RP6rTTTOxk':
+					fnc_listarPersonasinUsuario();
 				break;
 			default:
 				header('Location: ../errors/404.php?sesion='.$sex);  
@@ -231,6 +234,32 @@
 		echo json_encode($dtListarPersonas,JSON_UNESCAPED_UNICODE);
 
 	}
+	function fnc_listarUsuario()
+	{
+	
+		//$id_area = $_GET["id_area"];
+		$business_Rol = new business_Rol();
+		$dtListarUsuario =  $business_Rol -> fncBusinessListarUsuario();
+		$data = array(
+			'data'=> $dtListarUsuario
+		);
+		
+		echo json_encode($data,JSON_UNESCAPED_UNICODE);
+
+	}
+	function fnc_listarPersonasinUsuario()
+	{	
+		//$id_area = $_GET["id_area"];
+		$business_Rol = new business_Rol();
+		$dtListarUsuario =  $business_Rol -> fncBusinessListarPersonasSinUsuario();
+		$data = array(
+			'data'=> $dtListarUsuario
+		);
+		echo json_encode($data,JSON_UNESCAPED_UNICODE);
+
+	}
+
+	
 	function fnc_lisarRoles()
 	{
 		//$id_area = $_GET["id_area"];

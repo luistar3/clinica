@@ -25,12 +25,12 @@
          
       
 
-        <div class="card card-default">
+        <div class="card card-default collapsed-card">
           <div class="card-header">
             <h3 class="card-title">Gestion</h3>
 
             <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
               <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>
             </div>
           </div>
@@ -77,9 +77,127 @@
         </div>
 
 
+
+
+
+
+        <div class="row">
+          <div class="col-md-6">
+
+            <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Personas</h3>
+              </div>
+              <div class="card-body">
+                <table id="idListarUsuarios" style="min-height: 302px;" role="grid" class="table table-bordered table-striped dataTable">
+                  <thead>
+                  <tr>
+                    <th>Usuario</th>
+                    <th>Nombre</th>
+                    
+                    <th>Rol</th>                  
+                    <th>DNI</th>
+                    <th>Estado</th>
+                    <th>Aciones</th>
+                  </tr>
+                  </thead>
+                  
+                  <tfoot>
+                  <tr>
+                    <th>Usuario</th>
+                    <th>Nombre</th>
+                    
+                    <th>Rol</th>                  
+                    <th>DNI</th>
+                    <th>Estado</th>
+                    <th>Aciones</th>
+                  </tr>
+                  </tfoot>
+                </table>
+                
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+         
+            <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Personas</h3>
+              </div>
+              <div class="card-body">
+                <input type="hidden" name="" id="idPersonaAgregarModificar" value="0" >
+                <input type="text" name="" id="idUsuario" placeholder="Usuario" >
+                <input type="password" name="" id="idContrasena" placeholder="Contraseña" >
+                <input type="text" name="" id="idNombrePersona" placeholder="NombrePersona" >
+                <select name="" id="idSelectRolUsuario">
+                <option value=""></option>
+                </select>
+                <button type="submit" id="idBtnGuardarUsuario" >Guardar Usuario</button>
+             
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+          </div>
+          <!-- /.col (left) -->
+          <div class="col-md-6">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Datos</h3>
+              </div>
+              <div class="card-body">
+                
+              <table id="idListarPersonasSinUsuario" style="min-height: 302px;" role="grid" class="table table-bordered table-striped dataTable">
+                  <thead>
+                  <tr>
+                
+                    <th>Nombre</th>
+                    
+                    <th>Area</th>                  
+                    <th>DNI</th>
+                    
+                    <th>Acciones</th>
+                  </tr>
+                  </thead>
+                  
+                  <tfoot>
+                  <tr>
+                
+                    <th>Nombre</th>
+                    
+                    <th>Area</th>                  
+                    <th>DNI</th>
+                    
+                    <th>Acciones</th>
+                  </tr>
+                  </tfoot>
+              </table>
+                
+
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- iCheck -->
+            
+          </div>
+          <!-- /.col (right) -->
+
+
+        </div>
+
+
+
+
         
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
     </div>
+
+ 

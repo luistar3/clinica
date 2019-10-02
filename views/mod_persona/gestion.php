@@ -58,7 +58,10 @@
                     <div class="col-3">
                         <input type="text" id="id_txtApeMatPersona" class="form-control" placeholder="Apellido Materno" require>
                     </div>
+                    
                   </div>
+
+               
                   
                   
 

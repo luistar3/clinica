@@ -16,25 +16,258 @@
             
           });
 
-
-
           $("#idBtnGuardarPermisosModulos" ).click(function() {
             fnc_guardarPermisosPorModulos();
           });
 
-          
+          $("#idBtnGuardarUsuario" ).click(function() {
+            fnc_agregarUsuario();
+          });
+
+         
+
+          listarUsuarios();
+          listarPersonaSinUsuario();
       } 
     
       fnc_listarSelectRoles();
+      fnc_listarSelectRolesInsertar();
 
 
      // prueba_notificacion();
 
-
-
-
-
     });
+
+    function fnc_agregarUsuario() {
+      var usuario = document.getElementById("idUsuario").value;
+      var contrasena = document.getElementById("idContrasena").value;
+      var idrol = document.getElementById("idSelectRolUsuario").value;
+      var idPersona = document.getElementById("idPersonaAgregarModificar").value;
+
+      var parametros={
+        'usuario': usuario,
+        'contrasena': contrasena,
+        'idrol':idrol,
+        'idPersona':idPersona
+      }
+      console.log(parametros);
+    }
+
+    function fnc_listarSelectRolesInsertar() {
+      $.ajax({
+        type: "GET",
+        url: "../modules/permisos.php",
+        async: false,
+        data: {"p":"6x8RlHMFSK"},
+       
+        success: function (response) {
+          
+          data =JSON.parse(response);
+
+        
+          document.getElementById("idSelectRolUsuario").innerHTML="";
+          var select = document.getElementById( 'idSelectRolUsuario' );
+          var option;
+          for(var key in data)
+          {
+            option = document.createElement( 'option' );
+            option.value = data[key]["idRol"];
+            option.text = data[key]["Nombre"];
+            //option.selected = true;
+            select.add( option );
+          }
+          
+        }
+      });
+    }
+    var listarPersonaSinUsuario = function(){
+      var table = $('#idListarPersonasSinUsuario').DataTable();
+      table.clear();
+      table.destroy();
+      
+      
+        var idioma = '';
+      
+  
+      //$('#tablaListarChip').empty(); // empty in case the columns change
+  
+      //document.getElementById("chipLlenar").innerHTML = '<tr id="chipLlenar"><th></th> < th class="table-plus datatable-nosort" > Numero Chip</th >   <th>Tipo Contrato</th> <th>Operador</th><th>Fecha Contrato</th> <th>Meses de Servicio</th> <th>Tarifa</th>th>Traza</th> <th></th>';
+    
+      var parametros={
+        "p":"RP6rTTTOxk"
+      }
+
+        var table = $('#idListarPersonasSinUsuario').DataTable({
+          
+        
+            "scrollX": true,
+            "destroy":true,
+           
+            "ajax": {
+                url: "../modules/permisos.php", // json datasource				
+                type: 'GET',  // method  , by default get
+                data :parametros
+  
+            },
+          
+            'columns': [
+    
+            { data: 'NombrePersona' },
+            { data: 'NombreArea'},
+            { data: 'Dni'},
+            
+            { "defaultContent":  '<div class="btn-group">'+
+            '<button type="button"  title="ver" class="btn btn-primary"><a id="idSelectPersona"><i class="fas fa-arrow-circle-down"></i></a></button>'+
+            '</div>'}
+            
+            
+            ],
+            
+            responsive: false,
+            columnDefs: [{
+                targets: "datatable-nosort",
+                orderable: false,
+                
+            }
+            ],
+            
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "language": {
+                "info": "_START_-_END_ de _TOTAL_ registros",
+                searchPlaceholder: "Search"
+            },
+            dom: 'Blfrtip',
+            buttons: [
+            'copy', 'csv', 'pdf', 'print'
+            ]
+    
+  
+        });
+  
+        
+  
+      $('#idListarPersonasSinUsuario tbody').off('click');
+      $('#idListarPersonasSinUsuario tbody').on( 'click', '#idSelectPersona', function () {
+         var data = table.row( $(this).parents('tr') ).data();
+
+
+         document.getElementById("idPersonaAgregarModificar").value=data["id_persona"];
+         document.getElementById("idNombrePersona").value=data["NombrePersona"];
+         console.log(data);
+      
+       
+  
+         
+  } );
+  
+  
+  
+    }
+
+
+
+
+    var listarUsuarios = function(){
+      var table = $('#idListarUsuarios').DataTable();
+      table.clear();
+      table.destroy();
+      
+      
+        var idioma = '';
+      
+  
+      //$('#tablaListarChip').empty(); // empty in case the columns change
+  
+      //document.getElementById("chipLlenar").innerHTML = '<tr id="chipLlenar"><th></th> < th class="table-plus datatable-nosort" > Numero Chip</th >   <th>Tipo Contrato</th> <th>Operador</th><th>Fecha Contrato</th> <th>Meses de Servicio</th> <th>Tarifa</th>th>Traza</th> <th></th>';
+    
+      var parametros={
+        "p":"eLXzIh5jMU"
+      }
+
+        var table = $('#idListarUsuarios').DataTable({
+          
+        
+            "scrollX": true,
+            "destroy":true,
+           
+            "ajax": {
+                url: "../modules/permisos.php", // json datasource				
+                type: 'GET',  // method  , by default get
+                data :parametros
+  
+            },
+          
+            'columns': [
+            { data: 'Nombre',
+            render: function(data){
+             
+                return('<span >'+data+'</span>');
+                
+              
+            } },
+            { data: 'Usuario' },
+            { data: 'NombreRol'},
+            { data: 'Dni'},
+            { data: 'Estado',
+            render: function ( data, type, row ) {
+              if (data=='1') {
+                return('<a id="hdUsuario"><label><input type="checkbox" checked><span class="slider round"></span></label></a>');
+              } else {
+                return('<a id="hdUsuario"><label><input type="checkbox"><span class="slider round"></span></label> </a>');
+              };
+              }
+            },
+          
+            { "defaultContent":  '<button type="button"  title="ver" class="btn btn-danger"><a id="editarChip"><i class="fas fa-arrow-circle-down"></i></a></button>'}
+            
+            
+            ],
+            
+            responsive: false,
+            columnDefs: [{
+                targets: "datatable-nosort",
+                orderable: false,
+                
+            }
+            ],
+            
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "language": {
+                "info": "_START_-_END_ de _TOTAL_ registros",
+                searchPlaceholder: "Search"
+            },
+            dom: 'Blfrtip',
+            buttons: [
+            'copy', 'csv', 'pdf', 'print'
+            ]
+    
+  
+        });
+  
+        
+  
+      $('#idListarUsuarios tbody').off('click');
+      $('#idListarUsuarios tbody').on( 'click', '#editarChip', function () {
+         var data = table.row( $(this).parents('tr') ).data();
+         console.log(data);
+      
+       
+  
+         
+  } );
+  
+      $('#idListarUsuarios tbody').on( 'click', '#hdUsuario', function () {
+        
+        var data = table.row( $(this).parents('tr') ).data();
+        console.log(data);
+      } );
+  
+  
+    }
+
+
+
+
 
 function fnc_guardarPermisosPorModulos(){
   var select1 = document.getElementById("idSelectPermisosPorModulo");

@@ -43,6 +43,69 @@ class business_Rol
 			}
 	}
 
+	public function fncBusinessListarPersonasSinUsuario(){
+
+		@session_start();
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Usuario_ListarPersonaSinUsuario";
+					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
+					// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
+			$proc = mssql_init($sql, $connectionstatus); 
+			
+			$result = mssql_execute($proc);
+			$devolver = sqlsrv_getdata($result);
+			$connection -> closeConnection($connectionstatus);
+			unset($connectionstatus);
+			unset($connection);
+			return $devolver;
+		} 
+		else 
+		{
+			unset($connectionstatus);
+			unset($connection);
+			echo 'Tenemos un problema: ' . mssql_get_last_message();
+		}
+	}
+
+
+	public function fncBusinessListarUsuario(){
+
+		@session_start();
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Usuario_listarUsuario";
+					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
+					// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
+			$proc = mssql_init($sql, $connectionstatus); 
+						// mssql_bind($proc, '@USRId', $USRId, SQLINT4, false, false, 10);
+						// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
+
+						// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
+						// mssql_bind($proc, '@varDni', $varDni, SQLVARCHAR, false, false, 10); 
+						// mssql_bind($proc, '@intEdad', $intEdad, SQLINT4, false, false, 10); 
+						// mssql_bind($proc, '@IdGradoAcademico', $IdGradoAcademico, SQLINT4, false, false, 10); 
+						// mssql_bind($proc, '@IdSectorAcademico', $IdSectorAcademico, SQLINT4, false, false, 10); 
+
+			$result = mssql_execute($proc);
+			$devolver = sqlsrv_getdata($result);
+			$connection -> closeConnection($connectionstatus);
+			unset($connectionstatus);
+			unset($connection);
+			return $devolver;
+		} 
+		else 
+		{
+			unset($connectionstatus);
+			unset($connection);
+			echo 'Tenemos un problema: ' . mssql_get_last_message();
+		}
+	}
+
 	public function fncBusinessListarPermisosPorRol($idRol){
 
 		@session_start();

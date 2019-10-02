@@ -91,8 +91,8 @@
 <script src="../assets/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
 <!-- TOASTR -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-
+<!-- togle -->
+<script src="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
 
 <script src="../assets/js/jsHorario/jsHorario.js"></script>
 

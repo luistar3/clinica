@@ -202,7 +202,7 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
 
 
           <?php $PERMISOS = array_search('PERMISOS',$modulos);
-           $PERMISOS=1;?> 
+           //$PERMISOS=1;?> 
           <?php if($PERMISOS === false){}else{?>
           <li class="nav-item has-treeview  <?php if($menu_open == 'permisos'){ echo $menu_class_open; } ?>   ">
             <a href="#" class="nav-link  <?php if($menu_activo == 'permisos'){ echo $menu_class_active; } ?>   ">
