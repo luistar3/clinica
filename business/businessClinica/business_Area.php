@@ -1,9 +1,9 @@
 <?php 
 
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/connection.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Area.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/funciones.php');
-//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/navegador.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/connection.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Area.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/complements/funciones.php');
+//include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/complements/navegador.php');
 
 class business_Area
 {

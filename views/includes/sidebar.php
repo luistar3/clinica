@@ -77,6 +77,21 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
                   <p>Gestion Personal</p>
                 </a>
               </li>
+
+              <li class="nav-item">
+                <a href="../modules/persona.php?v=busquedanPersonal" class="nav-link <?php if($menu_activo == 'busquedanPersonal'){ echo $menu_class_active; } ?>  ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Busqueda Personal</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="../modules/persona.php?v=reporteEnfermeria" class="nav-link <?php if($menu_activo == 'reporteEnfermeria'){ echo $menu_class_active; } ?> ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p class="text-danger">Reporte Enfermeria</p>
+                </a>
+              </li>
+
               <!-- <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -136,7 +151,7 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
           <?php if($ver === false){}else{?>
           <li class="nav-item has-treeview <?php if($menu_open == 'verHorario'){ echo $menu_class_open; } ?>    ">
             <a href="#" class="nav-link <?php if($menu_activo == 'verHorario'){ echo $menu_class_active; } ?> ">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-search"></i>
               <p>
                 Ver
                 <i class="right fas fa-angle-left"></i>
@@ -223,6 +238,38 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
             </ul>
           </li>
           <?php }?>
+
+
+          
+          <?php $ENFERMERIA = array_search('ENFERMERIA',$modulos);
+           //$PERMISOS=1;?> 
+          <?php if($ENFERMERIA === false){}else{?>
+          <li class="nav-item has-treeview  <?php if($menu_open == 'Enfermeria'){ echo $menu_class_open; } ?>   ">
+            <a href="#" class="nav-link  <?php if($menu_activo == 'Turno'){ echo $menu_class_active; } ?>   ">
+              <i class=" nav-icon fas fa-user-nurse"></i>
+              <p>
+                ENFERMERIA
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../modules/turnoEnfermeria.php?v=index" class="nav-link  <?php if($menu_activo == 'Turno'){ echo $menu_class_active; } ?>  ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>CONTROL PERSONAL</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../modules/turnoEnfermeria.php?v=index2" class="nav-link  <?php if($menu_activo == 'Turnog'){ echo $menu_class_active; } ?>  ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>CONTROL GLOBAL</p>
+                </a>
+              </li>
+            
+            </ul>
+          </li>
+          <?php }?>
+
 
  <!-- 
           <li class="nav-item">

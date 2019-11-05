@@ -1,9 +1,9 @@
 <?php
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Persona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Usuario.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Persona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Usuario.php');
-	//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Registro.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Persona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Usuario.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Persona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Usuario.php');
+	//include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Registro.php');
 
 	// if( (isset($_GET["sesion"]) and $_GET["sesion"] !== "") or (isset($_POST["sesion"]) and $_POST["sesion"] !== "") ){
 	// 	if( isset($_GET["sesion"]) ){$sex = $_GET['sesion'];}
@@ -197,13 +197,19 @@
 					//$_SESSION['usuario']["ses_IdRol"] 							=	$dtAutenticarUsuario[0]['IdRol'];
 					$_SESSION['usuario']["ses_UsuarioRol"] 						=	$dtAutenticarUsuario[0]['NombreRol'];
 					$_SESSION['usuario']["ses_Dni"] 							=	$dtAutenticarUsuario[0]['Dni'];
-					$_SESSION['usuario']["ses_UsuarioLogeado"] 					= true;
+					$_SESSION['usuario']["ses_UsuarioLogeado"] 					= 	true;
+					$_SESSION['usuario']["ses_UsuarioTipo"] 					= 	$dtAutenticarUsuario[0]['id_tipo_persona'];
 
+					// $tipoPersona = $dtAutenticarUsuario[0]['id_tipo_persona'];
+					// $idUsuario =$dtAutenticarUsuario[0]['id_usuario'];
+
+					// $login = 1;
+					// if ($tipoPersona == 2) {
+					// 	$bollog = $business_UsuarioPermiso -> fncBusinessLogUsuario($idUsuario,$login);
+					// } else {
+					// 	# code...
+					// }
 					
-
-
-
-
 
 
 					$objPermiso =array();
@@ -269,7 +275,20 @@
 	function fnc_CerrarSesion()
 	{
 		@session_start();
-		// unset($_SESSION['usuario']);
+	
+
+		// $business_UsuarioPermiso 		= new business_Usuario();
+		// $tipoPersona = $_SESSION['usuario']["ses_UsuarioTipo"] ;
+		// $idUsuario =$_SESSION['usuario']["ses_UsuarioId"] ;
+
+		// $login = 0;
+		// if ($tipoPersona == 2) {
+		// 	$bollog = $business_UsuarioPermiso -> fncBusinessLogUsuario($idUsuario,$login);
+		// } else {
+		// 	# code...
+		// }
+				
+		unset($_SESSION['usuario']);
 		// unset($_SESSION['mensaje']);
 		header('Location: ../views/website/login.php');
 	}

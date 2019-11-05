@@ -107,13 +107,30 @@
                   </div>
                   <!-- /.input group -->
 
-
+                  
 
                   <!-- Date and time range -->
                 </div>
+              
               </div>
+
+              <div class="card"  >
+                    <div class="card-header">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <button type="button" id="id_btn_buscarDniReniec" class="btn btn-warning">Buscar</button>
+                        </div>
+                    
+                        <input type="text"  id="idTxtDniBuscar" class="form-control" placeholder="BUSCAR DNI RENIEC">
+                        
+                      </div>
+                      <textarea name=""  id="idTxtMostrarDatosDni" class="form-control" ></textarea>
+                    </div>
+                  </div>
             </div>
           </div>
+
+        
           <!-- /.col -->
           <div class="col-md-9">
             <div class="card card-primary" style="background-color: aliceblue;" >
@@ -124,6 +141,7 @@
                         <button title="Dia Anterior"  id ="idDiaAnteriorTablaHorarios" class="btn btn-info"><i class="fas fa-caret-left"></i></i></button>
                         <button title="Dia Siguiente" id ="idDiaSiguienteTablaHorarios" class="btn btn-info"><i class="fas fa-caret-right"></i></i></button>
                         <!-- <button  class="btn btn-info"><i class="fas fa-caret-right"></i></i></button> -->
+                        <input type="date" name="" id="idFechaActualSumar" disabled >
                 </div>
                 <div id="calendar" class="card-body" style="min-height:700px;" >
                 <input type="hidden" id="diasAnteriorSiguiente" name="" value="0">

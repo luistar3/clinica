@@ -5,6 +5,6 @@
 	define('PORT', $_SERVER['SERVER_PORT']);
 	define('SITE_PATH', preg_replace('/index.php$/i', '', $_SERVER['PHP_SELF']));
 	// define('SITE_ROOT', PROTOCOL . '://' . DOMAIN . (PORT === '80' ? '' : ':' . PORT) . SITE_PATH);
-	define('SITE_ROOT', PROTOCOL . '://' . DOMAIN . '/EventosWeb/' );
+	define('SITE_ROOT', PROTOCOL . '://' . DOMAIN . '/pjrclinica/' );
 		
 ?>

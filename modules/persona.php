@@ -1,15 +1,15 @@
 <?php
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Persona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Persona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Especializacion.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Especializacion.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Area.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Area.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_TipoPersona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_TipoPersona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Persona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Persona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Especializacion.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Especializacion.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Area.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Area.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_TipoPersona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_TipoPersona.php');
 	
-	//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessclinica/business_Usuario.php');
-	//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Usuario.php');
+	//include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessclinica/business_Usuario.php');
+	//include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Usuario.php');
 
 
 
@@ -43,6 +43,9 @@
 			case 'index':
 					view_Index();
 				break;
+			case 'busquedanPersonal':
+					view_BusquedaPersona();
+				break;
 			case 'gestionarPersona':
 					view_gestionarPersona();
 				break;
@@ -51,6 +54,9 @@
 				break;
 			case 'generar':
 					view_Generar();
+				break;
+			case 'reporteEnfermeria':
+					view_reporteEnfermeria();
 				break;
 			default:
 				header('Location: ../errors/404.php?sesion='.$sex);  
@@ -83,6 +89,11 @@
 			case 'xP6riiTOHxk':
 					fnc_listarPersonaPorIdArea();
 				break;
+			case 'AFTG56HY123':
+					fnc_listarPersonaParaBuscar();
+				break;
+
+				
 			default:
 				header('Location: ../errors/404.php?sesion='.$sex);  
 				break;
@@ -95,6 +106,16 @@
 	//===========================================================================
 	//	VISTAS   fnc_AgregarPersonaRegistrarEvento
 	//===========================================================================
+
+	function view_reporteEnfermeria(){
+		
+		@session_start();
+		$menu_activo = "gestionPersonal";
+		$menu_open 	 = "gestionPersonal";
+		include('../views/includes/header.php');
+	    include('../views/mod_persona/reporteEnfermeria.php');
+	    include('../views/includes/footer.php');
+	}
 
 	function view_Index()
 	{
@@ -114,6 +135,15 @@
 		$menu_open = "gestionPersonal";
 		include('../views/includes/header.php');
 	    include('../views/mod_persona/gestion.php');
+	    include('../views/includes/footer.php');
+	}
+
+	function view_BusquedaPersona(){
+		@session_start();
+		$menu_activo = "busquedanPersonal";
+		$menu_open = "gestionPersonal";
+		include('../views/includes/header.php');
+	    include('../views/mod_persona/busqueda.php');
 	    include('../views/includes/footer.php');
 	}
 	function view_Generar()
@@ -221,6 +251,21 @@
 	//===========================================================================
 	//	FUNCIONES
 	//===========================================================================
+
+	function fnc_listarPersonaParaBuscar()
+	{
+		
+		$business_Persona = new business_Persona();
+		$dtListarPersonas =  $business_Persona -> fncBusinessListarPersonaParaBuscar();
+		//echo json_encode($dtListarPersonas,JSON_UNESCAPED_UNICODE);
+		$json_data = array(
+	
+			"data" => $dtListarPersonas   // total data array
+		);
+		echo json_encode($json_data);
+
+	}
+
 
 	function fnc_listarPersonasPorArea()
 	{
@@ -646,6 +691,8 @@
 			$data_Persona -> setSexo($_GET["id_selectSexo"]);
 			$data_Persona -> setId_especializacion($_GET["id_selectEspecializacion"]);
 			$data_Persona -> setId_tipoPersona($_GET["id_selectTipoPersona"]);
+			$data_Persona -> setTelefono($_GET["id_txtTelf"]);
+
 			$data_Persona -> setEstado(1);
 
 			$dataPersona = $business_Persona ->fnc_buscarPersonaPorDni($data_Persona -> getDni());

@@ -1,7 +1,7 @@
 <?php 
 
-    include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Chip.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessGps/business_Chip.php');
+    include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Chip.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businesspjrclinica/business_Chip.php');
     
     
 

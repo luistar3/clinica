@@ -1,33 +1,26 @@
 <?php 
 
 include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/connection.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_TipoPersona.php');
+//include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Area.php');
 include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/complements/funciones.php');
 //include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/complements/navegador.php');
 
-class business_TipoPersona
+class business_Turno
 {
 
-  public function fncBusinessListarTipoPersona(){
+  public function fncBusinessListarturno($idUsuario){
 
 			@session_start();
 			$connection = new connection();
 			$connectionstatus = $connection -> openConnection();
 			if ($connectionstatus) 
 			{
-				$sql = "usp_Clinica_TipoPersona_ListarTipoPersona";
+				$sql = "usp_Clinica_Log_listarTurno";
 						//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 						// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
 				$proc = mssql_init($sql, $connectionstatus); 
-							// mssql_bind($proc, '@USRId', $USRId, SQLINT4, false, false, 10);
-							// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
-
-							// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
-							// mssql_bind($proc, '@varDni', $varDni, SQLVARCHAR, false, false, 10); 
-							// mssql_bind($proc, '@intEdad', $intEdad, SQLINT4, false, false, 10); 
-							// mssql_bind($proc, '@IdGradoAcademico', $IdGradoAcademico, SQLINT4, false, false, 10); 
-							// mssql_bind($proc, '@IdSectorAcademico', $IdSectorAcademico, SQLINT4, false, false, 10); 
-
+				mssql_bind($proc, '@idUsuario', $idUsuario, SQLINT4, false, false, 10);
+				
 				$result = mssql_execute($proc);
 				$devolver = sqlsrv_getdata($result);
 				$connection -> closeConnection($connectionstatus);
@@ -42,18 +35,48 @@ class business_TipoPersona
 				echo 'Tenemos un problema: ' . mssql_get_last_message();
 			}
 	}
-	public function fnc_reporteCantidadChipsPorOperador(){
+
+
+	public function fncBusinessListarturno2(){
 
 		@session_start();
 		$connection = new connection();
 		$connectionstatus = $connection -> openConnection();
 		if ($connectionstatus) 
 		{
-			$sql = "usp_Gps_Chip_CantidadPorOperador";
+			$sql = "usp_Clinica_Log_listarTurno2";
+					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
+					// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
+			$proc = mssql_init($sql, $connectionstatus); 
+			//mssql_bind($proc, '@idUsuario', $idUsuario, SQLINT4, false, false, 10);
+			
+			$result = mssql_execute($proc);
+			$devolver = sqlsrv_getdata($result);
+			$connection -> closeConnection($connectionstatus);
+			unset($connectionstatus);
+			unset($connection);
+			return $devolver;
+		} 
+		else 
+		{
+			unset($connectionstatus);
+			unset($connection);
+			echo 'Tenemos un problema: ' . mssql_get_last_message();
+		}
+}
+
+	public function fnc_BusinessbuscarTurnoPendiente($idUsuario){
+
+		@session_start();
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Log_verificarTurnoPendiente";
 					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 			// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
 			$proc = mssql_init($sql, $connectionstatus); 
-						// mssql_bind($proc, '@USRId', $USRId, SQLINT4, false, false, 10);
+			mssql_bind($proc, '@idUsuario', $idUsuario, SQLINT4, false, false, 10);
 			// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
 
 						// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
@@ -77,25 +100,18 @@ class business_TipoPersona
 		}
 }
 
-public function fnc_reporteCantidadDeDineroPorOperador(){
+public function fnc_horaServidor(){
 
 	@session_start();
 	$connection = new connection();
 	$connectionstatus = $connection -> openConnection();
 	if ($connectionstatus) 
 	{
-		$sql = "usp_Gps_Chip_CantidadDineroPorOperador";
+		$sql = "usp_Clinica_horaServidor";
 				//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 		// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
 		$proc = mssql_init($sql, $connectionstatus); 
-					// mssql_bind($proc, '@USRId', $USRId, SQLINT4, false, false, 10);
-		// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
-
-					// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
-					// mssql_bind($proc, '@varDni', $varDni, SQLVARCHAR, false, false, 10); 
-					// mssql_bind($proc, '@intEdad', $intEdad, SQLINT4, false, false, 10); 
-					// mssql_bind($proc, '@IdGradoAcademico', $IdGradoAcademico, SQLINT4, false, false, 10); 
-					// mssql_bind($proc, '@IdSectorAcademico', $IdSectorAcademico, SQLINT4, false, false, 10); 
+					
 
 		$result = mssql_execute($proc);
 		$devolver = sqlsrv_getdata($result);
@@ -112,25 +128,76 @@ public function fnc_reporteCantidadDeDineroPorOperador(){
 	}
 }
 
-	public function fnc_buscarChipPorNumero($numero){
+	public function fnc_ActualizarTurno($numero){
 		//@session_start();
 		$connection = new connection();
 		$connectionstatus = $connection -> openConnection();
 		if ($connectionstatus) 
 		{
-			$sql = "usp_Gps_Chip_BusarPorNumero";
+			$sql = "usp_Clinica_Log_ActualizarTurno";
 					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 			// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
 			$proc = mssql_init($sql, $connectionstatus); 
-			mssql_bind($proc, '@numeroChip', $numero, SQLVARCHAR, false, false, 18);
-			// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
+			mssql_bind($proc, '@idLog', $numero, SQLINT4, false, false, 18);
+			
+			$result = mssql_execute($proc);
+			if ($result) {
+				$connection -> closeConnection($connectionstatus);
+				unset($connectionstatus);
+				unset($connection);
+				return true;
+			}else{
+				$connection -> closeConnection($connectionstatus);
+				unset($connectionstatus);
+				unset($connection);
+				return false;
+			}
+		
+	}
+}
 
-						// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
-						// mssql_bind($proc, '@varDni', $varDni, SQLVARCHAR, false, false, 10); 
-						// mssql_bind($proc, '@intEdad', $intEdad, SQLINT4, false, false, 10); 
-						// mssql_bind($proc, '@IdGradoAcademico', $IdGradoAcademico, SQLINT4, false, false, 10); 
-						// mssql_bind($proc, '@IdSectorAcademico', $IdSectorAcademico, SQLINT4, false, false, 10); 
+	public function fnc_ActualizarTurno2($idLog,$idUsuario){
+		//@session_start();
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Log_ActualizarTurno2";
+					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
+			// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
+			$proc = mssql_init($sql, $connectionstatus); 
+			mssql_bind($proc, '@idLog', $idLog, SQLINT4, false, false, 10);
+			mssql_bind($proc, '@idUsuario', $idUsuario, SQLINT4, false, false, 10);
+			
+			$result = mssql_execute($proc);
+			if ($result) {
+				$connection -> closeConnection($connectionstatus);
+				unset($connectionstatus);
+				unset($connection);
+				return true;
+			}else{
+				$connection -> closeConnection($connectionstatus);
+				unset($connectionstatus);
+				unset($connection);
+				return false;
+			}
+		
+	}
+	}
 
+	public function fnc_buscarRegistro($idLog,$idUsuario){
+		//@session_start();
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Log_buscarRegistro";
+					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
+			// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
+			$proc = mssql_init($sql, $connectionstatus); 
+			mssql_bind($proc, '@idLog', $idLog, SQLINT4, false, false, 10);
+			mssql_bind($proc, '@idUsuario', $idUsuario, SQLINT4, false, false, 10);
+			
 			$result = mssql_execute($proc);
 			$devolver = sqlsrv_getdata($result);
 			$connection -> closeConnection($connectionstatus);
@@ -144,38 +211,21 @@ public function fnc_reporteCantidadDeDineroPorOperador(){
 			unset($connection);
 			echo 'Tenemos un problema: ' . mssql_get_last_message();
 		}
-		
 	}
-	public function fnc_insertarChip($chip){
-		//@session_start();
+
+	public function fnc_insertarNuevoTurno($idUsuario){
+		@session_start();
 		$connection = new connection();
 		$connectionstatus = $connection -> openConnection();
 		if ($connectionstatus) 
 		{
-			$sql = "usp_Gps_Chip_Insertar";
-
-			$operador 		= $chip -> getOperador();
-			$tipo_contrato  = $chip -> getTipo_contrato();
-			$numero 		= $chip -> getNumero();
-			$fechacontrato  = $chip -> getFechacontrato();
-			$tarifa 		= $chip -> getTarifa();
-					//$USRId = $_SESSION['usuario']["ses_USRId"] ;
+			$sql = "usp_Clinica_Log_insertarNuevoTurno";
+			//$USRId = $_SESSION['usuario']["ses_USRId"] ;
 			// echo "usp_Sed_S_Egresado_Consultar ".$USRId.', '.$idPtaDependenciaFijo.', '.$NombreApellido.', '.$varDni.', '.$intEdad.', '.$IdGradoAcademico.', '.$IdSectorAcademico;
 			$proc = mssql_init($sql, $connectionstatus); 
-			mssql_bind($proc, '@operador', $operador, SQLVARCHAR, false, false, 50);
-			mssql_bind($proc, '@tipo_contrato', $tipo_contrato, SQLVARCHAR, false, false, 50);
-			mssql_bind($proc, '@numero', $numero, SQLVARCHAR, false, false, 50);
-			mssql_bind($proc, '@fechacontrato', $fechacontrato, SQLVARCHAR, false, false, 50);
-			mssql_bind($proc, '@tarifa', $tarifa, SQLVARCHAR, false, false, 50);
-			// mssql_bind($proc, '@IdPtaDependenciaFijo', $idPtaDependenciaFijo, SQLINT4, false, false, 10);
+			mssql_bind($proc, '@idUsuario', $idUsuario, SQLVARCHAR, false, false, 50);
 
-						// mssql_bind($proc, '@NombreApellido', $NombreApellido, SQLVARCHAR, false, false, 10); 
-						// mssql_bind($proc, '@varDni', $varDni, SQLVARCHAR, false, false, 10); 
-						// mssql_bind($proc, '@intEdad', $intEdad, SQLINT4, false, false, 10); 
-						// mssql_bind($proc, '@IdGradoAcademico', $IdGradoAcademico, SQLINT4, false, false, 10); 
-						// mssql_bind($proc, '@IdSectorAcademico', $IdSectorAcademico, SQLINT4, false, false, 10); 
-
-		 $result = mssql_execute($proc);
+		 	$result = mssql_execute($proc);
 
 		if ($result) {
 			$connection -> closeConnection($connectionstatus);
@@ -190,7 +240,7 @@ public function fnc_reporteCantidadDeDineroPorOperador(){
 		}
 			
 	}
-}
+	}
 
 
 public function fnc_BusinessModificarChip($chip){ 

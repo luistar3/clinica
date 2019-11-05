@@ -28,10 +28,12 @@
 
           listarUsuarios();
           listarPersonaSinUsuario();
+
+          fnc_listarSelectRoles();
+          fnc_listarSelectRolesInsertar();
       } 
     
-      fnc_listarSelectRoles();
-      fnc_listarSelectRolesInsertar();
+ 
 
 
      // prueba_notificacion();
@@ -43,13 +45,40 @@
       var contrasena = document.getElementById("idContrasena").value;
       var idrol = document.getElementById("idSelectRolUsuario").value;
       var idPersona = document.getElementById("idPersonaAgregarModificar").value;
+      var Nombre = document.getElementById("idNombrePersona").value;
+      var bol = true;
+      if (usuario == "") { bol=false;  }
+      if (contrasena == "") { bol=false;  }
+      if (idrol == "") { bol=false;  }
+      if (idPersona == "") { bol=false;  }
+      if (bol) {
+        var parametros={
+          'p':'PGT78JTOxk',
+          'usuario': usuario,
+          'contrasena': contrasena,
+          'idrol':idrol,
+          'idPersona':idPersona,
+          'Nombre' :Nombre
+        }  
 
-      var parametros={
-        'usuario': usuario,
-        'contrasena': contrasena,
-        'idrol':idrol,
-        'idPersona':idPersona
+        $.ajax({
+          type: "GET",
+          url: "../modules/permisos.php",
+          data: parametros,
+          success: function (response) {
+            if (response == "1") {
+              toastr.success('El Usuario fue Creado con exito', 'Exito', {timeOut: 5000});
+            } else {
+              toastr.error('El Usuario fue Creado con exito', 'Error', {timeOut: 5000});
+            }
+          }
+        });
+      }else{
+        toastr.error(' Datos Incompletos', 'Error', {timeOut: 5000});
       }
+
+    
+     
       console.log(parametros);
     }
 

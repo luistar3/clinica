@@ -1,9 +1,9 @@
 <?php 
 
-    include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Horario.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Horario.php');
-    include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Area.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Area.php');
+    include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Horario.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Horario.php');
+    include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Area.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Area.php');
     
 
 
@@ -84,6 +84,13 @@
 			case 'Rd5f84FT7D':
 					fnc_listarhorarioHoy();
 				break;
+			case 'Ud5FR4FT7D':
+					fnc_sacarFechaSumada();
+				break;
+			case 'ZXSDE34FR':
+					fnc_buscarDniReniec();
+			break;
+				
 			default:
 				header('Location: ../errors/404.php?sesion=');  
 				break;
@@ -196,6 +203,49 @@
 	//	FUNCIONES
 	//===========================================================================
 
+
+
+	function fnc_buscarDniReniec()
+	{
+		$dni = $_GET['dni'] ;
+		//echo($dni);
+		$api_url = "http://clientes.reniec.gob.pe/padronElectoral2012/consulta.htm?hTipo=2&hDni=".$dni;
+		$port = 80;
+		$ch = curl_init( );
+		curl_setopt ( $ch, CURLOPT_URL, $api_url );
+		curl_setopt ( $ch, CURLOPT_PORT, $port );
+		curl_setopt ( $ch, CURLOPT_POST, 1 );
+		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+		// Allowing cUrl funtions 20 second to execute
+		curl_setopt ( $ch, CURLOPT_TIMEOUT, 5 );
+		// Waiting 20 seconds while trying to connect
+		curl_setopt ( $ch, CURLOPT_CONNECTTIMEOUT, 5 );                                 
+		$response_string = curl_exec( $ch );
+ 
+		$porciones = explode('<td><table width="100%"  border="0" cellspacing="0" cellpadding="8">', $response_string);
+		if (count($porciones)==2) {
+		 $arrayDni = explode('class="txtCuerpo">', $porciones[1]);
+		 $segundoArrayDni = $arrayDni[2].$arrayDni[4].$arrayDni[8].$arrayDni[10].$arrayDni[12];
+		 $vowels = array("</td>", "</tr>", "", "<td", "</td>", "</table></td>",'</table>',"<tr");
+		 $tercerReplace =  str_replace($vowels, "",$segundoArrayDni);
+		 $ultimArray = explode('>', $tercerReplace);
+		 print_r($ultimArray);
+		}else{
+		  echo("No se encontro");  
+		}
+		
+	}
+
+
+	function fnc_sacarFechaSumada()
+	{
+		//@session_start();
+        //$menu_activo = "horarioEspecialidad";
+		$business_Horarios = new business_Horario();
+		$dtListarHorarios = $business_Horarios -> fncBusinessSacarFechaSumadaServidor($_GET["d"]);
+	
+		echo json_encode($dtListarHorarios);
+	}
 	
 	function fnc_listarArea()
 	{
@@ -385,10 +435,10 @@
 			$hora_f = date("H",$anio_f);
 			$minuto = date("i",$anio_s);
 			$codigoColor ="";
-			if ($hora>6 && $hora<14) {
+			if ($hora>6 && $hora<=12) {
 				$codigoColor ="#28a745";
 				//echo("<br>".$hora."-");
-			}elseif($hora>13 && $hora<20){
+			}elseif($hora>12 && $hora<20){
 				$codigoColor = "#ffc107";
 				//echo("<br>".$hora."-");
 			}else {
@@ -440,7 +490,7 @@
 			//echo("-<br>".$anio."-".$mes."-".$dia."-<br>".$id_persona.$id_area);
 			//echo(count($dt_horario)."<br>");
 			//print_r($dt_horario);
-			if (count($dt_horario)>0) {
+			if (count($dt_horario)>=2){
 
 				//if (($hora>=0 && $hora <=6) /*||  ($hora >= 19 && 23 >= $hora)*/ ) {
 				//$bolres = $business_Horarios -> fncBusinessAgregarHorario($data_horario);

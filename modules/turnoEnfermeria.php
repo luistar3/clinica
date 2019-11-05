@@ -4,9 +4,11 @@
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Especializacion.php');
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Especializacion.php');
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Area.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Usuario.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Usuario.php');
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Area.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_TipoPersona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_TipoPersona.php');
+	//include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_TipoPersona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Turno.php');
 	
 	//include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessclinica/business_Usuario.php');
 	//include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Usuario.php');
@@ -43,8 +45,8 @@
 			case 'index':
 					view_Index();
 				break;
-			case 'gestionarPersona':
-					view_gestionarPersona();
+			case 'index2':
+					view_Index2();
 				break;
 			case 'editar':
 					view_AgregarEditar();
@@ -66,22 +68,40 @@
 		switch ($get_opcion) {
 
 			case '6x8RlHMFSK': 
-					fnc_AutenticarUsuario();
+					fnc_iniciarTurnoEnfermera();
 				break;
 			case 'J9Y0B7rh86':
-					fnc_listarPersonasPorArea();
+					fnc_VerificarTurnoPendiente();
 				break;
 			case 'xZ6rQTOHxk':
-					fnc_Agregar();
+					fnc_modificarTurno();
 				break;
 			case 'uctftGr4Jm':
-					fnc_eliminarUsuario();
+					fnc_agregarTurno();
 				break;
 			case 'eLXzIh5jMU':
-					fnc_camposAgregarPersona();
+					fnc_listarTurnosEnfermera();
 				break;
 			case 'xP6riiTOHxk':
-					fnc_listarPersonaPorIdArea();
+					fnc_listarTurnosEnfermera2();
+				break;
+			case 'xFRiiTOHxk':
+					fnc_listarTurnosEnfermeraReloj();
+				break;
+			case 'qRRTTOHxk':
+					fnc_terminarTurnoEnfermera();
+				break;
+			case '4GTYy67':
+					fnc_AgregarNuevoTurnoEnfermera();
+				break;
+			case 'GFHTER56':
+					fnc_listarPersonasTipoEnfermera();
+				break;
+			case 'FGERT567':
+					fnc_listarReporteEnfermera();
+				break;
+			case 'FtGht567':
+					fnc_listarReporteEnfermeraConsolidado();
 				break;
 			default:
 				header('Location: ../errors/404.php?sesion='.$sex);  
@@ -101,12 +121,25 @@
 		@session_start();
 
 		//echo(md5("123456"));
-        $menu_activo = "gestionArea";
-		$menu_open = "gestionArea";
+        $menu_activo = "Turno";
+		$menu_open = "Enfermeria";
 		include('../views/includes/header.php');
-		include('../views/mod_area/index.php');
+		include('../views/mod_turnoEnfermeria/index.php');
 		include('../views/includes/footer.php');
 	}
+
+	function view_Index2()
+	{
+		@session_start();
+
+		//echo(md5("123456"));
+        $menu_activo = "Turnog";
+		$menu_open = "Enfermeria";
+		include('../views/includes/header.php');
+		include('../views/mod_turnoEnfermeria/index2.php');
+		include('../views/includes/footer.php');
+	}
+
 
 	function view_gestionarPersona(){
 		@session_start();
@@ -118,109 +151,294 @@
 	}
 	function view_Generar()
 	{
-		if ($_SESSION['usuario']["ses_IdRol"]==1 ||$_SESSION['usuario']["ses_IdRol"]==2 ){
-
-
-			$menu_activo = "mantenimiento_persona_index";
-		}
-		else {
-			$menu_activo = "mantenimiento_evento_usuario_registro";
-		}
 		
-		
-		$IdPersona = $_GET["IdPersona"];
-		$nombre= $_GET["Nombre"];
-		$apellido= $_GET["Apellido"];
-		$dni = $_GET["Dni"];
-
-		$bolVistaPersona = 0;
-		if( isset($_GET["pal"]) ){
-			$bolVistaPersona = 1;
-		}else{
-			$bolVistaPersona = 0;
-		}
-
-		if( !isset($_GET["Dni"]) ){
-			$IdEvento = $_GET["IdEvento"];
-		}else{
-			$IdEvento = 0;
-		}
-		
-
-		$TipoPersona = $_GET["TipoPersona"];
-		if ($TipoPersona == 1) { 
-			$NomTipoUsuario = "Asociado";
-		}
-		else {
-			$NomTipoUsuario = "Invitado";
-		}
-		$encodeDni = base64_decode($dni);
-
-		$encodeDni = base64_encode('/'.$encodeDni);
-
-		$businessPersona = new business_Persona();
-
-		$dtPersona = array();
-
-		if( $IdEvento == 0 ){ 
-			$data_Persona= new data_Persona();
-			$data_Persona->setVarDni(base64_decode($_GET["Dni"]) );
-			$dtPersona = $businessPersona ->fncBusinessBuscarIdPorDni($data_Persona);
-		}else{
-			$dtPersona = $businessPersona ->fncBusinessGenerarPorIdEvento($IdEvento);
-		}
-
-		$dtPersona = utf8_converter($dtPersona);
-		$restric="";
-		if (isset($_GET['restric'])) {
-
-			$restric = $_GET['restric'];
-
-		}
-		
-
-
-
-
-
-	   include('../views/includes/header.php');
-	   include('../views/mod_persona/carnet.php');
-	   include('../views/includes/footer.php');
 	}
 
 	function view_AgregarEditar()
 	{
-        //@session_start();
-        //$url_parametros['sesion'] = $sex;
-        $menu_activo = "mantenimiento_persona_index";
-		//unset($_SESSION['empresa']);
-
-		// $business_SectorOcupacionalDetalle = new business_SectorOcupacionalDetalle();
-		// $dtConsultarSectorOcupacionalDetalleActivos = $business_SectorOcupacionalDetalle -> fncBusinessConsultarActivos();
-
-
-		 $operacion = $_GET["v"];
-		 if( $operacion == "editar" ){
-			$get_id = base64_decode($_GET["IdPersona"]) ;
-
-			$business_Persona = new business_Persona();
-			$dtConsultarPersona = $business_Persona -> fncBusinessConsultarPorId($get_id);
-			$dtConsultarPersona = utf8_converter($dtConsultarPersona);
-			if ( count($dtConsultarPersona) == 0 ){
-				header('Location: ../index.php?'); 
-			}
-        }
-     
-
-		include('../views/includes/header.php');
-		include('../views/mod_persona/add_edit.php');
-		include('../views/includes/footer.php');
+        
 	}
 
 
 	//===========================================================================
 	//	FUNCIONES
 	//===========================================================================
+
+	
+
+	function fnc_listarReporteEnfermera(){
+		@session_start();
+		//$idUsuario = $_SESSION['usuario']["ses_UsuarioId"];
+		$idUsuario = $_GET["idUsuario"];
+		$inicio = $_GET["idInicio"];
+		$fin = $_GET["idFin"];
+
+		// echo($idUsuario);
+		// echo($inicio);
+		// echo($fin);
+		$business_Persona = new business_Persona();
+		$dtListarReporteEnfermera =  $business_Persona -> fncBusinesslistarReporteEnfermera($idUsuario,$inicio,$fin);
+		
+		$json_data = array(
+	
+			"data" => $dtListarReporteEnfermera   // total data array
+		);
+		echo json_encode($json_data);
+	}
+
+	function fnc_listarReporteEnfermeraConsolidado(){
+		@session_start();
+		//$idUsuario = $_SESSION['usuario']["ses_UsuarioId"];
+		//$idUsuario = $_GET["idUsuario"];
+		$inicio = $_GET["idInicio"];
+		$fin = $_GET["idFin"];
+
+		// echo($idUsuario);
+		// echo($inicio);
+		// echo($fin);
+		$business_Persona = new business_Persona();
+		$dtListarReporteEnfermera =  $business_Persona -> fncBusinesslistarReporteEnfermeraConsolidado($inicio,$fin);
+		
+		$json_data = array(
+	
+			"data" => $dtListarReporteEnfermera   // total data array
+		);
+		echo json_encode($json_data);
+	}
+	function fnc_listarPersonasTipoEnfermera(){
+		
+		$business_Persona = new business_Persona();
+		$dtListarPersonas =  $business_Persona -> fncBusinesslistarPersonasTipoEnfermera();
+		//echo json_encode($dtListarPersonas,JSON_UNESCAPED_UNICODE);
+		echo json_encode($dtListarPersonas,JSON_UNESCAPED_UNICODE);
+	}
+	function fnc_AgregarNuevoTurnoEnfermera(){
+		$usuario =  $_GET["usuario"];
+		$password = md5( $_GET["password"]);
+		$data_Usuario 					= new data_Usuario;
+		$data_Usuario->setUsuario($usuario);
+		$data_Usuario->setContrasena($password);
+		$business_Usuario 				= new business_Usuario();
+		$bussines_turno = new business_Turno();
+		$dtAutenticarUsuario	 	= $business_Usuario -> fncBusinessAutenticarUsuario($data_Usuario);
+		//print_r($dtAutenticarUsuario);
+		
+
+		if (count($dtAutenticarUsuario)) {
+			# code...
+			
+			$dataTurnoPendiente =  $bussines_turno -> fnc_BusinessbuscarTurnoPendiente($dtAutenticarUsuario[0]["id_usuario"]);
+			if ($dataTurnoPendiente[0]["Pendiente"]=="0") {
+				
+	
+				$bolAgrear = $bussines_turno ->fnc_insertarNuevoTurno($dtAutenticarUsuario[0]["id_usuario"]);
+				if ($bolAgrear) {
+					echo("1");
+				}else{
+					echo("2"); // NO SE AGREGO .
+				}
+			}else{
+				echo("3");  // TIENE TRUNBIO PENDIENTE
+	
+			}
+		}
+		else{
+			echo("10");
+		}
+		
+		
+	}
+	function fnc_terminarTurnoEnfermera(){
+		$usuario = $_GET["usuario"];
+		$password = $_GET["password"];
+		$idLog =$_GET["idLog"];
+
+		$business_Usuario 				= new business_Usuario();
+		$data_Usuario 					= new data_Usuario;
+
+		$data_Usuario->setUsuario($usuario);
+		$data_Usuario->setContrasena(md5($password) );
+
+		$dtAutenticarUsuario	 	= $business_Usuario -> fncBusinessAutenticarUsuario($data_Usuario);
+
+		if (count($dtAutenticarUsuario)){
+
+			$bussines_turno = new business_Turno();
+			
+			$dataregistro = $bussines_turno -> fnc_buscarRegistro($idLog,$dtAutenticarUsuario[0]['id_usuario']);
+
+			if ( is_null( $dataregistro[0]['FinTurno'])) {
+				$bolModifico = $bussines_turno ->fnc_ActualizarTurno2($idLog,$dtAutenticarUsuario[0]['id_usuario']);
+				//echo($dtAutenticarUsuario[0]['id_usuario'].' '.$idLog);
+				if ($bolModifico) {
+					echo("1");
+				//	print_r($dtAutenticarUsuario);
+				}
+				else{
+					echo("2");
+				}
+			}else{
+				echo("4");
+			}
+			
+			// $bussines_turno = new business_Turno();
+			// $bolModifico = $bussines_turno ->fnc_ActualizarTurno($idLog);
+		}else{
+			echo("0");
+		}
+		
+	}
+	function fnc_modificarTurno(){
+
+		@session_start();
+		$idUsuario = $_SESSION['usuario']["ses_UsuarioId"];
+		$idLog = $_GET['idLog'];
+		$accion = $_GET['T'];
+		
+		$bussines_turno = new business_Turno();
+
+		$data_turnos = $bussines_turno -> fnc_BusinessbuscarTurnoPendiente($idUsuario);
+		
+		
+			
+			if ($data_turnos[0]['Pendiente']=='1' && $idLog==$data_turnos[0]['id_log'] ) {
+				$idLog = $data_turnos[0]['id_log'];
+				$bolModifico = $bussines_turno ->fnc_ActualizarTurno($idLog);
+				if ($bolModifico) {
+					echo('1');
+				}else{
+					echo('3');
+				}
+			} else{
+				echo("0");
+			}
+
+	}
+	function fnc_agregarTurno(){
+
+		@session_start();
+		$idUsuario = $_SESSION['usuario']["ses_UsuarioId"];
+		$idLog = $_GET['idLog'];
+		$accion = $_GET['T'];
+		
+		$bussines_turno = new business_Turno();
+
+		$data_turnos = $bussines_turno -> fnc_BusinessbuscarTurnoPendiente($idUsuario);
+		
+		
+			
+			if ($data_turnos[0]['Pendiente']=='0') {
+				$idLog = $data_turnos[0]['id_log'];
+				$bolAgrear = $bussines_turno ->fnc_insertarNuevoTurno($idUsuario);
+				if ($bolAgrear) {
+					echo('1');
+				}else{
+					echo('3');
+				}
+			} else{
+				echo("0");
+			}
+
+	}
+	function fnc_VerificarTurnoPendiente()
+	{
+		@session_start();
+		$idUsuario = $_SESSION['usuario']["ses_UsuarioId"];
+		
+		$bussines_turno = new business_Turno();
+		$data_turnos = $bussines_turno -> fnc_BusinessbuscarTurnoPendiente($idUsuario);
+		$horaServidor = $bussines_turno -> fnc_horaServidor();
+
+
+
+		if (count($data_turnos)==0) {
+			$json_data = array(
+	
+				"tiempo" => '0',
+				'reloj'	=> '0',
+				'idLog' => '0'
+				
+			   // total data array
+			);
+			echo json_encode($json_data);
+		}
+		else{
+			if ($data_turnos[0]['Pendiente']=='1') {
+				
+				$inicioFecha = strtotime($data_turnos[0]['InicioTurno']);
+				$idLog = $data_turnos[0]['id_log'];
+				$hoy = strtotime($horaServidor[0]['Fecha']);
+				$restatiempo = $hoy -$inicioFecha;
+				$json_data = array(
+	
+					'tiempo' => $restatiempo,
+					'reloj'	=> '1',
+					'idLog' => $idLog
+
+				   // total data array
+				);
+				echo json_encode($json_data);
+
+			} else {
+				$json_data = array(
+	
+					"tiempo" => '0',
+					'reloj'	=> '0',
+					'idLog' => '0'
+					
+				   // total data array
+				);
+				echo json_encode($json_data);
+			}
+			
+		}
+		
+
+		//print_r($data_turnos);
+
+		//echo json_encode($data_turnos);
+	}
+	function fnc_listarTurnosEnfermera(){
+		@session_start();
+		$idUsuario = $_SESSION['usuario']["ses_UsuarioId"];
+		$bussines_turno = new business_Turno();
+		$data_turnos = $bussines_turno -> fncBusinessListarturno($idUsuario);
+		
+		$json_data = array(
+	
+			"data" => $data_turnos   // total data array
+		);
+		echo json_encode($json_data);
+	}
+
+	function fnc_listarTurnosEnfermera2(){
+		@session_start();
+		$idUsuario = $_SESSION['usuario']["ses_UsuarioId"];
+		$bussines_turno = new business_Turno();
+		$data_turnos = $bussines_turno -> fncBusinessListarturno2();
+		
+		$json_data = array(
+	
+			"data" => $data_turnos   // total data array
+		);
+		echo json_encode($json_data);
+	}
+	function fnc_listarTurnosEnfermeraReloj(){
+		@session_start();
+		$idUsuario = $_SESSION['usuario']["ses_UsuarioId"];
+		$bussines_turno = new business_Turno();
+		$data_turnos = $bussines_turno -> fncBusinessListarturno2();
+		
+	
+		echo json_encode($data_turnos);
+	}
+
+	function fnc_iniciarTurnoEnfermera(){
+		@session_start();
+		$idUsuario = $_SESSION['usuario']["ses_UsuarioId"];
+
+
+	}
 
 	function fnc_listarPersonasPorArea()
 	{

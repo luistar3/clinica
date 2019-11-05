@@ -105,6 +105,15 @@
                    
                     <input type="date"  id="fechaEliminar" class="form-control" disabled>
                   </div>
+
+                  <div class="input-group">
+                    
+                   
+                   
+                   <select name="" class="form-control" id="idSelectHoraEliminar" >
+                  
+                   </select>
+                  </div>
                   <!-- /.input group -->
 
 
@@ -124,6 +133,9 @@
                         <button title="Dia Anterior"  id ="idDiaAnteriorTablaHorarios" class="btn btn-info"><i class="fas fa-caret-left"></i></i></button>
                         <button title="Dia Siguiente" id ="idDiaSiguienteTablaHorarios" class="btn btn-info"><i class="fas fa-caret-right"></i></i></button>
                         <!-- <button  class="btn btn-info"><i class="fas fa-caret-right"></i></i></button> -->
+           
+
+                        <input type="date" name="" id="idFechaActualSumar" disabled >
                 </div>
                 <div id="calendar" class="card-body" style="min-height:700px;" >
                 <input type="hidden" id="diasAnteriorSiguiente" name="" value="0">

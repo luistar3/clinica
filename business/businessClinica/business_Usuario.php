@@ -1,8 +1,8 @@
 <?php
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/connection.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Usuario.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/funciones.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/navegador.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/connection.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Usuario.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/complements/funciones.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/complements/navegador.php');
 
 
 class business_Usuario
@@ -35,6 +35,39 @@ class business_Usuario
 			echo 'Tenemos un problema: ' . mssql_get_last_message();
 		}
 	}
+
+
+	public function fncBusinessLogUsuario($idUsuario,$login)
+	{
+		
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Login_insertar";
+			$proc = mssql_init($sql, $connectionstatus);  
+
+			mssql_bind($proc, '@idUsuario', $idPersona, SQLINT4, false, false, 10); 
+			mssql_bind($proc, '@login', $login, SQLINT4, false, false, 10);
+			//mssql_bind($proc, '@Contrasena', $DataUsuario->getContrasena(), SQLVARCHAR, false, false, 10); 
+
+			$result = mssql_execute($proc);
+			$devolver = sqlsrv_getdata($result);
+			$connection -> closeConnection($connectionstatus);
+			unset($connectionstatus);
+			unset($connection);
+			return $devolver;
+		} 
+		else 
+		{
+			unset($connectionstatus);
+			unset($connection);
+			echo 'Tenemos un problema: ' . mssql_get_last_message();
+		}
+	}
+
+
+
 	public function fncBusinessVerificarPermisos($id)
 	{
 		

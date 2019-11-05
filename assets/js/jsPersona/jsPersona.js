@@ -25,8 +25,82 @@ $('document').ready(function(){
         
     }
 
+    // para cargar tabla de buiscaqueda de todsa las personas
+    if ( document.getElementById( "id_tablaBuscarPersonas" )) {
+
+      fnc_listarTodasLasersonasParaBusqueda();
+    }
+
 
 });
+
+function fnc_listarTodasLasersonasParaBusqueda(){
+  var table = $('#id_tablaBuscarPersonas').DataTable();
+    table.clear();
+    table.destroy();
+
+    //$('#tablaListarChip').empty(); // empty in case the columns change
+
+    //document.getElementById("chipLlenar").innerHTML = '<tr id="chipLlenar"><th></th> < th class="table-plus datatable-nosort" > Numero Chip</th >   <th>Tipo Contrato</th> <th>Operador</th><th>Fecha Contrato</th> <th>Meses de Servicio</th> <th>Tarifa</th>th>Traza</th> <th></th>';
+  var parametros= {
+    'p': 'AFTG56HY123'
+  }
+      var table = $('#id_tablaBuscarPersonas').DataTable({
+ 
+          "scrollX": true,
+          "destroy":true,
+          "ajax": {
+              url: "../modules/persona.php", // json datasource				
+              type: 'GET',  // method  , by default get
+              data : parametros
+
+          },
+        
+          'columns': [
+          { data: 'Dni' },
+          { data: 'Nombre' },
+          { data: 'ApePat'},
+          { data: 'ApeMat'},
+          { data: 'Sexo'},
+          { data: 'Area'}
+          
+          ],
+          
+          responsive: false,
+          columnDefs: [{
+              targets: "datatable-nosort",
+              orderable: false,
+              
+          }
+          ],
+          
+          "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+          "language": {
+              "info": "_START_-_END_ de _TOTAL_ registros",
+              searchPlaceholder: "Search"
+          },
+          dom: 'Blfrtip',
+          buttons: [
+          'copy', 'csv', 'pdf', 'print'
+          ]
+  
+
+      });
+
+      
+
+    $('#id_tablaBuscarPersonas tbody').off('click');
+    $('#id_tablaBuscarPersonas tbody').on( 'click', '#editarChip', function () {
+     
+       
+    } );
+
+    $('#id_tablaBuscarPersonas tbody').on( 'click', '#verHorario', function () {
+
+      
+    } );
+
+}
 
 function fnc_guardarModificarPersona() {
     var id_persona = document.getElementById("id_persona").value;
@@ -34,10 +108,13 @@ function fnc_guardarModificarPersona() {
     var id_txtNombrePersona = document.getElementById("id_txtNombrePersona").value;
     var id_txtApePatPersona = document.getElementById("id_txtApePatPersona").value;
     var id_txtApeMatPersona = document.getElementById("id_txtApeMatPersona").value;
+    var id_txtTelf = document.getElementById("id_txtTelf").value;
     var id_selectArea = document.getElementById("id_selectArea").value;
     var id_selectSexo = document.getElementById("id_selectSexo").value;
     var id_selectEspecializacion = document.getElementById("id_selectEspecializacion").value;
     var id_selectTipoPersona = document.getElementById("id_selectTipoPersona").value;
+    
+    
     //var id_btnGuardarModificarPersona = document.getElementById("id_btnGuardarModificarPersona").disabled=true;
 
     var validacion = true;
@@ -58,7 +135,8 @@ function fnc_guardarModificarPersona() {
         "id_selectArea"           : id_selectArea,
         "id_selectSexo"           : id_selectSexo,
         "id_selectEspecializacion": id_selectEspecializacion,
-        "id_selectTipoPersona"    : id_selectTipoPersona
+        "id_selectTipoPersona"    : id_selectTipoPersona,
+        "id_txtTelf"              : id_txtTelf
       }
       console.log(parametros);
 
@@ -120,7 +198,8 @@ function fnc_enviarNuevaPersona(parametros){
     //  
     },
     complete : function(xhr, status) {
-    //
+      var seleccion = document.getElementById("id_selectAreaBuscar").value;
+        fnc_listarPersonasPoArea(seleccion);
     }
   });
 
@@ -134,6 +213,8 @@ function fnc_nuevoRegistroPersonaLimpiar(){
       document.getElementById("id_txtNombrePersona").value="";
       document.getElementById("id_txtApePatPersona").value="";
       document.getElementById("id_txtApeMatPersona").value="";
+      document.getElementById("id_txtTelf").value="";
+
       // document.getElementById("id_selectArea").value="";
       // document.getElementById("id_selectSexo").value="";
       // document.getElementById("id_selectEspecializacion").value="";
@@ -306,6 +387,7 @@ function fnc_listarPersonasPoArea(id_Area){
       document.getElementById("id_selectSexo").value=data["Sexo"];
       document.getElementById("id_selectEspecializacion").value=data["id_especializacion"];
       document.getElementById("id_selectTipoPersona").value=data["id_tipo_persona"];
+      document.getElementById("id_txtTelf").value=data["telefono"];
       document.getElementById("id_btnGuardarModificarPersona").disabled=false;
       
       $('.select2').select2({ theme: 'bootstrap4'});

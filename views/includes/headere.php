@@ -95,7 +95,7 @@
           <span class="dropdown-item dropdown-header">Opciones</span>
           <div class="dropdown-divider"></div>
           <a href="../modules/usuario.php?p=eLXzIh5jMU" class="dropdown-item">
-          <i class="fas fa-door-open"></i> Cerrar Sesion
+          <i class="fas fa-door-open"></i> Cerrar Sesión
             
           </a>
           <!-- <div class="dropdown-divider"></div>

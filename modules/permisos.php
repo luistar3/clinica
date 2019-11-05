@@ -1,16 +1,16 @@
 <?php
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Persona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Persona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Especializacion.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Especializacion.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Area.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Area.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_TipoPersona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_TipoPersona.php');
-	include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessClinica/business_Rol.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Persona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Persona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Especializacion.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Especializacion.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Area.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Area.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_TipoPersona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_TipoPersona.php');
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Rol.php');
 	
-	//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessclinica/business_Usuario.php');
-	//include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Usuario.php');
+	//include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessclinica/business_Usuario.php');
+	//include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Usuario.php');
 
 
 
@@ -86,6 +86,9 @@
 				break;
 			case 'RP6rTTTOxk':
 					fnc_listarPersonasinUsuario();
+				break;
+			case 'PGT78JTOxk':
+					fnc_insertarUsuario();
 				break;
 			default:
 				header('Location: ../errors/404.php?sesion='.$sex);  
@@ -225,6 +228,29 @@
 	//===========================================================================
 	//	FUNCIONES
 	//===========================================================================
+	
+	function fnc_insertarUsuario()
+	{
+		$usuario = $_GET["usuario"];
+		$idRol = $_GET["idrol"];
+		$contrasena = $_GET["contrasena"];
+		$idPersona = $_GET["idPersona"];
+		$nombre = $_GET["Nombre"];
+
+		$business_usuario = new business_Rol();
+		$dtListarUsuario =  $business_usuario -> fncBusinessVerificarExistenciaUsuario($usuario);
+		if (count($dtListarUsuario)>0) {
+		echo("0");
+		}else{
+			
+		$bolInsertUsuario = $business_usuario -> fncBusinessInsertarUsuario($idRol,$usuario,$contrasena,$nombre,$idPersona);
+
+
+		echo("1");
+		}
+		//echo json_encode($dtListarPersonas,JSON_UNESCAPED_UNICODE);
+
+	}
 
 	function fnc_listarPersonasPorArea()
 	{

@@ -83,10 +83,15 @@
 
 
 
+<!-- flipClock -->
+<script src="../assets/plugins/flipClock/flipclock.js"></script>
+<script src="../assets/plugins/flipClock/flipclock.min.js"></script>
+
 <!-- Filterizr-->
 <script src="../assets/plugins/filterizr/jquery.filterizr.min.js"></script>
 
-
+ <!-- countDown -->
+ <script src="../assets/plugins/countDown/jquery.missofis-countdown.js"></script>
 <!-- Ekko Lightbox -->
 <script src="../assets/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
 <!-- TOASTR -->
@@ -98,6 +103,9 @@
 
 <script src="../assets/js/jsPersona/jsPersona.js"></script>
 <script src="../assets/js/jsPermisos/jsPermisos.js"></script>
+<script src="../assets/js/jsTurnoEnfermeria/jsTurnoEnfermeria.js"></script>
+<script src="../assets/js/jsTurnoEnfermeria/jsTurnoEnfermeria2.js"></script>
+<script src="../assets/js/jsPersona/jsEnfermeraReporte.js"></script>
 
 <script>
 

@@ -16,6 +16,7 @@
 		private $Estado ;
 		private $id_tipoPersona;
 		private $id_especializacion ;
+		private $telefono ;
 
 		/**
 		 * Get the value of id_persona
@@ -275,6 +276,26 @@
 		public function setArea($Area)
 		{
 				$this->Area = $Area;
+
+				return $this;
+		}
+
+		/**
+		 * Get the value of telefono
+		 */ 
+		public function getTelefono()
+		{
+				return $this->telefono;
+		}
+
+		/**
+		 * Set the value of telefono
+		 *
+		 * @return  self
+		 */ 
+		public function setTelefono($telefono)
+		{
+				$this->telefono = $telefono;
 
 				return $this;
 		}

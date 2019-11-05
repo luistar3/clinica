@@ -1,7 +1,7 @@
 var gl_id_horarioEliminar=0;
 
 $('document').ready(function(){
-       
+  fnc_mostrarFechaSuperior();
   if ( document.getElementById( "listaHorariosVer" )) {
     listarhorarioHoy();
   }
@@ -69,6 +69,10 @@ $('document').ready(function(){
         fnc_agregarHorario();
       });
 
+      
+      $("#id_btn_buscarDniReniec" ).click(function() {
+        fnc_buscarDni();
+      });
       $("#id_btn_eliminarHorario" ).click(function() {
         fnc_eliminarHorarioExistente();
       });
@@ -80,6 +84,7 @@ $('document').ready(function(){
         d = parseInt(d)-1;
         document.getElementById("diasAnteriorSiguiente").value=d;
         listarhorarioHoy();
+        fnc_mostrarFechaSuperior();
 
       });
       $("#idDiaSiguienteTablaHorarios" ).click(function() {
@@ -89,6 +94,13 @@ $('document').ready(function(){
         d = parseInt(d)+1;
         document.getElementById("diasAnteriorSiguiente").value=d;
         listarhorarioHoy();
+        fnc_mostrarFechaSuperior();
+      });
+
+
+      $("#id_btn_buscarDniReniec" ).click(function() {
+        
+        fnc_buscarDni();
       });
     //--bton de siguiente y anterior dias  
 
@@ -127,8 +139,48 @@ $('document').ready(function(){
 
     });
 
+    function fnc_buscarDni(){
+
+      var  dni  = document.getElementById('idTxtDniBuscar').value;
+      var parametros = {
+        'p': 'ZXSDE34FR',
+        'dni': dni
+      }
+      $.ajax({
+        type: "GET",
+        url: "../modules/horario.php",
+        data: parametros,
+        
+        success: function (response) {
+          
+            document.getElementById("idTxtMostrarDatosDni").value=response;
+        }
+      });
+    }
+
+    function fnc_mostrarFechaSuperior() {
+ 
+      var d = document.getElementById("diasAnteriorSiguiente").value;
+      var parametros = {
+       'p':'Ud5FR4FT7D',
+       'd' : d
+      }
+      
+      $.ajax({
+        type: "GET",
+        url: "../modules/horario.php",
+        data: parametros,
+      
+        success: function (response) {
+          var b = JSON.parse(response);
+          document.getElementById("idFechaActualSumar").value=b["0"]["fecha"];
+        }
+      });
+    }
+
+
     function fnc_eliminarHorarioExistente(){
-      var id_horario_eliminar = document.getElementById("id_horario_eliminar").value;
+      var id_horario_eliminar = document.getElementById("idSelectHoraEliminar").value;
       if (id_horario_eliminar==0) {
 
         console.log(id_horario_eliminar);
@@ -152,6 +204,7 @@ $('document').ready(function(){
             if (data == "0") {
               toastr.error('No se pudo Eliminar Horario', 'Error', {timeOut: 5000});
             }else{
+              
               toastr.success('Se Elimino el Horario con Exito', 'Error', {timeOut: 5000});
               var id_area = document.getElementById("id_area").value;
               var parametros = {
@@ -175,6 +228,8 @@ $('document').ready(function(){
                                
                 
             }
+
+            fnc_vefirExisteFechaEliminar();
           }
         });
       }
@@ -203,11 +258,28 @@ $('document').ready(function(){
        // console.log(JSON.parse(datos));
 
         if (Object.keys(JSON.parse(datos)).length>0) {
-
+          document.getElementById( 'idSelectHoraEliminar' ).innerHTML="";
+          
           var JsonDatos = JSON.parse(datos);
           console.log(JsonDatos);
           document.getElementById("id_btn_eliminarHorario").disabled=false;
           toastr.success(' Horario Encontrado', 'Exito', {timeOut: 5000});
+
+          var select = document.getElementById( 'idSelectHoraEliminar' );
+          var option;
+
+        
+          
+          for(var key in JsonDatos)
+          {
+            //alert("key");
+            option = document.createElement( 'option' );
+            option.value = JsonDatos[key]["id_horario"];
+            option.text = JsonDatos[key]["Fecha_inicio"];
+            select.add( option );
+            console.log(JsonDatos[key]["id_horario"]);
+          }
+
           document.getElementById("id_horario_eliminar").value=JsonDatos[0]['id_horario'];
           //id_horarioEliminar = JsonDatos[0]['id_horario'];
          // console.log(id_horarioEliminar);

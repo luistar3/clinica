@@ -49,14 +49,17 @@
                         
                         <input type="text" id="id_txtDniPersona" class="form-control" placeholder="Dni" require>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <input type="text" id="id_txtNombrePersona" class="form-control" placeholder="Nombre"require>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                     <input type="text" id="id_txtApePatPersona" class="form-control" placeholder="Apellido Paterno"require>
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <input type="text" id="id_txtApeMatPersona" class="form-control" placeholder="Apellido Materno" require>
+                    </div>
+                    <div class="col-3">
+                        <input type="text" id="id_txtTelf" class="form-control" placeholder="Telefono" require>
                     </div>
                     
                   </div>
@@ -112,14 +115,6 @@
                                     </div>
                                 
                     </div>
-                    
-          
-       
-                        
-
-                        
-                       
-                       
 
                     </div>
                 </div>
@@ -132,13 +127,6 @@
             
         
         </div>
-
-   
-
-
-        
-
-
 
 
         <!-- /.card-body -->

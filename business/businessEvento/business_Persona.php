@@ -1,13 +1,13 @@
 <?php 
 
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/connection.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Persona.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessEvento/business_Registro.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/business/businessEvento/business_Persona.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Registro.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/data/data_Persona.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/funciones.php');
-include_once($_SERVER["DOCUMENT_ROOT"] . '/gps/complements/navegador.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/connection.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Persona.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessEvento/business_Registro.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessEvento/business_Persona.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Registro.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/data/data_Persona.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/complements/funciones.php');
+include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/complements/navegador.php');
 
 class business_Persona
 {
