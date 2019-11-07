@@ -21,6 +21,7 @@ class connection
 	{
 		
 		$this->server = 'localhost';
+		
 		$this->database = 'clinica';
 		$this->userid = 'sa';
 		$this->passwd = '12345';

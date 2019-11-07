@@ -243,7 +243,7 @@
 		echo("0");
 		}else{
 			
-		$bolInsertUsuario = $business_usuario -> fncBusinessInsertarUsuario($idRol,$usuario,$contrasena,$nombre,$idPersona);
+		$bolInsertUsuario = $business_usuario -> fncBusinessInsertarUsuario($idRol,$usuario,md5($contrasena) ,$nombre,$idPersona);
 
 
 		echo("1");

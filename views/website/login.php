@@ -122,7 +122,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">Iniciar Sesión</p>
 
-      
+      <form action="">
         <div class="input-group mb-3">
           <input type="text" id="vuser" class="form-control" placeholder="Usuario">
           <div class="input-group-append">
@@ -132,7 +132,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" id="vpass" class="form-control" placeholder="Password">
+          <input type="password" id="vpass" class="form-control" placeholder="Password" onkeypress="pulsar(event)" >
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -150,12 +150,12 @@
           </div> -->
           <!-- /.col -->
           <div class="col-12">
-            <button type="button" id="btn_Login_iniciarSession" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            <button type="button" id="btn_Login_iniciarSession" class="btn btn-primary btn-block btn-flat">Ingresar</button>
           </div>
           <!-- /.col -->
         </div>
       
-
+        </form>
       <!-- <div class="social-auth-links text-center mb-3">
         <p>- OR -</p>
         <a href="#" class="btn btn-block btn-primary">
@@ -238,6 +238,11 @@ $('document').ready(function(){
 
 });
 
+function pulsar(e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      fnc_verificarUsuario();
+    }
+}
 
 function fnc_verificarUsuario(){
 
