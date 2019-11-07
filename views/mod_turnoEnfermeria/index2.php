@@ -68,7 +68,7 @@
                 
                 <div class="card-footer" id="idDivVisualizador" >
                   <button  id="idBtnLoginTurno" class="btn btn-info">Aceptar</button>
-                  <button  id="idBtnCancelarTurno" class="btn btn-default float-right">Cancel</button>
+                  <button  id="idBtnCancelarTurno" class="btn btn-danger float-right">Cancel</button>
                 </div>
                 <!-- /.card-footer -->
 
