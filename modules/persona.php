@@ -110,8 +110,8 @@
 	function view_reporteEnfermeria(){
 		
 		@session_start();
-		$menu_activo = "gestionPersonal";
-		$menu_open 	 = "gestionPersonal";
+		$menu_activo = "gestionEnfermera";
+		$menu_open 	 = "gestionEnfermera";
 		include('../views/includes/header.php');
 	    include('../views/mod_persona/reporteEnfermeria.php');
 	    include('../views/includes/footer.php');

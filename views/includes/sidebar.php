@@ -85,12 +85,7 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a href="../modules/persona.php?v=reporteEnfermeria" class="nav-link <?php if($menu_activo == 'reporteEnfermeria'){ echo $menu_class_active; } ?> ">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p class="text-danger">Reporte Enfermeria</p>
-                </a>
-              </li>
+              
 
               <!-- <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -104,6 +99,30 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
                   <p>Dashboard v3</p>
                 </a>
               </li> -->
+            </ul>
+          </li>
+          <?php }?>
+
+
+          <?php $personal = array_search('ENFERMERIA_GESTION',$modulos); ?> 
+          <?php if($personal === false){}else{?>
+
+          <li class="nav-item has-treeview <?php if($menu_open == 'gestionEnfermera'){ echo $menu_class_open; } ?>   ">
+            <a href="../modules/persona.php?v=gestionarPersona" class="nav-link <?php if($menu_activo == 'gestionEnfermera'){ echo $menu_class_active; } ?> ">
+            <i class=" nav-icon fas fa-user-nurse"></i>
+              <p>
+                Enfermeria
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../modules/persona.php?v=reporteEnfermeria" class="nav-link <?php if($menu_activo == 'gestionEnfermera'){ echo $menu_class_active; } ?>  ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Gestion</p>
+                </a>
+              </li>
+
             </ul>
           </li>
           <?php }?>
@@ -241,14 +260,14 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
 
 
           
-          <?php $ENFERMERIA = array_search('ENFERMERIA',$modulos);
+          <?php $ENFERMERIA = array_search('ENFERMERIA_CONTROL',$modulos);
            //$PERMISOS=1;?> 
           <?php if($ENFERMERIA === false){}else{?>
           <li class="nav-item has-treeview  <?php if($menu_open == 'Enfermeria'){ echo $menu_class_open; } ?>   ">
             <a href="#" class="nav-link  <?php if($menu_activo == 'Turno'){ echo $menu_class_active; } ?>   ">
               <i class=" nav-icon fas fa-user-nurse"></i>
               <p>
-                ENFERMERIA
+                Enfermeria CTRL
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
