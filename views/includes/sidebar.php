@@ -289,6 +289,35 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
           </li>
           <?php }?>
 
+          <?php $CAMPANA = array_search('CAMPANA',$modulos);
+           //$PERMISOS=1;?> 
+          <?php if($CAMPANA === false){}else{?>
+          <li class="nav-item has-treeview  <?php if($menu_open == 'campana'){ echo $menu_class_open; } ?>   ">
+            <a href="#" class="nav-link  <?php if($menu_activo == 'campana'){ echo $menu_class_active; } ?>   ">
+              <i class="nav-icon fas fa-calendar"></i>
+              <p>
+              Campañas
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../modules/turnoEnfermeria.php?v=index" class="nav-link  <?php if($menu_activo == 'campana'){ echo $menu_class_active; } ?>  ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>GEST. CAMPAÑA</p>
+                </a>
+              </li>
+              <!-- <li class="nav-item">
+                <a href="../modules/turnoEnfermeria.php?v=index2" class="nav-link  <?php if($menu_activo == 'campana'){ echo $menu_class_active; } ?>  ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>CONTROL GLOBAL</p>
+                </a>
+              </li> -->
+            
+            </ul>
+          </li>
+          <?php }?>
+
 
  <!-- 
           <li class="nav-item">
