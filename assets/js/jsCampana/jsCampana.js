@@ -2,6 +2,11 @@ $(document).ready(function() {
     $("#input-708").fileinput({
         uploadUrl: "../modules/campana.php?p=" + "J9Y0B7rh86",
         uploadAsync: false,
+        fileActionSettings : {
+            // Disable
+            showUpload : false,
+            showRemove :false
+            },
         maxFileCount: 5,
         allowedFileExtensions: ['jpg', 'png', 'gif'],
         uploadExtraData: {

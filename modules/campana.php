@@ -186,7 +186,7 @@
 	function fnc_listarChips()
 	{
 		$preview = $config = $errors = [];
-		$targetDir = '/pjrclinica/uploads';
+		$targetDir = '../uploads';
 		if (!file_exists($targetDir)) {
 			@mkdir($targetDir);
 		}
@@ -208,11 +208,11 @@
 			$fileName =  $_FILES[$fileBlob]['name'];          // you receive the file name as a separate post data
 			$fileSize = "filesize";          // you receive the file size as a separate post data
 			$fileId = "fileId";              // you receive the file identifier as a separate post data
-			$index =  "index";          // the current file chunk index
+			$index =  "1";          // the current file chunk index
 			$totalChunks = "total";     // the total number of chunks for this file
 			
 			$targetFile = $targetDir.'/'.$fileName;  // your target file path
-			echo($targetFile);
+			//echo($targetFile);
 			if ($totalChunks > 1) {                  // create chunk files only if chunks are greater than 1
 				$targetFile .= '_' . str_pad($index, 4, '0', STR_PAD_LEFT); 
 			} 
@@ -228,12 +228,12 @@
 					combineChunks($chunks, $outFile);
 				} 
 				// if you wish to generate a thumbnail image for the file
-				$targetUrl = getThumbnailUrl($path, $fileName);
+				//$targetUrl = getThumbnailUrl($path, $fileName);
 				// separate link for the full blown image file
-				$zoomUrl = 'http://localhost/pjrclinica/' . $fileName;
+				//$zoomUrl = 'http://localhost/pjrclinica/' . $fileName;
 				$data= [
 					'chunkIndex' => $index,         // the chunk index processed
-					'initialPreview' => $targetUrl, // the thumbnail preview data (e.g. image)
+					//'initialPreview' => $targetUrl, // the thumbnail preview data (e.g. image)
 					'initialPreviewConfig' => [
 						[
 							'type' => 'image',      // check previewTypes (set it to 'other' if you want no content preview)
@@ -241,7 +241,7 @@
 							'key' => $fileId,       // keys for deleting/reorganizing preview
 							'fileId' => $fileId,    // file identifier
 							'size' => $fileSize,    // file size
-							'zoomData' => $zoomUrl, // separate larger zoom data
+							//'zoomData' => $zoomUrl, // separate larger zoom data
 						]
 					],
 					'append' => true
@@ -255,10 +255,8 @@
 				echo json_encode($data);
 			}
 		}
-		$data = [
-			'error' => 'No file found'
-		];
-		echo json_encode($data);
+	
+		//echo json_encode($data);
 	}
 	function fnc_reporteCantidadChipsPorOperador()
 	{
