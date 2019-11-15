@@ -98,6 +98,12 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <!-- togle -->
 <script src="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
+<script src="../assets/plugins/siema/siema.min.js"></script>
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.6/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.6/js/fileinput.min.js"></script>
+
 
 <script src="../assets/js/jsHorario/jsHorario.js"></script>
 
@@ -106,8 +112,19 @@
 <script src="../assets/js/jsTurnoEnfermeria/jsTurnoEnfermeria.js"></script>
 <script src="../assets/js/jsTurnoEnfermeria/jsTurnoEnfermeria2.js"></script>
 <script src="../assets/js/jsPersona/jsEnfermeraReporte.js"></script>
+<script src="../assets/js/jsCampana/jsCampana.js"></script>
+
 
 <script>
+
+
+// const mySiema = new Siema({
+//   duration: 1000,
+//   loop: true,
+// });
+
+// // listen for keydown event
+// setInterval(() => mySiema.next(), 5000)
 
 /*
 

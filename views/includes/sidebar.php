@@ -10,7 +10,7 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
 	 <!-- Main Sidebar Container -->
 	 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
+    <a href="../modules/index.php" class="brand-link">
       <img src="../assets/dist/img/clinica.png"
            alt="AdminLTE Logo"
            class="brand-image"
@@ -302,7 +302,7 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../modules/turnoEnfermeria.php?v=index" class="nav-link  <?php if($menu_activo == 'campana'){ echo $menu_class_active; } ?>  ">
+                <a href="../modules/campana.php?v=index" class="nav-link  <?php if($menu_activo == 'campana'){ echo $menu_class_active; } ?>  ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>GEST. CAMPAÑA</p>
                 </a>

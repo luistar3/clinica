@@ -69,7 +69,7 @@
             if (response == "1") {
               toastr.success('El Usuario fue Creado con exito', 'Exito', {timeOut: 5000});
             } else {
-              toastr.error('El Usuario fue Creado con exito', 'Error', {timeOut: 5000});
+              toastr.error('El Usuario Ya Existe', 'Error', {timeOut: 5000});
             }
           }
         });
