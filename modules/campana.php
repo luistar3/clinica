@@ -186,7 +186,7 @@
 	function fnc_listarChips()
 	{
 		$preview = $config = $errors = [];
-		$targetDir = '../uploads';
+		$targetDir = '../uploads/campana';
 		if (!file_exists($targetDir)) {
 			@mkdir($targetDir);
 		}
@@ -205,7 +205,7 @@
 			//$index =  $_POST['chunkIndex'];          // the current file chunk index
 			//$totalChunks = $_POST['chunkCount'];     // the total number of chunks for this file
 				//var_dump($_FILES[$fileBlob]['tpm_name']);
-			$fileName =  $_FILES[$fileBlob]['name'];          // you receive the file name as a separate post data
+			$fileName = date("YmdHis"). $_FILES[$fileBlob]['name'];          // you receive the file name as a separate post data
 			$fileSize = "filesize";          // you receive the file size as a separate post data
 			$fileId = "fileId";              // you receive the file identifier as a separate post data
 			$index =  "1";          // the current file chunk index

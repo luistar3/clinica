@@ -75,7 +75,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 <!-- togle -->
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-
+<link href="../assets/plugins/boostrapFile/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 
 
 

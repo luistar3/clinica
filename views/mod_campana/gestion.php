@@ -93,7 +93,7 @@
                     
                 </div>
                 <br>
-                <input type="button" type="button" id="id_btnGuardarModificarPersona" value="GUARDAR" class="btn btn-success btn-sm btn-block" disabled >
+              <!-- <input type="button" type="button" id="id_btnGuardarModificarPersona" value="GUARDAR" class="btn btn-success btn-sm btn-block" disabled > -->
 
               </div>
               <!-- /.card-body -->
