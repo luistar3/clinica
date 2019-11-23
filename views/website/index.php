@@ -1,28 +1,6 @@
 
 <style>
 
-.card-img {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-.card-title {
-  margin-bottom: 0.3rem;
-}
-
-.cat {
-  display: inline-block;
-  margin-bottom: 1rem;
-}
-
-.fa-users {
-  margin-left: 1rem;
-}
-
-.card-footer {
-  font-size: 0.8rem;
-}
-
 </style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -58,56 +36,18 @@
 
 
 
-        <div class="card-columns">
-  <div class="card">
-    <img src="https://picsum.photos/400/300" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title that wraps to a new line</h5>
-      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    </div>
-  </div>
- 
-  <div class="card">
-    <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
- 
-  <div class="card">
-    <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
+      <div class="card-columns" id="id_contenedorCards">
 
-  <div class="card">
-    <img src="https://picsum.photos/400/300" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title that wraps to a new line</h5>
-      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    </div>
-  </div>
+
  
-  <div class="card">
-    <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-    </div>
-  </div>
+
 
 
   
 
 
 
-  <!-- <div class="card">
+    <!-- <div class="card">
         <img class="card-img" src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/pasta.jpg" alt="Bologna">
         <div class="card-img-overlay">
           <a href="#" class="btn btn-light btn-sm">Cooking</a>
@@ -146,3 +86,10 @@
   <!-- /.content-wrapper   -->
 
  
+
+
+<script src="">
+
+
+   
+</script>

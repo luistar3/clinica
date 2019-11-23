@@ -20,8 +20,8 @@ class connection
 	function __construct()
 	{
 		
-		$this->server = 'localhost';
-		
+		//$this->server = 'localhost';
+		$this->server = '192.168.3.233';
 		$this->database = 'clinica';
 		$this->userid = 'sa';
 		$this->passwd = '12345';

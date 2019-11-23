@@ -796,6 +796,7 @@ function fnc_guardarHorario(parametros){
   var calendar = new Calendar(calendarEl, {
         plugins: [ 'bootstrap', 'interaction', 'dayGrid', 'timeGrid' ],
         selectable:true,
+       // slotDuration: '00:15:00',
         
         'locale': 'es',
         header    : {

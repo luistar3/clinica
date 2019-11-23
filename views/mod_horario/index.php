@@ -162,7 +162,7 @@
                           <th>Reten</th>
                         </tr>
                       </tfoot>
-                    </table>
+                </table>
                 
                 </div>
               </div>

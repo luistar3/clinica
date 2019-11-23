@@ -68,22 +68,23 @@
 		switch ($get_opcion) {
 
 			case 'J9Y0B7rh86':
-					fnc_listarChips();
+					fnc_listarAreas();
 				break;
 			case 'xZ6rQTOHxk':
 					fnc_Agregar();
 				break;
-			case 'uctftGr4Jm':
-					fnc_Modificar();
-				break;
+			
 			case 'UkUELwv6kL':
-					fnc_VerificarAforo($sex);
+					fnc_modificarImagenCampana();
 				break;
 			case 'Q6SwcynHWV':
-					fnc_reporteCantidadDineroPorOperador();
+					fnc_modificarInfoCampana();
 				break;
 			case 'Rd5f84FT7D':
-					fnc_reporteCantidadChipsPorOperador();
+					fnc_listarCampanas();
+				break;
+			case 'uctftGr4Jm':
+					fnc_listarAllCampanas();
 				break;
 			default:
 				header('Location: ../errors/404.php?sesion='.$sex);  
@@ -181,15 +182,84 @@
 	//===========================================================================
 	//	FUNCIONES
 	//===========================================================================
+	function fnc_modificarInfoCampana(){
+		@session_start();
+		$fechaInicio = $_POST["inicioFecha"]." "."00:00:00.000";
+		$fechaFin = $_POST["finFecha"]." "."00:00:00.000";
+		$nombreCampana = $_POST["nombre"];
+		$descripcion = $_POST["descripcion"];
+		$idArea = $_POST["area"];		
+		$idCampana = $_POST["idCampana"];
 
+		$business_Campana = new business_Campana();
+		$data_Campana = new data_campana();
+		//echo($_SESSION['usuario']["ses_UsuarioId"]);
+		//$data_Campana -> setUrlImg($fileName);
+		$data_Campana -> setInicioFecha($fechaInicio);
+		$data_Campana -> setFinFecha($fechaFin);
+		//$data_Campana -> setIdUsuario($_SESSION['usuario']["ses_UsuarioId"]);
+		$data_Campana -> setId_area($idArea);
+		$data_Campana -> setDescripcion($descripcion);
+		$data_Campana -> setNombreCampana($nombreCampana);
+		$data_Campana -> setIdCampana($idCampana);
+		
+		$bolCampana = $business_Campana -> fnc_businessModificarInfoCampana($data_Campana);
+		if ($bolCampana) {
+			echo("1");
+		}else{
+			echo("0");
+		}
+	}
+
+	function fnc_listarCampanas(){
+		//@session_start();
+        //$menu_activo = "horarioEspecialidad";
+		$business_Campana = new business_Campana();
+		$dtListarCampana = $business_Campana -> fncBusinessListarCampanas();
+		$json_data = array(
 	
-	function fnc_listarChips()
+			"data" => $dtListarCampana   // total data array
+		);
+		echo json_encode($json_data);
+	}
+	function fnc_listarAllCampanas(){
+		//@session_start();
+        //$menu_activo = "horarioEspecialidad";
+		$business_Campana = new business_Campana();
+		$dtListarCampana = $business_Campana -> fncBusinessListarAllCampanas();
+		$json_data = array(
+	
+			"data" => $dtListarCampana   // total data array
+		);
+		echo json_encode($json_data);
+	}
+
+	function fnc_listarAreas(){
+		//@session_start();
+        //$menu_activo = "horarioEspecialidad";
+		$business_Area = new business_Area();
+		$dtListarArea = $business_Area -> fncBusinessListarArea();
+		$json_data = array(
+	
+			"area" => $dtListarArea   // total data array
+		);
+		echo json_encode($json_data);
+	}
+	
+	function fnc_Agregar()
 	{
+		@session_start();
 		$preview = $config = $errors = [];
 		$targetDir = '../uploads/campana';
 		if (!file_exists($targetDir)) {
 			@mkdir($targetDir);
 		}
+		//$hola = $_POST["hola"];
+		$fechaInicio = $_POST["fechaInicio"]." "."00:00:00.000";
+		$fechaFin = $_POST["fechaFin"]." "."00:00:00.000";
+		$nombreCampana = $_POST["nombre"];
+		$descripcion = $_POST["descripcion"];
+		$idArea = $_POST["idArea"];
 		$fileBlob = 'imagen';                      // the parameter name that stores the file blob
 		if (isset($_FILES[$fileBlob]) && isset($_POST['uploadToken'])) {
 			$token = $_POST['uploadToken'];          // gets the upload token
@@ -205,7 +275,7 @@
 			//$index =  $_POST['chunkIndex'];          // the current file chunk index
 			//$totalChunks = $_POST['chunkCount'];     // the total number of chunks for this file
 				//var_dump($_FILES[$fileBlob]['tpm_name']);
-			$fileName = date("YmdHis"). $_FILES[$fileBlob]['name'];          // you receive the file name as a separate post data
+			$fileName = date("YmdHis");          // you receive the file name as a separate post data
 			$fileSize = "filesize";          // you receive the file size as a separate post data
 			$fileId = "fileId";              // you receive the file identifier as a separate post data
 			$index =  "1";          // the current file chunk index
@@ -218,6 +288,20 @@
 			} 
 			$thumbnail = 'unknown.jpg';
 			if(move_uploaded_file($_FILES['imagen']['tmp_name'], $targetFile)) {
+				
+				$business_Campana = new business_Campana();
+				$data_Campana = new data_campana();
+//echo($_SESSION['usuario']["ses_UsuarioId"]);
+				$data_Campana -> setUrlImg($fileName);
+				$data_Campana -> setInicioFecha($fechaInicio);
+				$data_Campana -> setFinFecha($fechaFin);
+				$data_Campana -> setIdUsuario($_SESSION['usuario']["ses_UsuarioId"]);
+				$data_Campana -> setId_area($idArea);
+				$data_Campana -> setDescripcion($descripcion);
+				$data_Campana -> setNombreCampana($nombreCampana);
+				
+				$x = $business_Campana -> fnc_businessInsertarCampana($data_Campana);
+
 				// get list of all chunks uploaded so far to server
 				$chunks = glob("{$targetDir}/{$fileName}_*"); 
 				// check uploaded chunks so far (do not combine files if only one chunk received)
@@ -240,7 +324,96 @@
 							'caption' => $fileName, // caption
 							'key' => $fileId,       // keys for deleting/reorganizing preview
 							'fileId' => $fileId,    // file identifier
-							'size' => $fileSize,    // file size
+							'size' => 'null',    // file size
+							//'zoomData' => $zoomUrl, // separate larger zoom data
+						]
+					],
+					'append' => true
+				];
+
+				echo json_encode($data);
+			} else {
+				$data = [
+					'error' => 'Error uploading chunk ' . $_POST['chunkIndex']
+				];
+				echo json_encode($data);
+			}
+		}
+	
+		//echo json_encode($data);
+	}
+	function fnc_modificarImagenCampana()
+	{
+		@session_start();
+		$preview = $config = $errors = [];
+		$targetDir = '../uploads/campana';
+		if (!file_exists($targetDir)) {
+			@mkdir($targetDir);
+		}
+		//$hola = $_POST["hola"];
+		
+		$idCampana = $_POST["idCampana"];
+		$fileBlob = 'imagen';                      // the parameter name that stores the file blob
+		if (isset($_FILES[$fileBlob]) && isset($_POST['uploadToken'])) {
+			$token = $_POST['uploadToken'];          // gets the upload token
+			// if (!validateToken($token)) {            // your access validation routine (not included)
+			// 	return [
+			// 		'error' => 'Access not allowed'  // return access control error
+			// 	];
+			// }
+			$file = $_FILES[$fileBlob]['tmp_name'];  // the path for the uploaded file chunk 
+			//$fileName = $_POST['fileName'];          // you receive the file name as a separate post data
+			//$fileSize = $_POST['fileSize'];          // you receive the file size as a separate post data
+			//$fileId = $_POST['fileId'];              // you receive the file identifier as a separate post data
+			//$index =  $_POST['chunkIndex'];          // the current file chunk index
+			//$totalChunks = $_POST['chunkCount'];     // the total number of chunks for this file
+				//var_dump($_FILES[$fileBlob]['tpm_name']);
+			$fileName = date("YmdHis");          // you receive the file name as a separate post data
+			$fileSize = "filesize";          // you receive the file size as a separate post data
+			$fileId = "fileId";              // you receive the file identifier as a separate post data
+			$index =  "1";          // the current file chunk index
+			$totalChunks = "total";     // the total number of chunks for this file
+			
+			$targetFile = $targetDir.'/'.$fileName;  // your target file path
+			//echo($targetFile);
+			if ($totalChunks > 1) {                  // create chunk files only if chunks are greater than 1
+				$targetFile .= '_' . str_pad($index, 4, '0', STR_PAD_LEFT); 
+			} 
+			$thumbnail = 'unknown.jpg';
+			if(move_uploaded_file($_FILES['imagen']['tmp_name'], $targetFile)) {
+				
+				$business_Campana = new business_Campana();
+				$data_Campana = new data_campana();
+//echo($_SESSION['usuario']["ses_UsuarioId"]);
+				$data_Campana -> setIdCampana($idCampana);
+				$data_Campana -> setUrlImg($fileName);
+				
+				
+				$x = $business_Campana -> fnc_businessModificarCampana($data_Campana);
+
+				// get list of all chunks uploaded so far to server
+				$chunks = glob("{$targetDir}/{$fileName}_*"); 
+				// check uploaded chunks so far (do not combine files if only one chunk received)
+				$allChunksUploaded = $totalChunks > 1 && count($chunks) == $totalChunks;
+				if ($allChunksUploaded) {           // all chunks were uploaded
+					$outFile = $targetDir.'/'.$fileName;
+					// combines all file chunks to one file
+					combineChunks($chunks, $outFile);
+				} 
+				// if you wish to generate a thumbnail image for the file
+				//$targetUrl = getThumbnailUrl($path, $fileName);
+				// separate link for the full blown image file
+				//$zoomUrl = 'http://localhost/pjrclinica/' . $fileName;
+				$data= [
+					'chunkIndex' => $index,         // the chunk index processed
+					//'initialPreview' => $targetUrl, // the thumbnail preview data (e.g. image)
+					'initialPreviewConfig' => [
+						[
+							'type' => 'image',      // check previewTypes (set it to 'other' if you want no content preview)
+							'caption' => $fileName, // caption
+							'key' => $fileId,       // keys for deleting/reorganizing preview
+							'fileId' => $fileId,    // file identifier
+							'size' => 'null',    // file size
 							//'zoomData' => $zoomUrl, // separate larger zoom data
 						]
 					],
@@ -312,7 +485,7 @@
 
 	}
 
-	function fnc_Agregar()
+	function fnc_Agregarss()
 	{
 
 		 $validacion_post = true;

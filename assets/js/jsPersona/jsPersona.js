@@ -376,8 +376,8 @@ function fnc_listarPersonasPoArea(id_Area){
        
       var data = table.row( $(this).parents('tr') ).data();
       //  alert("sd");
-      console.log(data);
-
+      //console.log(data);
+      $('html, body').animate({scrollTop:0}, 'slow');
       document.getElementById("id_persona").value= data["id_persona"];
       document.getElementById("id_txtDniPersona").value= data["Dni"];
       document.getElementById("id_txtNombrePersona").value=data["Nombre"];

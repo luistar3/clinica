@@ -228,19 +228,34 @@
 			# code...
 			
 			$dataTurnoPendiente =  $bussines_turno -> fnc_BusinessbuscarTurnoPendiente($dtAutenticarUsuario[0]["id_usuario"]);
-			if ($dataTurnoPendiente[0]["Pendiente"]=="0") {
-				
-	
+
+			if (empty($dataTurnoPendiente)) {
+
 				$bolAgrear = $bussines_turno ->fnc_insertarNuevoTurno($dtAutenticarUsuario[0]["id_usuario"]);
 				if ($bolAgrear) {
 					echo("1");
 				}else{
 					echo("2"); // NO SE AGREGO .
 				}
-			}else{
-				echo("3");  // TIENE TRUNBIO PENDIENTE
-	
 			}
+			else{
+
+				if ($dataTurnoPendiente[0]["Pendiente"]=="0" ) {
+				
+	
+					$bolAgrear = $bussines_turno ->fnc_insertarNuevoTurno($dtAutenticarUsuario[0]["id_usuario"]);
+					if ($bolAgrear) {
+						echo("1");
+					}else{
+						echo("2"); // NO SE AGREGO .
+					}
+				}else{
+					echo("3");  // TIENE TRUNBIO PENDIENTE
+		
+				}
+			}
+
+		
 		}
 		else{
 			echo("10");
@@ -325,9 +340,17 @@
 
 		$data_turnos = $bussines_turno -> fnc_BusinessbuscarTurnoPendiente($idUsuario);
 		
-		
-			
-			if ($data_turnos[0]['Pendiente']=='0') {
+		if (empty($data_turnos)) {
+			//$idLog = $data_turnos[0]['id_log'];
+				$bolAgrear = $bussines_turno ->fnc_insertarNuevoTurno($idUsuario);
+				if ($bolAgrear) {
+					echo('1');
+				}else{
+					echo('3');
+				}
+		}
+		else{
+			if ($data_turnos[0]['Pendiente']=='0' ) {
 				$idLog = $data_turnos[0]['id_log'];
 				$bolAgrear = $bussines_turno ->fnc_insertarNuevoTurno($idUsuario);
 				if ($bolAgrear) {
@@ -338,6 +361,9 @@
 			} else{
 				echo("0");
 			}
+		}
+			
+			
 
 	}
 	function fnc_VerificarTurnoPendiente()
