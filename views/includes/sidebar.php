@@ -319,6 +319,40 @@ $modulos = $_SESSION['usuario']["ses_PermisoPSTobjeto"];
           <?php }?>
 
 
+
+
+
+          
+          <?php $LIQUIDACION = array_search('LIQUIDACION',$modulos);
+           //$PERMISOS=1;?> 
+          <?php if($LIQUIDACION === false){}else{?>
+          <li class="nav-item has-treeview  <?php if($menu_open == 'liquidacion'){ echo $menu_class_open; } ?>   ">
+            <a href="#" class="nav-link  <?php if($menu_activo == 'liquidacion'){ echo $menu_class_active; } ?>   ">
+            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+              <p>
+              Liquidación
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="../modules/liquidacion.php?v=index" class="nav-link  <?php if($menu_activo == 'liquidacion'){ echo $menu_class_active; } ?>  ">
+                <i class="far fa-circle nav-icon"></i>
+                  <p>GEST. CAMPAÑA</p>
+                </a>
+              </li>
+              <!-- <li class="nav-item">
+                <a href="../modules/turnoEnfermeria.php?v=index2" class="nav-link  <?php if($menu_activo == 'liquidacion'){ echo $menu_class_active; } ?>  ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>CONTROL GLOBAL</p>
+                </a>
+              </li> -->
+            
+            </ul>
+          </li>
+          <?php }?>
+
+
  <!-- 
           <li class="nav-item">
             <a href="../widgets.html" class="nav-link">

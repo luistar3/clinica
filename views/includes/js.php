@@ -116,7 +116,7 @@
 <script src="../assets/js/jsPersona/jsEnfermeraReporte.js"></script>
 <script src="../assets/js/jsCampana/jsCampana.js"></script>
 <script src="../assets/js/jsCampana/jsCampanaCard.js"></script>
-
+<script src="../assets/js/jsLiquidacion/jsLiquidacion.js"></script>
 
 <script>
 
