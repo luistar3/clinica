@@ -2,7 +2,7 @@
 
   
 	include_once($_SERVER["DOCUMENT_ROOT"] . '/pjrclinica/business/businessClinica/business_Liquidacion.php');
-
+	//require 'PHPExcel.php';
     
     
 
@@ -138,6 +138,7 @@
 
 		$listDifEspecialidad = $business_Liquidacion -> fncBusinessListarLiquidacionEspecialidad();
 		$listDifCodigo = $business_Liquidacion -> fncBusinessListarLiquidacionCodigo();
+		$listDifCodigoPaquete = $business_Liquidacion -> fncBusinessListarLiquidacionCodigoPaquete($nombreEspecialidad);
 
 
 
@@ -153,25 +154,44 @@
 		$NUMEROES = 0;
 		$NUMEROCOD = 0;
 
+		$sumaCantidad=0;
+		$subTotalFinal =0;
+		$propietarioTotal =0;
+		$socioTotal =0;
+		$impuestoTotal =0;
+		$totalNeto =0;
+
+
 		//columnas
 		
 		
 
 		foreach ($dtListarLiquidacion as $k => $valueLiquidacion) {
+
+			foreach ($listDifCodigoPaquete as $h => $valueListDifCodigoPaquete) {
+				if ($valueListDifCodigoPaquete["codigo"]== $dtListarLiquidacion[$k]["CODIGO"] ) {
+					$dtListarLiquidacion[$k]["PRECIO"]=$valueListDifCodigoPaquete['precio'];
+					$dtListarLiquidacion[$k]["TOTAL"]= floatval($valueListDifCodigoPaquete['precio'])* floatval($dtListarLiquidacion[$k]["CANTIDAD"]);
+				}
+			
+			}
+
+
 			$cantidad 		= $dtListarLiquidacion [$k]['CANTIDAD'];
 			$precio 		= $dtListarLiquidacion [$k]['PRECIO'];
 			$subTotal 		= $dtListarLiquidacion [$k]['TOTAL'];
-			$AuxForm 		= 70;
+			$AuxForm 		= 65;
 			$auxCal			= 'p';
 			$neto			= 0.0;
 			$impuesto 		= 0.0;
 
 			foreach ($listDifEspecialidad as $key => $valueEspecialidad) {
-				if ($valueEspecialidad["nombre"]== $dtListarLiquidacion[$k]["ESPECIALIDAD"] ) {
+				if ($valueEspecialidad["nombre"]== $dtListarLiquidacion[$k]["ESPECIALIDAD"]) {
 					$NUMEROES++;
 					$AuxForm 		= $valueEspecialidad["form"];
 					$auxCal			= $valueEspecialidad["operacion"];
 				}
+			
 			
 			}
 
@@ -223,11 +243,29 @@
 
 			array_push($datos,$registro);
 
+
+			$sumaCantidad		+=$registro["CANTIDAD"];
+			$subTotalFinal 		+=$registro["SUBTOTAL"];
+			$propietarioTotal 	+=$registro["PROPIETARIO"];
+			$socioTotal 		+=$registro["SOCIO"];
+			$impuestoTotal 		+=$registro["IMPUESTO"];
+			$totalNeto 			+=$registro["NETO"];
+
+
 		}
 
+		$totales = array(
+			'sumaCantidad' 		=> $sumaCantidad, 
+			'subTotalFinal' 	=> number_format( $subTotalFinal,2), 
+			'propietarioTotal' 	=> number_format($propietarioTotal,2), 
+			'socioTotal' 		=> number_format($socioTotal,2), 
+			'impuestoTotal' 	=> number_format($impuestoTotal,2), 
+			'totalNeto' 		=> number_format($totalNeto,2)
 
+		);
 		$RESPUESTA = array(
-			$datos//,
+			$datos,
+			$totales
 			//$NUMEROES  , 
 			//$NUMEROCOD,
 			//$listDifCodigo
@@ -235,7 +273,7 @@
 
 	
 
-		echo json_encode($datos);
+		echo json_encode($RESPUESTA);
 	}
 
 	function fnc_listarAreas(){
@@ -249,6 +287,7 @@
 		);
 		echo json_encode($json_data);
 	}
+	
 	
 
 

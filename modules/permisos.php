@@ -90,6 +90,9 @@
 			case 'PGT78JTOxk':
 					fnc_insertarUsuario();
 				break;
+			case 'GTT78Oxk':
+					fnc_accesEditUser();
+				break;
 			default:
 				header('Location: ../errors/404.php?sesion='.$sex);  
 				break;
@@ -229,6 +232,32 @@
 	//	FUNCIONES
 	//===========================================================================
 	
+	function fnc_accesEditUser()
+	{
+		
+		$idRol = $_POST["idRol"];
+		$idUser = $_POST["idUsuario"];
+		$bolEditUser="2";
+
+		$business_usuario = new business_Rol();
+		if ($idUser=="1") {
+			echo("2");
+			exit();
+		}else{
+			$bolEditUser =  $business_usuario -> fncBusinessEditUser($idRol,$idUser);
+		}
+		//$bolEditUser =  $business_usuario -> fncBusinessEditUser($idRol,$idUser);
+
+		if ($bolEditUser) {
+			echo("1");
+			
+		}
+		else{
+			echo("2");
+		}
+		//echo($idRol);
+
+	}
 	function fnc_insertarUsuario()
 	{
 		$usuario = $_GET["usuario"];

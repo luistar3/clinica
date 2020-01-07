@@ -196,6 +196,44 @@
         
         <!-- /.row -->
       </div><!-- /.container-fluid -->
+
+
+
+<!-- modal edicion de permisos -->
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalEditarPermisos" tabindex="-1" role="dialog" aria-labelledby="modalEditarPermisos" aria-hidden="true"  data-keyboard="false" data-backdrop="static" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Permiso</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="">
+        <input type="hidden" name="" id="idHiddenIdUsuario">
+        <label for="" >Nombre</label>
+        <input type="text" class="form-control" name="" id="idNombrePersonaPermiso">
+        <label for="" >Seleccione nuevo permiso</label>
+        <select class="form-control select2" id="idPermisoModulosEdit" style="width: 100%;">
+             
+        </select>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="idCerrarCambiosPermiso" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" id="idGuardarCambiosPermiso" class="btn btn-primary">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     </section>
     <!-- /.content -->
     </div>

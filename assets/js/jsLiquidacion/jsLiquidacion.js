@@ -18,14 +18,37 @@ $('document').ready(function(){
         fnc_listarLiquidaciones();
     });
 
+    $("#idBtnGenerarLiquidacionExcel").click(function (e) { 
+        fncGenerarLiquidacionExcel();
+        
+    });
+
     var dataLiquidacion ;
 
     console.log(G_Especialidades);
 
+
+
+
+    $("#exportButton").click(function(){
+        html2canvas(document.querySelector("#chartsContainer")).then(canvas => {  
+          var dataURL = canvas.toDataURL();
+          var width = canvas.width;
+          //var printWindow = window.open("");
+          $(printWindow.document.body)
+            .html("<img id='Image' src=" + dataURL + " style='" + width + "'></img>")
+            .ready(function() {
+            printWindow.focus();
+            printWindow.print();
+          });
+        });
+      });
+
+      formatDate(new Date());
     } 
 
 
-
+    
  
 
   });
@@ -74,7 +97,9 @@ $('document').ready(function(){
         async: false,
         data : parametros,
         success: function (response) {
-            var datos = JSON.parse(response);
+            var datosGen = JSON.parse(response);
+            var datos = datosGen[0];
+            var datosTotales = datosGen [1];
             var tabla = document.getElementById("idTblLiquidacionBody").innerHTML="";
             //var tr = document.createElement('tr');
             var apend = '';
@@ -85,22 +110,65 @@ $('document').ready(function(){
                     
                 apend+= '<tr>'+
                       
-                      '<td>'+(count)+'</td>'+
-                      '<td>'+datos[key]["PRODUCTO"]+'</td>'+
-                      '<td>'+datos[key]["CODIGO"]+'</td>'+
-                      '<td>'+datos[key]["CANTIDAD"]+'</td>'+
-                      '<td>'+datos[key]["PRECIO"]+'</td>'+
-                      '<td>'+datos[key]["SUBTOTAL"]+'</td>'+
-                      '<td>'+datos[key]["FORM"]+'</td>'+
-                      '<td>'+datos[key]["PROPIETARIO"]+'</td>'+
-                      '<td>'+datos[key]["SOCIO"]+'</td>'+
-                      '<td>'+datos[key]["IMPUESTO"]+'</td>'+
-                      '<td>'+datos[key]["NETO"]+'</td>'+
+                            '<td>'+(count)+'</td>'+
+                            '<td>'+datos[key]["PRODUCTO"]+'</td>'+
+                            '<td>'+datos[key]["CODIGO"]+'</td>'+
+                            '<td>'+datos[key]["CANTIDAD"]+'</td>'+
+                            '<td>S/.'+datos[key]["PRECIO"]+'</td>'+
+                            '<td>S/.'+datos[key]["SUBTOTAL"]+'</td>'+
+                            '<td>'+datos[key]["FORM"]+'</td>'+
+                            '<td>S/.'+datos[key]["PROPIETARIO"]+'</td>'+
+                            '<td>S/.'+datos[key]["SOCIO"]+'</td>'+
+                            '<td>S/.'+datos[key]["IMPUESTO"]+'</td>'+
+                            '<td>S/.'+datos[key]["NETO"]+'</td>'+
+                      
+                        '</tr>';
+            }
+            apend+= '<tr>'+
+    
+                      '<td>'+/*(count+1)+*/'</td>'+
+                      '<td></td>'+
+                      '<td></td>'+
+                      '<td>'+datosTotales["sumaCantidad"]+'</td>'+
+                      '<td></td>'+
+                      '<td>S/.'+datosTotales["subTotalFinal"]+'</td>'+
+                      '<td></td>'+
+                      '<td>S/.'+datosTotales["propietarioTotal"]+'</td>'+
+                      '<td>S/.'+datosTotales["socioTotal"]+'</td>'+
+                      '<td>S/.'+datosTotales["impuestoTotal"]+'</td>'+
+                      '<td>S/.'+datosTotales["totalNeto"]+'</td>'+
                       
                     '</tr>';
-            }
+
+
+            var amount =        '<tr>'+
+                        '<th style="width:50%">Catidad de Items:</th>'+
+                        '<td>'+datosTotales["sumaCantidad"]+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<th>SubTotal:</th>'+
+                        '<td>S/.'+datosTotales["subTotalFinal"]+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<th>Propietario:</th>'+
+                        '<td>S/.'+datosTotales["propietarioTotal"]+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<th>Socio:</th>'+
+                        '<td>S/.'+datosTotales["socioTotal"]+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<th>Impuesto Total:</th>'+
+                        '<td>S/.'+datosTotales["impuestoTotal"]+'</td>'+
+                    '</tr>'+
+                    '<tr>'+
+                        '<th>Total Neto:</th>'+
+                        '<td>S/.'+datosTotales["totalNeto"]+'</td>'+
+                    '</tr>';
+
 
             var tabla = document.getElementById("idTblLiquidacionBody").innerHTML=apend;
+            var amountTable = document.getElementById("idTableAmount").innerHTML=amount;
             //data =JSON.parse(response);
             //dataLiquidacion = data;
         }
@@ -115,3 +183,32 @@ $('document').ready(function(){
    
        
   }
+
+  
+   
+  
+
+  function formatDate(date) {
+    var monthNames = [
+      "ENERO", "FEBRERO", "MARZO",
+      "ABRIL", "MAYO", "JUNIO", "JULIO",
+      "AGOSTO", "SEPTIEMBRE", "OCTUBRE",
+      "NOVIEMBRE", "DICIEMBRE"
+    ];
+  
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+  
+    var fecha =  day + ' ' + monthNames[monthIndex] + ' ' + year;
+    document.getElementById("idSmallDateNow").innerHTML=fecha;
+  }
+
+
+
+  function fncGenerarLiquidacionExcel() {
+    var especialidad = document.getElementById("idSelectEspecialidadLiquidacion").value;
+    window.open('../modules/report_liquidacionExcel.php?l='+especialidad);
+       
+}
+

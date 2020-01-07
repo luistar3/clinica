@@ -100,6 +100,9 @@
 <script src="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
 <script src="../assets/plugins/siema/siema.min.js"></script>
 
+<!-- html2canva -->
+<script src="../assets/plugins/html2canva/canvasjs.min.js"></script>
+<script src="../assets/plugins/html2canva/html2canvas.min.js"></script>
 
 
 <script src="../assets/plugins/boostrapFile/fileinput.min.js"></script>

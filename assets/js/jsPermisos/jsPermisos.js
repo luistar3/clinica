@@ -24,6 +24,10 @@
             fnc_agregarUsuario();
           });
 
+          $("#idGuardarCambiosPermiso" ).click(function() {
+            fnc_editarPermisosUsuario();
+          });
+
          
 
           listarUsuarios();
@@ -96,6 +100,7 @@
         
           document.getElementById("idSelectRolUsuario").innerHTML="";
           var select = document.getElementById( 'idSelectRolUsuario' );
+          var selectEdit = document.getElementById( 'idPermisoModulosEdit' );
           var option;
           for(var key in data)
           {
@@ -104,11 +109,13 @@
             option.text = data[key]["Nombre"];
             //option.selected = true;
             select.add( option );
+            selectEdit.add( option );
           }
           
         }
       });
     }
+    
     var listarPersonaSinUsuario = function(){
       var table = $('#idListarPersonasSinUsuario').DataTable();
       table.clear();
@@ -247,7 +254,7 @@
               }
             },
           
-            { "defaultContent":  '<button type="button"  title="ver" class="btn btn-danger"><a id="editarChip"><i class="fas fa-arrow-circle-down"></i></a></button>'}
+            { "defaultContent":  '<button type="button" id="editarPermiso" data-toggle="modal" data-target="#modalEditarPermisos" title="ver" class="btn btn-danger"><a><i class="fas fa-arrow-circle-down"></i></a></button>'}
             
             
             ],
@@ -290,6 +297,22 @@
         var data = table.row( $(this).parents('tr') ).data();
         console.log(data);
       } );
+
+
+      $('#idListarUsuarios tbody').on( 'click', '#editarPermiso', function () {
+        
+        var data = table.row( $(this).parents('tr') ).data();
+
+        $('#idNombrePersonaPermiso').val(data["Nombre"]);
+       document.getElementById("idPermisoModulosEdit").value=data["Rol_idRol"];
+       document.getElementById("idHiddenIdUsuario").value=data["id_usuario"];
+       
+       $('.select2').select2({ theme: 'bootstrap4'});
+        console.log(data);
+      } );
+
+
+      
   
   
     }
@@ -419,4 +442,38 @@ function fnc_guardarPermisosPorModulos(){
           
         }
       });
+    }
+
+    function fnc_editarPermisosUsuario(params) {
+
+      var idRol = document.getElementById("idPermisoModulosEdit").value;
+      var idUsuario = document.getElementById("idHiddenIdUsuario").value;
+
+      var parametros = {
+        
+        "idRol"  : idRol,
+        "idUsuario": idUsuario
+      }
+
+      console.log(parametros);
+
+      $.ajax({
+        type: "POST",
+        async:false,
+        url: "../modules/permisos.php?p=GTT78Oxk",
+        data: parametros,
+        success: function (response) {
+
+          if(response=="1"){
+            toastr.success('Editado con exito', 'Exito', {timeOut: 5000});
+            listarUsuarios();
+            $("#idCerrarCambiosPermiso").click();
+          }
+          else if(response=="2"){
+            toastr.error('Ocurrio un problema', 'Error', {timeOut: 5000});
+          }
+          
+        }
+      });
+      
     }

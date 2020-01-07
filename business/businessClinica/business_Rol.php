@@ -44,6 +44,34 @@ class business_Rol
 			echo 'Tenemos un problema: ' . mssql_get_last_message();
 		}
 }
+public function fncBusinessEditUser($idRol,$idUsuario)
+	{
+		
+		$connection = new connection();
+		$connectionstatus = $connection -> openConnection();
+		if ($connectionstatus) 
+		{
+			$sql = "usp_Clinica_Usuario_EditarUsuario";
+			$proc = mssql_init($sql, $connectionstatus);  
+
+			mssql_bind($proc, '@idRol', $idRol, SQLINT4, false, false, 10); 
+			mssql_bind($proc, '@idUsuario', $idUsuario, SQLINT4, false, false, 10);
+			//mssql_bind($proc, '@Contrasena', $DataUsuario->getContrasena(), SQLVARCHAR, false, false, 10); 
+
+			$result = mssql_execute($proc);
+			if ($result) {
+				$connection -> closeConnection($connectionstatus);
+				unset($connectionstatus);
+				unset($connection);
+				return true;
+			}else{
+				$connection -> closeConnection($connectionstatus);
+				unset($connectionstatus);
+				unset($connection);
+				return false;
+			}
+	}
+}
 
 
 public function fncBusinessInsertarUsuario($idRol,$usuario,$contrasena,$nombre,$idpersona){
